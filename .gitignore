@@ -1,0 +1,6 @@
+vendor
+.idea/
+.env
+
+# бинарник
+cdek_sdk
