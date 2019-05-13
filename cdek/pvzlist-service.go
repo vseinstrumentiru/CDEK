@@ -19,8 +19,8 @@ func getPvzList(clientConfig ClientConfig, filter map[PvzListFilter]string) (*Pv
 	serverUrl.Path = path.Join(serverUrl.Path, pvzListUrl)
 
 	queryString := serverUrl.Query()
-	for key, v := range filter {
-		queryString.Set(string(key), v)
+	for filterKey, value := range filter {
+		queryString.Set(string(filterKey), value)
 	}
 	serverUrl.RawQuery = queryString.Encode()
 
