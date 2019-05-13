@@ -13,11 +13,18 @@ func main() {
 	}
 
 	client := cdek.NewClient(config)
-	filterBuilder := cdek.PvzListFilterBuilder{}
-	filterBuilder = filterBuilder.AddFilter(cdek.FilterCityId, "")
-	pvzlist, _ := client.GetPvzList(filterBuilder.Filter())
+	//filterBuilder := cdek.PvzListFilterBuilder{}
+	//filterBuilder.AddFilter(cdek.FilterCityId, "")
+	//pvzlist, _ := client.GetPvzList(filterBuilder.Filter())
+	//
+	//for i := 0; len(pvzlist.Pvz) > i; i++ {
+	//	fmt.Println(pvzlist.Pvz[i].CityCode, " ", pvzlist.Pvz[i].City)
+	//}
 
-	for i := 0; len(pvzlist.Pvz) > i; i++ {
-		fmt.Println(pvzlist.Pvz[i].CityCode, " ", pvzlist.Pvz[i].City)
-	}
+	filterBuilder := cdek.CityFilterBuilder{}
+
+	filterBuilder.AddFilter(cdek.FilterSize, "1")
+
+	cities, _ := client.GetCities(filterBuilder.Filter())
+	fmt.Println(cities)
 }
