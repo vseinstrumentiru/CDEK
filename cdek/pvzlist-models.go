@@ -1,4 +1,4 @@
-package pvzlist
+package cdek
 
 type PvzList struct {
 	Pvz []struct {

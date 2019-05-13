@@ -1,11 +1,51 @@
 package cdek
 
-import (
-	"os"
-)
+const jsonContentType = "application/json"
 
-const JsonContentType = "application/json"
+func NewClient(clientConfig ClientConfig) *client {
+	return &client{
+		clientConfig: clientConfig,
+	}
+}
 
-func GetServerUrl() string {
-	return os.Getenv("SERVER_URL")
+type client struct {
+	clientConfig ClientConfig
+}
+
+type Client interface {
+	RegisterOrder()
+	UpdateOrder()
+	DeleteOrder()
+	GetPvzList()
+	GetRegions()
+	GetCities()
+	CalculateDelivery()
+}
+
+func (cl client) RegisterOrder() (*PvzList, error) {
+	return nil, nil
+}
+
+func (cl client) UpdateOrder() (*PvzList, error) {
+	return nil, nil
+}
+
+func (cl client) DeleteOrder() (*PvzList, error) {
+	return nil, nil
+}
+
+func (cl client) GetPvzList(filter map[Filter]string) (*PvzList, error) {
+	return getPvzList(cl.clientConfig, filter)
+}
+
+func (cl client) GetRegions(filter map[string]string) (*PvzList, error) {
+	return nil, nil
+}
+
+func (cl client) GetCities(filter map[string]string) (*PvzList, error) {
+	return nil, nil
+}
+
+func (cl client) CalculateDelivery(getCostRequest GetCostRequest) (*GetCostResponse, error) {
+	return calculateDelivery(getCostRequest)
 }

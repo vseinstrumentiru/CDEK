@@ -1,4 +1,4 @@
-package calculator
+package cdek
 
 type Good struct {
 	Weight float64 `json:"weight"`

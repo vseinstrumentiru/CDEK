@@ -1,36 +1,20 @@
 package main
 
 import (
-	"github.com/joho/godotenv"
+	"cdek_sdk/cdek"
+	"fmt"
 )
 
-const version = "0.0.1"
-
 func main() {
-	_ = godotenv.Load()
+	config := cdek.ClientConfig{
+		Account: "f62dcb094cc91617def72d9c260b4483",
+		Secure: "6bd3937dcebd15beb25278bc0657014c",
+		XmlApiUrl: "https://integration.edu.cdek.ru",
+	}
 
-	//
-	//args := os.Args
-	//
-	//if len(args) < 2 {
-	//	PrintUsage()
-	//	return
-	//}
-	//
-	//switch cmd := args[1]; cmd {
-	//case "version":
-	//	fmt.Println("version: ", version)
-	//case "help":
-	//	PrintUsage()
-	//case "pvzlist":
-	//	filter := map[string]string{
-	//		pvzlist.FilterType:   pvzlist.TypePvz,
-	//		pvzlist.FilterCityId: "417",
-	//	}
-	//	fmt.Println(pvzlist.GetPvzList(filter))
-	//case "calc":
-	//	fmt.Println(calculator.Calculate(calculator.GetCostRequest{}))
-	//default:
-	//	PrintUsage()
-	//}
+	fmt.Println(config.EncodedSecure())
+
+	client := cdek.NewClient(config)
+	pvzlist, _ := client.GetPvzList(make(map[cdek.Filter]string))
+	fmt.Println(pvzlist)
 }

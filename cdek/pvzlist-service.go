@@ -1,7 +1,6 @@
-package pvzlist
+package cdek
 
 import (
-	"cdek_sdk/cdek"
 	"encoding/xml"
 	"io/ioutil"
 	"net/http"
@@ -11,18 +10,20 @@ import (
 
 const pvzListUrl = "pvzlist/v1/xml"
 
+type Filter string
+
 const (
-	FilterCityPostCode   = "citypostcode"
-	FilterCityId         = "cityid"
-	FilterType           = "type"
-	FilterCountryId      = "type"
-	FilterRegionId       = "countryid"
-	FilterHaveCashless   = "regionid"
-	FilterAllowedCod     = "havecashless"
-	FilterIsDressingRoom = "allowedcod"
-	FilterWeightMax      = "isdressingroom"
-	FilterLang           = "weightmax"
-	FilterTakeOnly       = "lang"
+	FilterCityPostCode   Filter = "citypostcode"
+	FilterCityId         Filter = "cityid"
+	FilterType           Filter = "type"
+	FilterCountryId      Filter = "countryid"
+	FilterRegionId       Filter = "regionid"
+	FilterHaveCashless   Filter = "havecashless"
+	FilterAllowedCod     Filter = "allowedcod"
+	FilterIsDressingRoom Filter = "isdressingroom"
+	FilterWeightMax      Filter = "weightmax"
+	FilterLang           Filter = "lang"
+	FilterTakeOnly       Filter = "takeonly"
 )
 
 const (
@@ -31,8 +32,8 @@ const (
 	TypeAll      string = "ALL"
 )
 
-func GetPvzList(filter map[string]string) (*PvzList, error) {
-	serverUrl, err := url.Parse(cdek.GetServerUrl())
+func getPvzList(clientConfig ClientConfig, filter map[Filter]string) (*PvzList, error) {
+	serverUrl, err := url.Parse(clientConfig.XmlApiUrl)
 	if err != nil {
 		return nil, err
 	}
@@ -40,8 +41,8 @@ func GetPvzList(filter map[string]string) (*PvzList, error) {
 	serverUrl.Path = path.Join(serverUrl.Path, pvzListUrl)
 
 	queryString := serverUrl.Query()
-	for i, v := range filter {
-		queryString.Set(i, v)
+	for key, v := range filter {
+		queryString.Set(string(key), v)
 	}
 	serverUrl.RawQuery = queryString.Encode()
 

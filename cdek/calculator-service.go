@@ -1,8 +1,7 @@
-package calculator
+package cdek
 
 import (
 	"bytes"
-	"cdek_sdk/cdek"
 	"encoding/json"
 	"io/ioutil"
 	"net/http"
@@ -10,13 +9,13 @@ import (
 
 const calculatorUrl = "http://api.cdek.ru/calculator/calculate_price_by_json.php"
 
-func CalculateDelivery(request GetCostRequest) (*GetCostResponse, error) {
+func calculateDelivery(request GetCostRequest) (*GetCostResponse, error) {
 	requestByte, err := json.Marshal(request)
 	if err != nil {
 		return nil, err
 	}
 
-	resp, err := http.Post(calculatorUrl, cdek.JsonContentType, bytes.NewReader(requestByte))
+	resp, err := http.Post(calculatorUrl, jsonContentType, bytes.NewReader(requestByte))
 	if err != nil {
 		return nil, err
 	}
