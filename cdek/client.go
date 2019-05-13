@@ -34,7 +34,7 @@ func (cl client) DeleteOrder() (*PvzList, error) {
 	return nil, nil
 }
 
-func (cl client) GetPvzList(filter map[Filter]string) (*PvzList, error) {
+func (cl client) GetPvzList(filter map[PvzListFilter]string) (*PvzList, error) {
 	return getPvzList(cl.clientConfig, filter)
 }
 

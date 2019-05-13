@@ -10,29 +10,7 @@ import (
 
 const pvzListUrl = "pvzlist/v1/xml"
 
-type Filter string
-
-const (
-	FilterCityPostCode   Filter = "citypostcode"
-	FilterCityId         Filter = "cityid"
-	FilterType           Filter = "type"
-	FilterCountryId      Filter = "countryid"
-	FilterRegionId       Filter = "regionid"
-	FilterHaveCashless   Filter = "havecashless"
-	FilterAllowedCod     Filter = "allowedcod"
-	FilterIsDressingRoom Filter = "isdressingroom"
-	FilterWeightMax      Filter = "weightmax"
-	FilterLang           Filter = "lang"
-	FilterTakeOnly       Filter = "takeonly"
-)
-
-const (
-	TypePvz      string = "PVZ"
-	TypePostomat string = "POSTOMAT"
-	TypeAll      string = "ALL"
-)
-
-func getPvzList(clientConfig ClientConfig, filter map[Filter]string) (*PvzList, error) {
+func getPvzList(clientConfig ClientConfig, filter map[PvzListFilter]string) (*PvzList, error) {
 	serverUrl, err := url.Parse(clientConfig.XmlApiUrl)
 	if err != nil {
 		return nil, err
