@@ -34,6 +34,10 @@ func (cl client) GetCities(filter map[CityFilter]string) (*GetCitiesResponse, er
 	return getCities(cl.clientConfig, filter)
 }
 
+func (cl client) GetRegions(filter map[RegionFilter]string) (*GetRegionsResponse, error) {
+	return getRegions(cl.clientConfig, filter)
+}
+
 // TODO
 
 func (cl client) RegisterOrder() (*PvzList, error) {
@@ -48,8 +52,5 @@ func (cl client) DeleteOrder() (*PvzList, error) {
 	return nil, nil
 }
 
-func (cl client) GetRegions(filter map[string]string) (*PvzList, error) {
-	return nil, nil
-}
 
 
