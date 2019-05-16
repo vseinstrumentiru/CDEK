@@ -10,7 +10,7 @@ import (
 
 const citiesUrl = "v1/location/cities/json"
 
-func getCities(clientConfig ClientConfig, filter map[CityFilter]string) (*GetCitiesResponse, error) {
+func getCities(clientConfig ClientConfig, filter map[CityFilter]string) (*GetCitiesRes, error) {
 	serverUrl, err := url.Parse(clientConfig.XmlApiUrl)
 	if err != nil {
 		return nil, err
@@ -24,26 +24,26 @@ func getCities(clientConfig ClientConfig, filter map[CityFilter]string) (*GetCit
 	}
 	serverUrl.RawQuery = queryString.Encode()
 
-	requestUrl := serverUrl.String()
+	reqUrl := serverUrl.String()
 
-	resp, err := http.Get(requestUrl)
+	res, err := http.Get(reqUrl)
 	if err != nil {
 		return nil, err
 	}
 
 	defer func() {
-		err = resp.Body.Close()
+		err = res.Body.Close()
 	}()
 	if err != nil {
 		return nil, err
 	}
 
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := ioutil.ReadAll(res.Body)
 	if err != nil {
 		return nil, err
 	}
 
-	var cities GetCitiesResponse
+	var cities GetCitiesRes
 	err = json.Unmarshal(body, &cities)
 	if err != nil {
 		return nil, err

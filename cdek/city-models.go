@@ -1,6 +1,6 @@
 package cdek
 
-type GetCitiesResponse []struct {
+type GetCitiesRes []struct {
 	CityUUID       string  `json:"cityUuid"`
 	CityName       string  `json:"cityName"`
 	CityCode       int     `json:"cityCode,string"`

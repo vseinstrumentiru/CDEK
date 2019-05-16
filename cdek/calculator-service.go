@@ -9,34 +9,34 @@ import (
 
 const calculatorUrl = "http://api.cdek.ru/calculator/calculate_price_by_json.php"
 
-func calculateDelivery(request GetCostRequest) (*GetCostResponse, error) {
-	requestByte, err := json.Marshal(request)
+func calculateDelivery(req GetCostReq) (*GetCostRes, error) {
+	reqByte, err := json.Marshal(req)
 	if err != nil {
 		return nil, err
 	}
 
-	resp, err := http.Post(calculatorUrl, jsonContentType, bytes.NewReader(requestByte))
+	res, err := http.Post(calculatorUrl, jsonContentType, bytes.NewReader(reqByte))
 	if err != nil {
 		return nil, err
 	}
 
 	defer func() {
-		err = resp.Body.Close()
+		err = res.Body.Close()
 	}()
 	if err != nil {
 		return nil, err
 	}
 
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := ioutil.ReadAll(res.Body)
 	if err != nil {
 		return nil, err
 	}
 
-	var getCostResponse GetCostResponse
-	err = json.Unmarshal(body, &getCostResponse)
+	var getCostRes GetCostRes
+	err = json.Unmarshal(body, &getCostRes)
 	if err != nil {
 		return nil, err
 	}
 
-	return &getCostResponse, nil
+	return &getCostRes, nil
 }

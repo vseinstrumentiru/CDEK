@@ -1,6 +1,6 @@
 package cdek
 
-type GetRegionsResponse []struct {
+type GetRegionsRes []struct {
 	RegionUUID     string `json:"regionUuid"`
 	RegionName     string `json:"regionName"`
 	Prefix         string `json:"prefix,omitempty"`

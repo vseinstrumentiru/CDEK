@@ -24,21 +24,21 @@ func getPvzList(clientConfig ClientConfig, filter map[PvzListFilter]string) (*Pv
 	}
 	serverUrl.RawQuery = queryString.Encode()
 
-	requestUrl := serverUrl.String()
+	reqUrl := serverUrl.String()
 
-	resp, err := http.Get(requestUrl)
+	res, err := http.Get(reqUrl)
 	if err != nil {
 		return nil, err
 	}
 
 	defer func() {
-		err = resp.Body.Close()
+		err = res.Body.Close()
 	}()
 	if err != nil {
 		return nil, err
 	}
 
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := ioutil.ReadAll(res.Body)
 	if err != nil {
 		return nil, err
 	}

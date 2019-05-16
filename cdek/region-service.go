@@ -10,7 +10,7 @@ import (
 
 const regionsUrl = "/v1/location/regions/json"
 
-func getRegions(clientConfig ClientConfig, filter map[RegionFilter]string) (*GetRegionsResponse, error) {
+func getRegions(clientConfig ClientConfig, filter map[RegionFilter]string) (*GetRegionsRes, error) {
 	serverUrl, err := url.Parse(clientConfig.XmlApiUrl)
 	if err != nil {
 		return nil, err
@@ -24,26 +24,26 @@ func getRegions(clientConfig ClientConfig, filter map[RegionFilter]string) (*Get
 	}
 	serverUrl.RawQuery = queryString.Encode()
 
-	requestUrl := serverUrl.String()
+	reqUrl := serverUrl.String()
 
-	resp, err := http.Get(requestUrl)
+	res, err := http.Get(reqUrl)
 	if err != nil {
 		return nil, err
 	}
 
 	defer func() {
-		err = resp.Body.Close()
+		err = res.Body.Close()
 	}()
 	if err != nil {
 		return nil, err
 	}
 
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := ioutil.ReadAll(res.Body)
 	if err != nil {
 		return nil, err
 	}
 
-	var regions GetRegionsResponse
+	var regions GetRegionsRes
 	err = json.Unmarshal(body, &regions)
 	if err != nil {
 		return nil, err
