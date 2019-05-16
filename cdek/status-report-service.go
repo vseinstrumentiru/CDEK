@@ -11,13 +11,14 @@ import (
 
 const statusReportUrl = "/status_report_h.php"
 
-func getStatusReport(clientConfig ClientConfig, req StatusReportReq) (*StatusReportRes, error) {
+func getStatusReport(clientConf ClientConf, req StatusReportReq) (*StatusReportRes, error) {
+	req.setAuth(clientConf.Auth)
 	reqByte, err := xml.Marshal(req)
 	if err != nil {
 		return nil, err
 	}
 
-	serverUrl, err := url.Parse(clientConfig.XmlApiUrl)
+	serverUrl, err := url.Parse(clientConf.XmlApiUrl)
 	if err != nil {
 		return nil, err
 	}

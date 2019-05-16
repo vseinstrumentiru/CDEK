@@ -16,8 +16,8 @@ func main() {
 	tryStatusReport()
 }
 
-func getClientConfig() *cdek.ClientConfig {
-	return &cdek.ClientConfig{
+func getClientConfig() *cdek.ClientConf {
+	return &cdek.ClientConf{
 		Auth: cdek.Auth{
 			Account: "f62dcb094cc91617def72d9c260b4483",
 			Secure:  "6bd3937dcebd15beb25278bc0657014c",
@@ -74,7 +74,6 @@ func tryPvzlist() {
 func tryCalculator() {
 	fmt.Println(client().CalculateDelivery(cdek.GetCostReq{
 		Version:        "1.0",
-		DateExecute:    time.Now().Format("2006-01-02"),
 		SenderCityId:   44,
 		ReceiverCityId: 414,
 		TariffId:       1,
@@ -95,8 +94,7 @@ func tryStatusReport() {
 		SetDateFirst(time.Now().AddDate(0, 0, -7)).
 		SetDateLast(time.Now())
 
-	StatusReportReq.SetAuth(getClientConfig().Auth).
-		SetShowHistory(true).
+	StatusReportReq.SetShowHistory(true).
 		SetShowReturnOrder(false).
 		SetChangePeriod(*changePeriod)
 

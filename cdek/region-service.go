@@ -10,7 +10,7 @@ import (
 
 const regionsUrl = "/v1/location/regions/json"
 
-func getRegions(clientConfig ClientConfig, filter map[RegionFilter]string) (*GetRegionsRes, error) {
+func getRegions(clientConfig ClientConf, filter map[RegionFilter]string) (*GetRegionsRes, error) {
 	serverUrl, err := url.Parse(clientConfig.XmlApiUrl)
 	if err != nil {
 		return nil, err

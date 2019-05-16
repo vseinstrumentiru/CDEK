@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-type ClientConfig struct {
+type ClientConf struct {
 	Auth      Auth
 	XmlApiUrl string
 }

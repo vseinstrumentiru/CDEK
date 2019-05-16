@@ -3,7 +3,7 @@ package cdek
 import "time"
 
 type StatusReportReqBuilder interface {
-	SetAuth(auth Auth) *StatusReportReq
+	setAuth(auth Auth) *StatusReportReq
 	SetShowHistory(showHistory bool) *StatusReportReq
 	SetShowReturnOrder(showReturnOrder bool) *StatusReportReq
 	SetShowReturnOrderHistory(showReturnOrderHistory bool) *StatusReportReq
@@ -18,12 +18,9 @@ func NewStatusReportReq() *StatusReportReq {
 	return statusReportReq
 }
 
-func (req *StatusReportReq) SetAuth(auth Auth) *StatusReportReq {
-	date, encodedSecure := auth.EncodedSecure()
-	account := auth.Account
-	req.StatusReport.Account = &account
-	req.StatusReport.Secure = &encodedSecure
-	req.StatusReport.Date = &date
+func (req *StatusReportReq) setAuth(auth Auth) *StatusReportReq {
+	req.StatusReport.Account = &auth.Account
+	*req.StatusReport.Date, *req.StatusReport.Secure = auth.EncodedSecure()
 
 	return req
 }

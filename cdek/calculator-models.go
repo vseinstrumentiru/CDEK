@@ -22,9 +22,9 @@ type ServiceRes struct {
 
 type GetCostReq struct {
 	Version        string       `json:"version"`
-	AuthLogin      string       `json:"authLogin,omitempty"`
-	Secure         string       `json:"secure,omitempty"`
-	DateExecute    string       `json:"dateExecute,omitempty"`
+	authLogin      string       `json:"authLogin,omitempty"`
+	secure         string       `json:"secure,omitempty"`
+	dateExecute    string       `json:"dateExecute,omitempty"`
 	SenderCityId   int          `json:"senderCityId"`
 	ReceiverCityId int          `json:"receiverCityId"`
 	TariffId       int          `json:"tariffId"`

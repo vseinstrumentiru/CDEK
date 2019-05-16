@@ -10,7 +10,7 @@ import (
 
 const citiesUrl = "v1/location/cities/json"
 
-func getCities(clientConfig ClientConfig, filter map[CityFilter]string) (*GetCitiesRes, error) {
+func getCities(clientConfig ClientConf, filter map[CityFilter]string) (*GetCitiesRes, error) {
 	serverUrl, err := url.Parse(clientConfig.XmlApiUrl)
 	if err != nil {
 		return nil, err

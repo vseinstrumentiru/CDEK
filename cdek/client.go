@@ -3,14 +3,14 @@ package cdek
 const jsonContentType = "application/json"
 const xmlContentType = "application/xml"
 
-func NewClient(clientConfig ClientConfig) Client {
+func NewClient(clientConfig ClientConf) Client {
 	return &client{
 		clientConfig: clientConfig,
 	}
 }
 
 type client struct {
-	clientConfig ClientConfig
+	clientConfig ClientConf
 }
 
 type Client interface {
@@ -29,7 +29,7 @@ func (cl client) GetPvzList(filter map[PvzListFilter]string) (*PvzList, error) {
 }
 
 func (cl client) CalculateDelivery(getCostReq GetCostReq) (*GetCostRes, error) {
-	return calculateDelivery(getCostReq)
+	return calculateDelivery(cl.clientConfig, getCostReq)
 }
 
 func (cl client) GetCities(filter map[CityFilter]string) (*GetCitiesRes, error) {
@@ -39,6 +39,11 @@ func (cl client) GetCities(filter map[CityFilter]string) (*GetCitiesRes, error) 
 func (cl client) GetRegions(filter map[RegionFilter]string) (*GetRegionsRes, error) {
 	return getRegions(cl.clientConfig, filter)
 }
+
+func (cl client) GetStatusReport(statusReportReq StatusReportReq) (*StatusReportRes, error) {
+	return getStatusReport(cl.clientConfig, statusReportReq)
+}
+
 
 // TODO
 
@@ -52,8 +57,4 @@ func (cl client) UpdateOrder() (*interface{}, error) {
 
 func (cl client) DeleteOrder() (*interface{}, error) {
 	return nil, nil
-}
-
-func (cl client) GetStatusReport(statusReportReq StatusReportReq) (*StatusReportRes, error) {
-	return getStatusReport(cl.clientConfig, statusReportReq)
 }
