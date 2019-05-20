@@ -2,15 +2,6 @@ package cdek
 
 import "time"
 
-type StatusReportReqBuilder interface {
-	setAuth(auth Auth) *StatusReportReq
-	SetShowHistory(showHistory bool) *StatusReportReq
-	SetShowReturnOrder(showReturnOrder bool) *StatusReportReq
-	SetShowReturnOrderHistory(showReturnOrderHistory bool) *StatusReportReq
-	SetChangePeriod(changePeriod ChangePeriod) *StatusReportReq
-	AddOrder(order StatusReportOrderReq) *StatusReportReq
-}
-
 func NewStatusReportReq() *StatusReportReq {
 	statusReportReq := new(StatusReportReq)
 	statusReportReq.StatusReport = new(StatusReportContentReq)
@@ -59,11 +50,6 @@ func NewChangePeriod() *ChangePeriod {
 	return new(ChangePeriod)
 }
 
-type ChangePeriodBuilder interface {
-	SetDateFirst(date time.Time) *ChangePeriod
-	SetDateLast(date time.Time) *ChangePeriod
-}
-
 func (changePeriod *ChangePeriod) SetDateFirst(date time.Time) *ChangePeriod {
 	dateFormatted := date.Format("2006-01-02")
 	changePeriod.DateFirst = &dateFormatted
@@ -79,12 +65,6 @@ func (changePeriod *ChangePeriod) SetDateLast(date time.Time) *ChangePeriod {
 
 func NewStatusReportOrderReq() *StatusReportOrderReq {
 	return new(StatusReportOrderReq)
-}
-
-type StatusReportOrderReqBuilder interface {
-	SetDispatchNumber(dispatchNumber int) *StatusReportOrderReq
-	SetNumber(number string) *StatusReportOrderReq
-	SetDate(date time.Time) *StatusReportOrderReq
 }
 
 func (req *StatusReportOrderReq) SetDispatchNumber(dispatchNumber int) *StatusReportOrderReq {

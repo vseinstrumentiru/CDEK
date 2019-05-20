@@ -11,9 +11,9 @@ var cdekClient cdek.Client
 func main() {
 	//tryPvzlist()
 	//tryCities()
-	//tryRegions()
+	tryRegions()
 	//tryCalculator()
-	tryStatusReport()
+	//tryStatusReport()
 }
 
 func getClientConfig() *cdek.ClientConf {
@@ -36,7 +36,7 @@ func client() cdek.Client {
 
 func tryRegions() {
 	filterBuilder := cdek.RegionFilterBuilder{}
-	filterBuilder.AddFilter(cdek.RegionFilterSize, "1")
+	filterBuilder.AddFilter(cdek.RegionFilterSize, "")
 
 	regions, err := client().GetRegions(filterBuilder.Filter())
 	if err != nil {

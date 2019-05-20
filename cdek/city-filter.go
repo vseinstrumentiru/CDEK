@@ -3,14 +3,29 @@ package cdek
 type CityFilter string
 
 const (
-	CityFilterRegionCodeExt  CityFilter = "regionCodeExt"  // Код региона
-	CityFilterRegionCode     CityFilter = "regionCode"     // Код региона в ИС СДЭК
-	CityFilterRegionFiasGuid CityFilter = "regionFiasGuid" // Код региона из ФИАС
-	CityFilterPage           CityFilter = "page"           // Номер страницы выборки результата.По умолчанию 0
-	CityFilterSize           CityFilter = "size"           // Ограничение выборки результата.По умолчанию 1000
-	CityFilterCountryCode    CityFilter = "countryCode"    // Код страны в формате ISO 3166-1 alpha-2
-	CityFilterCityName       CityFilter = "cityName"       // Название города
-	CityFilterPostcode       CityFilter = "postcode"       // Почтовый индекс
+	// Код региона
+	CityFilterRegionCodeExt CityFilter = "regionCodeExt"
+
+	// Код региона в ИС СДЭК
+	CityFilterRegionCode CityFilter = "regionCode"
+
+	// Код региона из ФИАС
+	CityFilterRegionFiasGuid CityFilter = "regionFiasGuid"
+
+	// Номер страницы выборки результата.По умолчанию 0
+	CityFilterPage CityFilter = "page"
+
+	// Ограничение выборки результата.По умолчанию 1000
+	CityFilterSize CityFilter = "size"
+
+	// Код страны в формате ISO 3166-1 alpha-2
+	CityFilterCountryCode CityFilter = "countryCode"
+
+	// Название города
+	CityFilterCityName CityFilter = "cityName"
+
+	// Почтовый индекс
+	CityFilterPostcode CityFilter = "postcode"
 )
 
 type CityFilterBuilder struct {

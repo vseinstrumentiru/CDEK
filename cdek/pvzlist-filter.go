@@ -3,24 +3,52 @@ package cdek
 type PvzListFilter string
 
 const (
-	PvzListFilterCityPostCode   PvzListFilter = "citypostcode"   // Почтовый индекс города, для которого необходим список ПВЗ
-	PvzListFilterCityId         PvzListFilter = "cityid"         // Код города по базе СДЭК
-	PvzListFilterType           PvzListFilter = "type"           // Тип пункта выдачи, по умолчанию «PVZ».
-	PvzListFilterCountryId      PvzListFilter = "countryid"      // Код страны по базе СДЭК
-	PvzListFilterCountryIso     PvzListFilter = "countryiso"     // Код страны в формате ISO_3166-1_alpha-2
-	PvzListFilterRegionId       PvzListFilter = "regionid"       // Код региона по базе СДЭК
-	PvzListFilterHaveCashless   PvzListFilter = "havecashless"   // Наличие терминала оплаты («1», «true» - есть; «0», «false» - нет.)
-	PvzListFilterAllowedCod     PvzListFilter = "allowedcod"     // Разрешен наложенный платеж («1», «true» - да; «0», «false» - нет.)
-	PvzListFilterIsDressingRoom PvzListFilter = "isdressingroom" // Наличие примерочной («1», «true» - есть; «0», «false» - нет.)
-	PvzListFilterWeightMax      PvzListFilter = "weightmax"      // Максимальный вес, который может принять ПВЗ
-	PvzListFilterLang           PvzListFilter = "lang"           // Локализация ПВЗ. По-умолчанию "rus"
-	PvzListFilterTakeOnly       PvzListFilter = "takeonly"       // Является ли ПВЗ только пунктом выдачи («1», «true» - да; «0», «false» - нет.)
+	// Почтовый индекс города, для которого необходим список ПВЗ
+	PvzListFilterCityPostCode PvzListFilter = "citypostcode"
+
+	// Код города по базе СДЭК
+	PvzListFilterCityId PvzListFilter = "cityid"
+
+	// Тип пункта выдачи, по умолчанию «PVZ».
+	PvzListFilterType PvzListFilter = "type"
+
+	// Код страны по базе СДЭК
+	PvzListFilterCountryId PvzListFilter = "countryid"
+
+	// Код страны в формате ISO_3166-1_alpha-2
+	PvzListFilterCountryIso PvzListFilter = "countryiso"
+
+	// Код региона по базе СДЭК
+	PvzListFilterRegionId PvzListFilter = "regionid"
+
+	// Наличие терминала оплаты («1», «true» - есть; «0», «false» - нет.)
+	PvzListFilterHaveCashless PvzListFilter = "havecashless"
+
+	// Разрешен наложенный платеж («1», «true» - да; «0», «false» - нет.)
+	PvzListFilterAllowedCod PvzListFilter = "allowedcod"
+
+	// Наличие примерочной («1», «true» - есть; «0», «false» - нет.)
+	PvzListFilterIsDressingRoom PvzListFilter = "isdressingroom"
+
+	// Максимальный вес, который может принять ПВЗ
+	PvzListFilterWeightMax PvzListFilter = "weightmax"
+
+	// Локализация ПВЗ. По-умолчанию "rus"
+	PvzListFilterLang PvzListFilter = "lang"
+
+	// Является ли ПВЗ только пунктом выдачи («1», «true» - да; «0», «false» - нет.)
+	PvzListFilterTakeOnly PvzListFilter = "takeonly"
 )
 
 const (
-	TypePvz      string = "PVZ"      // только склады СДЭК
-	TypePostomat string = "POSTOMAT" // постоматы партнёра
-	TypeAll      string = "ALL"      // все ПВЗ не зависимо от их типа
+	// только склады СДЭК
+	TypePvz string = "PVZ"
+
+	// постоматы партнёра
+	TypePostomat string = "POSTOMAT"
+
+	// все ПВЗ не зависимо от их типа
+	TypeAll string = "ALL"
 )
 
 type PvzListFilterBuilder struct {
