@@ -11,7 +11,10 @@ func NewStatusReportReq() *StatusReportReq {
 
 func (req *StatusReportReq) setAuth(auth Auth) *StatusReportReq {
 	req.StatusReport.Account = &auth.Account
-	*req.StatusReport.Date, *req.StatusReport.Secure = auth.EncodedSecure()
+
+	date, sec := auth.EncodedSecure()
+	req.StatusReport.Date = &date
+	req.StatusReport.Secure = &sec
 
 	return req
 }

@@ -2,6 +2,7 @@ package cdek
 
 const jsonContentType = "application/json"
 const xmlContentType = "application/xml"
+const urlFormEncoded = "application/x-www-form-urlencoded"
 
 func NewClient(clientConfig ClientConf) Client {
 	return &client{
@@ -14,7 +15,7 @@ type client struct {
 }
 
 type Client interface {
-	RegisterOrder() (*interface{}, error)
+	RegisterOrder(req RegisterOrderReq) (*RegisterOrderRes, error)
 	UpdateOrder() (*interface{}, error)
 	DeleteOrder() (*interface{}, error)
 	GetPvzList(filter map[PvzListFilter]string) (*PvzList, error)
@@ -44,12 +45,11 @@ func (cl client) GetStatusReport(statusReportReq StatusReportReq) (*StatusReport
 	return getStatusReport(cl.clientConfig, statusReportReq)
 }
 
+func (cl client) RegisterOrder(req RegisterOrderReq) (*RegisterOrderRes, error) {
+	return registerOrder(cl.clientConfig, req)
+}
 
 // TODO
-
-func (cl client) RegisterOrder() (*interface{}, error) {
-	return nil, nil
-}
 
 func (cl client) UpdateOrder() (*interface{}, error) {
 	return nil, nil

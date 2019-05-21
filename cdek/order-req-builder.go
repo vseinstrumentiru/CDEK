@@ -2,45 +2,48 @@ package cdek
 
 import "time"
 
-func NewDeliveryReqContent() *DeliveryReqContent {
-	return new(DeliveryReqContent)
+func NewDeliveryRequest() *RegisterOrderReq {
+	return new(RegisterOrderReq)
 }
 
-func (deliveryReqContent *DeliveryReqContent) SetNumber(number string) *DeliveryReqContent {
-	deliveryReqContent.Number = &number
+func (registerOrderReq *RegisterOrderReq) setAuth(auth Auth) *RegisterOrderReq {
+	registerOrderReq.Account = &auth.Account
 
-	return deliveryReqContent
+	date, sec := auth.EncodedSecure()
+	registerOrderReq.Date = &date
+	registerOrderReq.Secure = &sec
+
+	return registerOrderReq
 }
 
-func (deliveryReqContent *DeliveryReqContent) SetAuth(auth Auth) *DeliveryReqContent {
-	deliveryReqContent.Account = &auth.Account
-	*deliveryReqContent.Date, *deliveryReqContent.Secure = auth.EncodedSecure()
+func (registerOrderReq *RegisterOrderReq) SetNumber(number string) *RegisterOrderReq {
+	registerOrderReq.Number = &number
 
-	return deliveryReqContent
+	return registerOrderReq
 }
 
-func (deliveryReqContent *DeliveryReqContent) SetOrderCount(orderCount string) *DeliveryReqContent {
-	deliveryReqContent.OrderCount = &orderCount
+func (registerOrderReq *RegisterOrderReq) SetOrderCount(orderCount string) *RegisterOrderReq {
+	registerOrderReq.OrderCount = &orderCount
 
-	return deliveryReqContent
+	return registerOrderReq
 }
 
-func (deliveryReqContent *DeliveryReqContent) SetCurrency(currency string) *DeliveryReqContent {
-	deliveryReqContent.Currency = &currency
+func (registerOrderReq *RegisterOrderReq) SetCurrency(currency string) *RegisterOrderReq {
+	registerOrderReq.Currency = &currency
 
-	return deliveryReqContent
+	return registerOrderReq
 }
 
-func (deliveryReqContent *DeliveryReqContent) SetOrder(order OrderReq) *DeliveryReqContent {
-	deliveryReqContent.Order = &order
+func (registerOrderReq *RegisterOrderReq) SetOrder(order OrderReq) *RegisterOrderReq {
+	registerOrderReq.Order = &order
 
-	return deliveryReqContent
+	return registerOrderReq
 }
 
-func (deliveryReqContent *DeliveryReqContent) SetCallCourier(callCourier CallCourier) *DeliveryReqContent {
-	deliveryReqContent.CallCourier = &callCourier
+func (registerOrderReq *RegisterOrderReq) SetCallCourier(callCourier CallCourier) *RegisterOrderReq {
+	registerOrderReq.CallCourier = &callCourier
 
-	return deliveryReqContent
+	return registerOrderReq
 }
 
 func NewOrderReq() *OrderReq {
@@ -576,90 +579,90 @@ func NewCallCourier() *CallCourier {
 	return new(CallCourier)
 }
 
-func (callCourier *CallCourier) SetCall(call CourierCall) *CallCourier {
+func (callCourier *CallCourier) SetCall(call CourierCallReq) *CallCourier {
 	callCourier.Call = &call
 
 	return callCourier
 }
 
-func NewCourierCall() *CourierCall {
-	return new(CourierCall)
+func NewCourierCall() *CourierCallReq {
+	return new(CourierCallReq)
 }
 
-func (call *CourierCall) SetDate(date time.Time) *CourierCall {
+func (call *CourierCallReq) SetDate(date time.Time) *CourierCallReq {
 	dateFmt := date.Format("2006-01-02")
 	call.Date = &dateFmt
 
 	return call
 }
 
-func (call *CourierCall) SetTimeBeg(timeBeg string) *CourierCall {
+func (call *CourierCallReq) SetTimeBeg(timeBeg string) *CourierCallReq {
 	call.TimeBeg = &timeBeg
 
 	return call
 }
 
-func (call *CourierCall) SetTimeEnd(end string) *CourierCall {
+func (call *CourierCallReq) SetTimeEnd(end string) *CourierCallReq {
 	call.TimeEnd = &end
 
 	return call
 }
 
-func (call *CourierCall) SetLunchBeg(lunchBeg string) *CourierCall {
+func (call *CourierCallReq) SetLunchBeg(lunchBeg string) *CourierCallReq {
 	call.LunchBeg = &lunchBeg
 
 	return call
 }
 
-func (call *CourierCall) SetLunchEnd(lunchEnd string) *CourierCall {
+func (call *CourierCallReq) SetLunchEnd(lunchEnd string) *CourierCallReq {
 	call.LunchEnd = &lunchEnd
 
 	return call
 }
 
-func (call *CourierCall) SetSendCityCode(sendCityCode int) *CourierCall {
+func (call *CourierCallReq) SetSendCityCode(sendCityCode int) *CourierCallReq {
 	call.SendCityCode = &sendCityCode
 
 	return call
 }
 
-func (call *CourierCall) SetSendCityPostCode(sendCityPostCode string) *CourierCall {
+func (call *CourierCallReq) SetSendCityPostCode(sendCityPostCode string) *CourierCallReq {
 	call.SendCityPostCode = &sendCityPostCode
 
 	return call
 }
 
-func (call *CourierCall) SetSendCountryCode(sendCountryCode string) *CourierCall {
+func (call *CourierCallReq) SetSendCountryCode(sendCountryCode string) *CourierCallReq {
 	call.SendCountryCode = &sendCountryCode
 
 	return call
 }
 
-func (call *CourierCall) SetSendCityName(sendCityName string) *CourierCall {
+func (call *CourierCallReq) SetSendCityName(sendCityName string) *CourierCallReq {
 	call.SendCityName = &sendCityName
 
 	return call
 }
 
-func (call *CourierCall) SetSendPhone(sendPhone string) *CourierCall {
+func (call *CourierCallReq) SetSendPhone(sendPhone string) *CourierCallReq {
 	call.SendPhone = &sendPhone
 
 	return call
 }
 
-func (call *CourierCall) SetSenderName(senderName string) *CourierCall {
+func (call *CourierCallReq) SetSenderName(senderName string) *CourierCallReq {
 	call.SenderName = &senderName
 
 	return call
 }
 
-func (call *CourierCall) SetComment(comment string) *CourierCall {
+func (call *CourierCallReq) SetComment(comment string) *CourierCallReq {
 	call.Comment = &comment
 
 	return call
 }
 
-func (call *CourierCall) SetSendAddress(sendAddress Address) *CourierCall {
+func (call *CourierCallReq) SetSendAddress(sendAddress Address) *CourierCallReq {
 	call.SendAddress = &sendAddress
 
 	return call

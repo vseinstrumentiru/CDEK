@@ -1,6 +1,9 @@
 package cdek
 
-type DeliveryReqContent struct {
+import "encoding/xml"
+
+type RegisterOrderReq struct {
+	XMLName     xml.Name     `xml:"DeliveryRequest"`
 	Number      *string      `xml:"Number,attr"`
 	Date        *string      `xml:"Date,attr"`
 	Account     *string      `xml:"Account,attr"`
@@ -125,10 +128,10 @@ type ScheduleAttempt struct {
 }
 
 type CallCourier struct {
-	Call *CourierCall `xml:"Call"`
+	Call *CourierCallReq `xml:"Call"`
 }
 
-type CourierCall struct {
+type CourierCallReq struct {
 	Date             *string  `xml:"Date,attr"`
 	TimeBeg          *string  `xml:"TimeBeg,attr"`
 	TimeEnd          *string  `xml:"TimeEnd,attr"`
@@ -142,4 +145,31 @@ type CourierCall struct {
 	SenderName       *string  `xml:"SenderName,attr"`
 	Comment          *string  `xml:"Comment,attr"`
 	SendAddress      *Address `xml:"SendAddress"`
+}
+
+type RegisterOrderRes struct {
+	ErrorCode       *string               `xml:"ErrorCode,attr,omitempty"`
+	Msg             *string               `xml:"Msg,attr,omitempty"`
+	DeliveryRequest []*DeliveryRequestRes `xml:"DeliveryRequest,omitempty"`
+	Order           []*OrderRes           `xml:"Order,omitempty"`
+	Call            *CourierCallRes       `xml:"Call,omitempty"`
+}
+
+type DeliveryRequestRes struct {
+	Number    string `xml:"Number,attr"`
+	ErrorCode string `xml:"ErrorCode,attr"`
+	Msg       string `xml:"Msg,attr"`
+}
+
+type OrderRes struct {
+	DispatchNumber *int    `xml:"DispatchNumber,attr"`
+	Number         *string `xml:"Number,attr"`
+	ErrorCode      *string `xml:"ErrorCode,attr,omitempty"`
+	Msg            *string `xml:"Msg,attr"`
+}
+
+type CourierCallRes struct {
+	Number    *string `xml:"Number,attr"`
+	ErrorCode *string `xml:"ErrorCode,attr,omitempty"`
+	Msg       *string `xml:"Msg,attr"`
 }

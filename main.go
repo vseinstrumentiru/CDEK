@@ -11,9 +11,10 @@ var cdekClient cdek.Client
 func main() {
 	//tryPvzlist()
 	//tryCities()
-	tryRegions()
+	//tryRegions()
 	//tryCalculator()
 	//tryStatusReport()
+	tryRegisterOrder()
 }
 
 func getClientConfig() *cdek.ClientConf {
@@ -67,7 +68,7 @@ func tryPvzlist() {
 	pvzlist, _ := client().GetPvzList(filterBuilder.Filter())
 
 	for _, pvz := range pvzlist.Pvz {
-		fmt.Println(pvz.City, pvz.Name, pvz.Site)
+		fmt.Println(pvz.City, pvz.Name, pvz.Site, pvz.Code)
 	}
 }
 
@@ -104,4 +105,33 @@ func tryStatusReport() {
 	StatusReportReq.AddOrder(*order)
 
 	fmt.Println(client().GetStatusReport(*StatusReportReq))
+}
+
+func tryRegisterOrder() {
+	addr := cdek.NewAddress().
+		SetPvzCode("MSK117")
+	pack := cdek.NewOrderPackage().
+		SetWeight(321).
+		SetNumber("123-321-123").
+		SetBarCode("123-321-123")
+	order := cdek.NewOrderReq().
+		SetNumber("123-321-123").
+		AddPackage(*pack).
+		SetSendCityCode(441).
+		SetRecCityCode(44).
+		SetTariffTypeCode(123).
+		SetPhone("12457655435346").
+		SetRecipientName("Yasya").
+		SetAddress(*addr)
+	req := cdek.NewDeliveryRequest().
+		SetNumber("123-321-123").
+		SetOrderCount("1").
+		SetOrder(*order)
+
+	res, e := client().RegisterOrder(*req)
+	fmt.Printf("%+v%+v\n", res, e)
+	fmt.Println("_________________________________________________________________")
+	for _, o := range res.Order {
+		fmt.Println(*o.Msg)
+	}
 }
