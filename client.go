@@ -16,8 +16,8 @@ type client struct {
 
 type Client interface {
 	RegisterOrder(req RegisterOrderReq) (*RegisterOrderRes, error)
-	UpdateOrder() (*interface{}, error)
-	DeleteOrder() (*interface{}, error)
+	UpdateOrder(req UpdateOrderReq) (*UpdateOrderRes, error)
+	DeleteOrder(req DeleteOrderReq) (*DeleteOrderRes, error)
 	GetPvzList(filter map[PvzListFilter]string) (*PvzList, error)
 	GetRegions(filter map[RegionFilter]string) (*GetRegionsRes, error)
 	GetCities(filter map[CityFilter]string) (*GetCitiesRes, error)
@@ -49,12 +49,10 @@ func (cl client) RegisterOrder(req RegisterOrderReq) (*RegisterOrderRes, error) 
 	return registerOrder(cl.clientConfig, req)
 }
 
-// TODO
-
-func (cl client) UpdateOrder() (*interface{}, error) {
-	return nil, nil
+func (cl client) UpdateOrder(req UpdateOrderReq) (*UpdateOrderRes, error) {
+	return updateOrder(cl.clientConfig, req)
 }
 
-func (cl client) DeleteOrder() (*interface{}, error) {
-	return nil, nil
+func (cl client) DeleteOrder(req DeleteOrderReq) (*DeleteOrderRes, error) {
+	return deleteOrder(cl.clientConfig, req)
 }

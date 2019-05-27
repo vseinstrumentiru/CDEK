@@ -10,8 +10,8 @@ import (
 const calculatorUrl = "http://api.cdek.ru/calculator/calculate_price_by_json.php"
 
 func calculateDelivery(clientConf ClientConf, req GetCostReq) (*GetCostRes, error) {
-	req.authLogin = clientConf.Auth.Account
-	req.dateExecute, req.secure = clientConf.Auth.EncodedSecure()
+	req.AuthLogin = clientConf.Auth.Account
+	req.DateExecute, req.Secure = clientConf.Auth.EncodedSecure()
 	reqByte, err := json.Marshal(req)
 	if err != nil {
 		return nil, err

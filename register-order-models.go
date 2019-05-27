@@ -156,9 +156,9 @@ type RegisterOrderRes struct {
 }
 
 type DeliveryRequestRes struct {
-	Number    string `xml:"Number,attr"`
-	ErrorCode string `xml:"ErrorCode,attr"`
-	Msg       string `xml:"Msg,attr"`
+	Number    *string `xml:"Number,attr"`
+	ErrorCode *string `xml:"ErrorCode,attr"`
+	Msg       *string `xml:"Msg,attr"`
 }
 
 type OrderRes struct {

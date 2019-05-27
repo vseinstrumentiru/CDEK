@@ -2,8 +2,6 @@ package cdek
 
 import (
 	"encoding/xml"
-	"errors"
-	"fmt"
 	"io/ioutil"
 	"net/http"
 	"net/url"
@@ -11,9 +9,9 @@ import (
 	"strings"
 )
 
-const registerOrderUrl = "new_orders.php"
+const updateOrderUrl = "update"
 
-func registerOrder(clientConf ClientConf, req RegisterOrderReq) (*RegisterOrderRes, error) {
+func updateOrder(clientConf ClientConf, req UpdateOrderReq) (*UpdateOrderRes, error) {
 	req.setAuth(clientConf.Auth)
 	reqByte, err := xml.Marshal(req)
 
@@ -29,7 +27,7 @@ func registerOrder(clientConf ClientConf, req RegisterOrderReq) (*RegisterOrderR
 		return nil, err
 	}
 
-	serverUrl.Path = path.Join(serverUrl.Path, registerOrderUrl)
+	serverUrl.Path = path.Join(serverUrl.Path, updateOrderUrl)
 	reqUrl := serverUrl.String()
 
 	res, err := http.Post(reqUrl, urlFormEncoded, strings.NewReader(data.Encode()))
@@ -49,17 +47,11 @@ func registerOrder(clientConf ClientConf, req RegisterOrderReq) (*RegisterOrderR
 		return nil, err
 	}
 
-	var registerOrderRes RegisterOrderRes
-	err = xml.Unmarshal(body, &registerOrderRes)
+	var updateOrderRes UpdateOrderRes
+	err = xml.Unmarshal(body, &updateOrderRes)
 	if err != nil {
 		return nil, err
 	}
 
-	fmt.Printf("%+v\n", string(body))
-
-	if registerOrderRes.ErrorCode != nil {
-		return nil, errors.New(*registerOrderRes.Msg)
-	}
-
-	return &registerOrderRes, nil
+	return &updateOrderRes, nil
 }
