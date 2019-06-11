@@ -28,7 +28,7 @@ type UpdateOrder struct {
 	Package                  *OrderPackage             `xml:"Package"`
 }
 
-type UpdateOrderRes struct {
-	XMLName xml.Name    `xml:"Response"`
-	Order   []*OrderRes `xml:"Order"`
+type UpdateOrderResp struct {
+	XMLName xml.Name     `xml:"Response"`
+	Order   []*OrderResp `xml:"Order"`
 }

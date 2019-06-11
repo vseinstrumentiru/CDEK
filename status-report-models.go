@@ -4,10 +4,10 @@ type StatusReportReq struct {
 	StatusReport *StatusReportContentReq `xml:"StatusReport"`
 }
 
-type StatusReportRes struct {
-	StatusReport *StatusReportContentForRes `xml:"StatusReport"`
-	Order        []*StatusReportOrderRes    `xml:"Order"`
-	ReturnOrder  []*ReturnOrder             `xml:"ReturnOrder,omitempty"`
+type StatusReportResp struct {
+	StatusReport *StatusReportContentForResp `xml:"StatusReport"`
+	Order        []*StatusReportOrderResp    `xml:"Order"`
+	ReturnOrder  []*ReturnOrder              `xml:"ReturnOrder,omitempty"`
 }
 
 type StatusReportContentReq struct {
@@ -32,12 +32,12 @@ type StatusReportOrderReq struct {
 	Date           *string `xml:"Date,attr"`
 }
 
-type StatusReportContentForRes struct {
+type StatusReportContentForResp struct {
 	DateFirst *string `xml:"DateFirst,attr"`
 	DateLast  *string `xml:"DateLast,attr"`
 }
 
-type StatusReportOrderRes struct {
+type StatusReportOrderResp struct {
 	ActNumber            *string      `xml:"ActNumber,attr"`
 	Number               *string      `xml:"Number,attr"`
 	DispatchNumber       *string      `xml:"DispatchNumber,attr"`

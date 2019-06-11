@@ -9,7 +9,7 @@ import (
 
 const calculatorUrl = "http://api.cdek.ru/calculator/calculate_price_by_json.php"
 
-func calculateDelivery(clientConf ClientConf, req GetCostReq) (*GetCostRes, error) {
+func calculateDelivery(clientConf ClientConf, req GetCostReq) (*GetCostResp, error) {
 	req.AuthLogin = clientConf.Auth.Account
 	req.DateExecute, req.Secure = clientConf.Auth.EncodedSecure()
 	reqByte, err := json.Marshal(req)
@@ -17,28 +17,28 @@ func calculateDelivery(clientConf ClientConf, req GetCostReq) (*GetCostRes, erro
 		return nil, err
 	}
 
-	res, err := http.Post(calculatorUrl, jsonContentType, bytes.NewReader(reqByte))
+	resp, err := http.Post(calculatorUrl, jsonContentType, bytes.NewReader(reqByte))
 	if err != nil {
 		return nil, err
 	}
 
 	defer func() {
-		err = res.Body.Close()
+		err = resp.Body.Close()
 	}()
 	if err != nil {
 		return nil, err
 	}
 
-	body, err := ioutil.ReadAll(res.Body)
+	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return nil, err
 	}
 
-	var getCostRes GetCostRes
-	err = json.Unmarshal(body, &getCostRes)
+	var getCostResp GetCostResp
+	err = json.Unmarshal(body, &getCostResp)
 	if err != nil {
 		return nil, err
 	}
 
-	return &getCostRes, nil
+	return &getCostResp, nil
 }

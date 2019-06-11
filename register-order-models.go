@@ -147,28 +147,28 @@ type CourierCallReq struct {
 	SendAddress      *Address `xml:"SendAddress"`
 }
 
-type RegisterOrderRes struct {
-	ErrorCode       *string               `xml:"ErrorCode,attr,omitempty"`
-	Msg             *string               `xml:"Msg,attr,omitempty"`
-	DeliveryRequest []*DeliveryRequestRes `xml:"DeliveryRequest,omitempty"`
-	Order           []*OrderRes           `xml:"Order,omitempty"`
-	Call            *CourierCallRes       `xml:"Call,omitempty"`
+type RegisterOrderResp struct {
+	ErrorCode       *string                `xml:"ErrorCode,attr,omitempty"`
+	Msg             *string                `xml:"Msg,attr,omitempty"`
+	DeliveryRequest []*DeliveryRequestResp `xml:"DeliveryRequest,omitempty"`
+	Order           []*OrderResp           `xml:"Order,omitempty"`
+	Call            *CourierCallResp       `xml:"Call,omitempty"`
 }
 
-type DeliveryRequestRes struct {
+type DeliveryRequestResp struct {
 	Number    *string `xml:"Number,attr"`
 	ErrorCode *string `xml:"ErrorCode,attr"`
 	Msg       *string `xml:"Msg,attr"`
 }
 
-type OrderRes struct {
+type OrderResp struct {
 	DispatchNumber *int    `xml:"DispatchNumber,attr"`
 	Number         *string `xml:"Number,attr"`
 	ErrorCode      *string `xml:"ErrorCode,attr,omitempty"`
 	Msg            *string `xml:"Msg,attr"`
 }
 
-type CourierCallRes struct {
+type CourierCallResp struct {
 	Number    *string `xml:"Number,attr"`
 	ErrorCode *string `xml:"ErrorCode,attr,omitempty"`
 	Msg       *string `xml:"Msg,attr"`

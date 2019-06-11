@@ -15,44 +15,44 @@ type client struct {
 }
 
 type Client interface {
-	RegisterOrder(req RegisterOrderReq) (*RegisterOrderRes, error)
-	UpdateOrder(req UpdateOrderReq) (*UpdateOrderRes, error)
-	DeleteOrder(req DeleteOrderReq) (*DeleteOrderRes, error)
+	RegisterOrder(req RegisterOrderReq) (*RegisterOrderResp, error)
+	UpdateOrder(req UpdateOrderReq) (*UpdateOrderResp, error)
+	DeleteOrder(req DeleteOrderReq) (*DeleteOrderResp, error)
 	GetPvzList(filter map[PvzListFilter]string) (*PvzList, error)
-	GetRegions(filter map[RegionFilter]string) (*GetRegionsRes, error)
-	GetCities(filter map[CityFilter]string) (*GetCitiesRes, error)
-	CalculateDelivery(getCostReq GetCostReq) (*GetCostRes, error)
-	GetStatusReport(statusReportReq StatusReportReq) (*StatusReportRes, error)
+	GetRegions(filter map[RegionFilter]string) (*GetRegionsResp, error)
+	GetCities(filter map[CityFilter]string) (*GetCitiesResp, error)
+	CalculateDelivery(getCostReq GetCostReq) (*GetCostResp, error)
+	GetStatusReport(statusReportReq StatusReportReq) (*StatusReportResp, error)
 }
 
 func (cl client) GetPvzList(filter map[PvzListFilter]string) (*PvzList, error) {
 	return getPvzList(cl.clientConfig, filter)
 }
 
-func (cl client) CalculateDelivery(getCostReq GetCostReq) (*GetCostRes, error) {
+func (cl client) CalculateDelivery(getCostReq GetCostReq) (*GetCostResp, error) {
 	return calculateDelivery(cl.clientConfig, getCostReq)
 }
 
-func (cl client) GetCities(filter map[CityFilter]string) (*GetCitiesRes, error) {
+func (cl client) GetCities(filter map[CityFilter]string) (*GetCitiesResp, error) {
 	return getCities(cl.clientConfig, filter)
 }
 
-func (cl client) GetRegions(filter map[RegionFilter]string) (*GetRegionsRes, error) {
+func (cl client) GetRegions(filter map[RegionFilter]string) (*GetRegionsResp, error) {
 	return getRegions(cl.clientConfig, filter)
 }
 
-func (cl client) GetStatusReport(statusReportReq StatusReportReq) (*StatusReportRes, error) {
+func (cl client) GetStatusReport(statusReportReq StatusReportReq) (*StatusReportResp, error) {
 	return getStatusReport(cl.clientConfig, statusReportReq)
 }
 
-func (cl client) RegisterOrder(req RegisterOrderReq) (*RegisterOrderRes, error) {
+func (cl client) RegisterOrder(req RegisterOrderReq) (*RegisterOrderResp, error) {
 	return registerOrder(cl.clientConfig, req)
 }
 
-func (cl client) UpdateOrder(req UpdateOrderReq) (*UpdateOrderRes, error) {
+func (cl client) UpdateOrder(req UpdateOrderReq) (*UpdateOrderResp, error) {
 	return updateOrder(cl.clientConfig, req)
 }
 
-func (cl client) DeleteOrder(req DeleteOrderReq) (*DeleteOrderRes, error) {
+func (cl client) DeleteOrder(req DeleteOrderReq) (*DeleteOrderResp, error) {
 	return deleteOrder(cl.clientConfig, req)
 }

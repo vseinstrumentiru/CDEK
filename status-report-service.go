@@ -11,7 +11,7 @@ import (
 
 const statusReportUrl = "/status_report_h.php"
 
-func getStatusReport(clientConf ClientConf, req StatusReportReq) (*StatusReportRes, error) {
+func getStatusReport(clientConf ClientConf, req StatusReportReq) (*StatusReportResp, error) {
 	req.setAuth(clientConf.Auth)
 	reqByte, err := xml.Marshal(req)
 	if err != nil {
@@ -26,28 +26,28 @@ func getStatusReport(clientConf ClientConf, req StatusReportReq) (*StatusReportR
 	serverUrl.Path = path.Join(serverUrl.Path, statusReportUrl)
 	reqUrl := serverUrl.String()
 
-	res, err := http.Post(reqUrl, xmlContentType, bytes.NewReader(reqByte))
+	resp, err := http.Post(reqUrl, xmlContentType, bytes.NewReader(reqByte))
 	if err != nil {
 		return nil, err
 	}
 
 	defer func() {
-		err = res.Body.Close()
+		err = resp.Body.Close()
 	}()
 	if err != nil {
 		return nil, err
 	}
 
-	body, err := ioutil.ReadAll(res.Body)
+	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return nil, err
 	}
 
-	var statusReportRes StatusReportRes
-	err = xml.Unmarshal(body, &statusReportRes)
+	var statusReportResp StatusReportResp
+	err = xml.Unmarshal(body, &statusReportResp)
 	if err != nil {
 		return nil, err
 	}
 
-	return &statusReportRes, nil
+	return &statusReportResp, nil
 }

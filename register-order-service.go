@@ -12,7 +12,7 @@ import (
 
 const registerOrderUrl = "new_orders.php"
 
-func registerOrder(clientConf ClientConf, req RegisterOrderReq) (*RegisterOrderRes, error) {
+func registerOrder(clientConf ClientConf, req RegisterOrderReq) (*RegisterOrderResp, error) {
 	req.setAuth(clientConf.Auth)
 	reqByte, err := xml.Marshal(req)
 
@@ -31,32 +31,32 @@ func registerOrder(clientConf ClientConf, req RegisterOrderReq) (*RegisterOrderR
 	serverUrl.Path = path.Join(serverUrl.Path, registerOrderUrl)
 	reqUrl := serverUrl.String()
 
-	res, err := http.Post(reqUrl, urlFormEncoded, strings.NewReader(data.Encode()))
+	resp, err := http.Post(reqUrl, urlFormEncoded, strings.NewReader(data.Encode()))
 	if err != nil {
 		return nil, err
 	}
 
 	defer func() {
-		err = res.Body.Close()
+		err = resp.Body.Close()
 	}()
 	if err != nil {
 		return nil, err
 	}
 
-	body, err := ioutil.ReadAll(res.Body)
+	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return nil, err
 	}
 
-	var registerOrderRes RegisterOrderRes
-	err = xml.Unmarshal(body, &registerOrderRes)
+	var registerOrderResp RegisterOrderResp
+	err = xml.Unmarshal(body, &registerOrderResp)
 	if err != nil {
 		return nil, err
 	}
 
-	if registerOrderRes.ErrorCode != nil {
-		return nil, errors.New(*registerOrderRes.Msg)
+	if registerOrderResp.ErrorCode != nil {
+		return nil, errors.New(*registerOrderResp.Msg)
 	}
 
-	return &registerOrderRes, nil
+	return &registerOrderResp, nil
 }

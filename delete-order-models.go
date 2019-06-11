@@ -17,7 +17,7 @@ type DeleteOrder struct {
 	DispatchNumber *int    `xml:"DispatchNumber,attr"`
 }
 
-type DeleteOrderRes struct {
-	XMLName xml.Name    `xml:"Response"`
-	Order   []*OrderRes `xml:"Order"`
+type DeleteOrderResp struct {
+	XMLName xml.Name     `xml:"Response"`
+	Order   []*OrderResp `xml:"Order"`
 }

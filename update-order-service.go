@@ -11,7 +11,7 @@ import (
 
 const updateOrderUrl = "update"
 
-func updateOrder(clientConf ClientConf, req UpdateOrderReq) (*UpdateOrderRes, error) {
+func updateOrder(clientConf ClientConf, req UpdateOrderReq) (*UpdateOrderResp, error) {
 	req.setAuth(clientConf.Auth)
 	reqByte, err := xml.Marshal(req)
 
@@ -30,28 +30,28 @@ func updateOrder(clientConf ClientConf, req UpdateOrderReq) (*UpdateOrderRes, er
 	serverUrl.Path = path.Join(serverUrl.Path, updateOrderUrl)
 	reqUrl := serverUrl.String()
 
-	res, err := http.Post(reqUrl, urlFormEncoded, strings.NewReader(data.Encode()))
+	resp, err := http.Post(reqUrl, urlFormEncoded, strings.NewReader(data.Encode()))
 	if err != nil {
 		return nil, err
 	}
 
 	defer func() {
-		err = res.Body.Close()
+		err = resp.Body.Close()
 	}()
 	if err != nil {
 		return nil, err
 	}
 
-	body, err := ioutil.ReadAll(res.Body)
+	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return nil, err
 	}
 
-	var updateOrderRes UpdateOrderRes
-	err = xml.Unmarshal(body, &updateOrderRes)
+	var updateOrderResp UpdateOrderResp
+	err = xml.Unmarshal(body, &updateOrderResp)
 	if err != nil {
 		return nil, err
 	}
 
-	return &updateOrderRes, nil
+	return &updateOrderResp, nil
 }

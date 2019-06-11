@@ -1,6 +1,6 @@
 package cdek
 
-type GetCitiesRes []City
+type GetCitiesResp []City
 
 type City struct {
 	CityUUID       *string  `json:"cityUuid"`
