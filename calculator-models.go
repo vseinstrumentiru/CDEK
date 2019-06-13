@@ -35,7 +35,7 @@ type GetCostReq struct {
 type GetCostResp struct {
 	Error  []ErrorResp `json:"error,omitempty"`
 	Result struct {
-		Price             string        `json:"price"`
+		Price             float64       `json:"price"`
 		DeliveryPeriodMin int           `json:"deliveryPeriodMin"`
 		DeliveryPeriodMax int           `json:"deliveryPeriodMax"`
 		DeliveryDateMin   string        `json:"deliveryDateMin"`
