@@ -3,28 +3,28 @@ package cdek
 type CityFilter string
 
 const (
-	// Код региона
+	//CityFilterRegionCodeExt Код региона
 	CityFilterRegionCodeExt CityFilter = "regionCodeExt"
 
-	// Код региона в ИС СДЭК
+	//CityFilterRegionCode Код региона в ИС СДЭК
 	CityFilterRegionCode CityFilter = "regionCode"
 
-	// Код региона из ФИАС
+	//CityFilterRegionFiasGuid Код региона из ФИАС
 	CityFilterRegionFiasGuid CityFilter = "regionFiasGuid"
 
-	// Номер страницы выборки результата.По умолчанию 0
+	//CityFilterPage Номер страницы выборки результата.По умолчанию 0
 	CityFilterPage CityFilter = "page"
 
-	// Ограничение выборки результата.По умолчанию 1000
+	//CityFilterSize Ограничение выборки результата.По умолчанию 1000
 	CityFilterSize CityFilter = "size"
 
-	// Код страны в формате ISO 3166-1 alpha-2
+	//CityFilterCountryCode Код страны в формате ISO 3166-1 alpha-2
 	CityFilterCountryCode CityFilter = "countryCode"
 
-	// Название города
+	//CityFilterCityName Название города
 	CityFilterCityName CityFilter = "cityName"
 
-	// Почтовый индекс
+	//CityFilterPostcode Почтовый индекс
 	CityFilterPostcode CityFilter = "postcode"
 )
 

@@ -6,19 +6,19 @@ import (
 	"time"
 )
 
-// ClientConf SDK client configuration
+//ClientConf SDK client configuration
 type ClientConf struct {
 	Auth      Auth
 	XmlApiUrl string
 }
 
-// Auth account credentials
+//Auth account credentials
 type Auth struct {
 	Account string
 	Secure  string
 }
 
-// EncodedSecure encode secure according to CDEK api
+//EncodedSecure encode secure according to CDEK api
 func (a Auth) EncodedSecure() (date string, encodedSecure string) {
 	date = time.Now().Format("2006-01-02 15:04:05")
 	encoder := md5.New()

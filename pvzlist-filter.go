@@ -1,6 +1,6 @@
 package cdek
 
-// PvzListFilter key for filtering pvzList
+//PvzListFilter key for filtering pvzList
 type PvzListFilter string
 
 const (

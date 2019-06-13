@@ -4,7 +4,7 @@ const jsonContentType = "application/json"
 const xmlContentType = "application/xml"
 const urlFormEncoded = "application/x-www-form-urlencoded"
 
-// NewClient creates new instance of Client
+//NewClient creates new instance of Client
 func NewClient(clientConfig ClientConf) Client {
 	return &client{
 		clientConfig: clientConfig,
@@ -15,7 +15,7 @@ type client struct {
 	clientConfig ClientConf
 }
 
-// Client CDEK SDK client with public methods
+//Client CDEK SDK client with public methods
 type Client interface {
 	RegisterOrder(req RegisterOrderReq) (*RegisterOrderResp, error)
 	UpdateOrder(req UpdateOrderReq) (*UpdateOrderResp, error)

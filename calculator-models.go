@@ -21,15 +21,15 @@ type ServiceResp struct {
 }
 
 type GetCostReq struct {
-	Version        string       `json:"version"`
-	AuthLogin      string       `json:"authLogin,omitempty"`
-	Secure         string       `json:"secure,omitempty"`
-	DateExecute    string       `json:"dateExecute,omitempty"`
-	SenderCityId   int          `json:"senderCityId"`
-	ReceiverCityId int          `json:"receiverCityId"`
-	TariffId       int          `json:"tariffId"`
-	Goods          []Good       `json:"goods"`
-	Services       []ServiceReq `json:"services,omitempty"`
+	Version        *string       `json:"version"`
+	AuthLogin      *string       `json:"authLogin,omitempty"`
+	Secure         *string       `json:"secure,omitempty"`
+	DateExecute    *string       `json:"dateExecute,omitempty"`
+	SenderCityId   *int          `json:"senderCityId"`
+	ReceiverCityId *int          `json:"receiverCityId"`
+	TariffId       *int          `json:"tariffId"`
+	Goods          []*Good       `json:"goods"`
+	Services       []*ServiceReq `json:"services,omitempty"`
 }
 
 type GetCostResp struct {
