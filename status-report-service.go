@@ -9,7 +9,7 @@ import (
 	"path"
 )
 
-const statusReportUrl = "/status_report_h.php"
+const statusReportURL = "/status_report_h.php"
 
 func getStatusReport(clientConf ClientConf, req StatusReportReq) (*StatusReportResp, error) {
 	req.setAuth(clientConf.Auth)
@@ -18,15 +18,15 @@ func getStatusReport(clientConf ClientConf, req StatusReportReq) (*StatusReportR
 		return nil, err
 	}
 
-	serverUrl, err := url.Parse(clientConf.XmlApiUrl)
+	serverURL, err := url.Parse(clientConf.XmlApiUrl)
 	if err != nil {
 		return nil, err
 	}
 
-	serverUrl.Path = path.Join(serverUrl.Path, statusReportUrl)
-	reqUrl := serverUrl.String()
+	serverURL.Path = path.Join(serverURL.Path, statusReportURL)
+	reqURL := serverURL.String()
 
-	resp, err := http.Post(reqUrl, xmlContentType, bytes.NewReader(reqByte))
+	resp, err := http.Post(reqURL, xmlContentType, bytes.NewReader(reqByte))
 	if err != nil {
 		return nil, err
 	}

@@ -9,7 +9,7 @@ import (
 	"strings"
 )
 
-const updateOrderUrl = "update"
+const updateOrderURL = "update"
 
 func updateOrder(clientConf ClientConf, req UpdateOrderReq) (*UpdateOrderResp, error) {
 	req.setAuth(clientConf.Auth)
@@ -22,15 +22,15 @@ func updateOrder(clientConf ClientConf, req UpdateOrderReq) (*UpdateOrderResp, e
 	data := make(url.Values)
 	data.Add("xml_request", string(reqByte))
 
-	serverUrl, err := url.Parse(clientConf.XmlApiUrl)
+	serverURL, err := url.Parse(clientConf.XmlApiUrl)
 	if err != nil {
 		return nil, err
 	}
 
-	serverUrl.Path = path.Join(serverUrl.Path, updateOrderUrl)
-	reqUrl := serverUrl.String()
+	serverURL.Path = path.Join(serverURL.Path, updateOrderURL)
+	reqURL := serverURL.String()
 
-	resp, err := http.Post(reqUrl, urlFormEncoded, strings.NewReader(data.Encode()))
+	resp, err := http.Post(reqURL, urlFormEncoded, strings.NewReader(data.Encode()))
 	if err != nil {
 		return nil, err
 	}

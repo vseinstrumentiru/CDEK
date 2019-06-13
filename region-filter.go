@@ -5,7 +5,7 @@ type RegionFilter string
 const (
 	RegionFilterRegionCodeExt  RegionFilter = "regionCodeExt"  // Код региона
 	RegionFilterRegionCode     RegionFilter = "regionCode"     // Код региона в ИС СДЭК
-	RegionFilterRegionFiasGuid RegionFilter = "regionFiasGuid" // Код региона из ФИАС
+	RegionFilterRegionFiasGUID RegionFilter = "regionFiasGuid" // Код региона из ФИАС
 	RegionFilterCountryCode    RegionFilter = "countryCode"    // Код страны в формате ISO 3166-1 alpha-2
 	RegionFilterCountryCodeExt RegionFilter = "countryCodeExt" // Код ОКСМ
 	RegionFilterPage           RegionFilter = "page"           // Номер страницы выборки результата.По умолчанию 0

@@ -74,7 +74,7 @@ func Test_client_GetPvzList(t *testing.T) {
 			},
 			args{
 				map[PvzListFilter]string{
-					PvzListFilterCityId: cityCode,
+					PvzListFilterCityID: cityCode,
 				},
 			},
 			cityCode,

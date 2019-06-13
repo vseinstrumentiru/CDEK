@@ -8,25 +8,25 @@ import (
 	"path"
 )
 
-const pvzListUrl = "pvzlist/v1/xml"
+const pvzListURL = "pvzlist/v1/xml"
 
 func getPvzList(clientConfig ClientConf, filter map[PvzListFilter]string) (*PvzList, error) {
-	serverUrl, err := url.Parse(clientConfig.XmlApiUrl)
+	serverURL, err := url.Parse(clientConfig.XmlApiUrl)
 	if err != nil {
 		return nil, err
 	}
 
-	serverUrl.Path = path.Join(serverUrl.Path, pvzListUrl)
+	serverURL.Path = path.Join(serverURL.Path, pvzListURL)
 
-	queryString := serverUrl.Query()
+	queryString := serverURL.Query()
 	for filterKey, value := range filter {
 		queryString.Set(string(filterKey), value)
 	}
-	serverUrl.RawQuery = queryString.Encode()
+	serverURL.RawQuery = queryString.Encode()
 
-	reqUrl := serverUrl.String()
+	reqURL := serverURL.String()
 
-	resp, err := http.Get(reqUrl)
+	resp, err := http.Get(reqURL)
 	if err != nil {
 		return nil, err
 	}

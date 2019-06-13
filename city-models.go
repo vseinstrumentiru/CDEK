@@ -1,7 +1,9 @@
 package cdek
 
+// GetCitiesResp response struct for CDEK cities getter
 type GetCitiesResp []City
 
+// City CDEK city model
 type City struct {
 	CityUUID       *string  `json:"cityUuid"`
 	CityName       *string  `json:"cityName"`
@@ -16,6 +18,6 @@ type City struct {
 	Longitude      *float64 `json:"longitude"`
 	Kladr          *string  `json:"kladr"`
 	FiasGUID       *string  `json:"fiasGuid"`
-	RegionFiasGuid *string  `json:"regionFiasGuid"`
+	RegionFiasGUID *string  `json:"regionFiasGuid"`
 	PaymentLimit   *float64 `json:"paymentLimit"`
 }

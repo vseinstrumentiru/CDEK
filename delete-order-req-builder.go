@@ -1,5 +1,6 @@
 package cdek
 
+// NewDeleteOrderReq DeleteOrderReq constructor
 func NewDeleteOrderReq(number string, orderCount string, order DeleteOrder) *DeleteOrderReq {
 	return &DeleteOrderReq{
 		Number:     &number,
@@ -18,6 +19,7 @@ func (deleteOrderReq *DeleteOrderReq) setAuth(auth Auth) *DeleteOrderReq {
 	return deleteOrderReq
 }
 
+// NewDeleteOrder DeleteOrder constructor
 func NewDeleteOrder(number string, dispatchNumber int) *DeleteOrder {
 	return &DeleteOrder{
 		Number:         &number,

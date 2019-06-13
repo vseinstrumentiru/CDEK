@@ -10,7 +10,7 @@ import (
 	"strings"
 )
 
-const registerOrderUrl = "new_orders.php"
+const registerOrderURL = "new_orders.php"
 
 func registerOrder(clientConf ClientConf, req RegisterOrderReq) (*RegisterOrderResp, error) {
 	req.setAuth(clientConf.Auth)
@@ -23,15 +23,15 @@ func registerOrder(clientConf ClientConf, req RegisterOrderReq) (*RegisterOrderR
 	data := make(url.Values)
 	data.Add("xml_request", string(reqByte))
 
-	serverUrl, err := url.Parse(clientConf.XmlApiUrl)
+	serverURL, err := url.Parse(clientConf.XmlApiUrl)
 	if err != nil {
 		return nil, err
 	}
 
-	serverUrl.Path = path.Join(serverUrl.Path, registerOrderUrl)
-	reqUrl := serverUrl.String()
+	serverURL.Path = path.Join(serverURL.Path, registerOrderURL)
+	reqURL := serverURL.String()
 
-	resp, err := http.Post(reqUrl, urlFormEncoded, strings.NewReader(data.Encode()))
+	resp, err := http.Post(reqURL, urlFormEncoded, strings.NewReader(data.Encode()))
 	if err != nil {
 		return nil, err
 	}

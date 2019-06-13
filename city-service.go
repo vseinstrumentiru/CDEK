@@ -8,25 +8,25 @@ import (
 	"path"
 )
 
-const citiesUrl = "v1/location/cities/json"
+const citiesURL = "v1/location/cities/json"
 
 func getCities(clientConfig ClientConf, filter map[CityFilter]string) (*GetCitiesResp, error) {
-	serverUrl, err := url.Parse(clientConfig.XmlApiUrl)
+	serverURL, err := url.Parse(clientConfig.XmlApiUrl)
 	if err != nil {
 		return nil, err
 	}
 
-	serverUrl.Path = path.Join(serverUrl.Path, citiesUrl)
+	serverURL.Path = path.Join(serverURL.Path, citiesURL)
 
-	queryString := serverUrl.Query()
+	queryString := serverURL.Query()
 	for filterKey, value := range filter {
 		queryString.Set(string(filterKey), value)
 	}
-	serverUrl.RawQuery = queryString.Encode()
+	serverURL.RawQuery = queryString.Encode()
 
-	reqUrl := serverUrl.String()
+	reqURL := serverURL.String()
 
-	resp, err := http.Get(reqUrl)
+	resp, err := http.Get(reqURL)
 	if err != nil {
 		return nil, err
 	}

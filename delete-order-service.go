@@ -9,7 +9,7 @@ import (
 	"strings"
 )
 
-const deleteOrderUrl = "delete_orders.php"
+const deleteOrderURL = "delete_orders.php"
 
 func deleteOrder(clientConf ClientConf, req DeleteOrderReq) (*DeleteOrderResp, error) {
 	req.setAuth(clientConf.Auth)
@@ -22,15 +22,15 @@ func deleteOrder(clientConf ClientConf, req DeleteOrderReq) (*DeleteOrderResp, e
 	data := make(url.Values)
 	data.Add("xml_request", string(reqByte))
 
-	serverUrl, err := url.Parse(clientConf.XmlApiUrl)
+	serverURL, err := url.Parse(clientConf.XmlApiUrl)
 	if err != nil {
 		return nil, err
 	}
 
-	serverUrl.Path = path.Join(serverUrl.Path, deleteOrderUrl)
-	reqUrl := serverUrl.String()
+	serverURL.Path = path.Join(serverURL.Path, deleteOrderURL)
+	reqURL := serverURL.String()
 
-	resp, err := http.Post(reqUrl, urlFormEncoded, strings.NewReader(data.Encode()))
+	resp, err := http.Post(reqURL, urlFormEncoded, strings.NewReader(data.Encode()))
 	if err != nil {
 		return nil, err
 	}

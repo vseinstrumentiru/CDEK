@@ -7,7 +7,7 @@ import (
 	"net/http"
 )
 
-const calculatorUrl = "http://api.cdek.ru/calculator/calculate_price_by_json.php"
+const calculatorURL = "http://api.cdek.ru/calculator/calculate_price_by_json.php"
 
 func calculateDelivery(clientConf ClientConf, req GetCostReq) (*GetCostResp, error) {
 	req.AuthLogin = clientConf.Auth.Account
@@ -17,7 +17,7 @@ func calculateDelivery(clientConf ClientConf, req GetCostReq) (*GetCostResp, err
 		return nil, err
 	}
 
-	resp, err := http.Post(calculatorUrl, jsonContentType, bytes.NewReader(reqByte))
+	resp, err := http.Post(calculatorURL, jsonContentType, bytes.NewReader(reqByte))
 	if err != nil {
 		return nil, err
 	}
