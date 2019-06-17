@@ -1,7 +1,7 @@
 package cdek
 
 //GetCitiesResp response struct for CDEK cities getter
-type GetCitiesResp []City
+type GetCitiesResp []*City
 
 //City CDEK city model
 type City struct {
