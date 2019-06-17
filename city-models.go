@@ -21,3 +21,15 @@ type City struct {
 	RegionFiasGUID *string  `json:"regionFiasGuid"`
 	PaymentLimit   *float64 `json:"paymentLimit"`
 }
+
+//Alert CDEK Alert model
+type Alert struct {
+	Type      string
+	Msg       string
+	ErrorCode string
+}
+
+//GetCitiesErr CDEK Alerts model
+type GetCitiesErr struct {
+	Alerts []*Alert
+}

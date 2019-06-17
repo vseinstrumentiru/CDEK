@@ -2,6 +2,7 @@ package cdek
 
 import (
 	"encoding/json"
+	"errors"
 	"io/ioutil"
 	"net/http"
 	"net/url"
@@ -46,7 +47,17 @@ func getCities(clientConfig ClientConf, filter map[CityFilter]string) (*GetCitie
 	var cities GetCitiesResp
 	err = json.Unmarshal(body, &cities)
 	if err != nil {
-		return nil, err
+		var citiesErr GetCitiesErr
+		err = json.Unmarshal(body, &citiesErr)
+		if err != nil {
+			return nil, err
+		}
+		var errorMsg string
+		for _, alert := range citiesErr.Alerts {
+			errorMsg += alert.Msg
+		}
+
+		return nil, errors.New(errorMsg)
 	}
 
 	return &cities, nil
