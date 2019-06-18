@@ -48,6 +48,6 @@ type WorkTimeY struct {
 }
 
 type WeightLimit struct {
-	WeightMin *string `xml:"WeightMin,attr"`
-	WeightMax *string `xml:"WeightMax,attr"`
+	WeightMin *float64 `xml:"WeightMin,attr"`
+	WeightMax *float64 `xml:"WeightMax,attr"`
 }
