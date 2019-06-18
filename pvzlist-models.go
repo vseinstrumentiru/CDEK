@@ -13,7 +13,7 @@ type Pvz struct {
 	CountryName    *string        `xml:"CountryName,attr"`
 	RegionCode     *string        `xml:"RegionCode,attr"`
 	RegionName     *string        `xml:"RegionName,attr"`
-	CityCode       *string        `xml:"CityCode,attr"`
+	CityCode       *int           `xml:"CityCode,attr"`
 	City           *string        `xml:"City,attr"`
 	WorkTime       *string        `xml:"WorkTime,attr"`
 	Address        *string        `xml:"Address,attr"`
@@ -23,8 +23,8 @@ type Pvz struct {
 	Email          *string        `xml:"Email,attr"`
 	QqId           *string        `xml:"qqId,attr"`
 	Note           *string        `xml:"Note,attr"`
-	CoordX         *string        `xml:"coordX,attr"`
-	CoordY         *string        `xml:"coordY,attr"`
+	CoordX         *float64       `xml:"coordX,attr"`
+	CoordY         *float64       `xml:"coordY,attr"`
 	Type           *string        `xml:"Type,attr"`
 	OwnerCode      *string        `xml:"ownerCode,attr"`
 	IsDressingRoom *string        `xml:"IsDressingRoom,attr"`
@@ -43,7 +43,7 @@ type OfficeImage struct {
 }
 
 type WorkTimeY struct {
-	Day     *string `xml:"day,attr"`
+	Day     *int    `xml:"day,attr"`
 	Periods *string `xml:"periods,attr"`
 }
 
