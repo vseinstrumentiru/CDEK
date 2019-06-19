@@ -16,7 +16,7 @@ type ServiceReq struct {
 type ServiceResp struct {
 	Id    int     `json:"id"`
 	Title string  `json:"title"`
-	Price float64 `json:"price"`
+	Price float64 `json:"price,string"`
 	Rate  float64 `json:"rate,omitempty"`
 }
 
@@ -35,14 +35,14 @@ type GetCostReq struct {
 type GetCostResp struct {
 	Error  []ErrorResp `json:"error,omitempty"`
 	Result struct {
-		Price             float64       `json:"price"`
+		Price             float64       `json:"price,string"`
 		DeliveryPeriodMin int           `json:"deliveryPeriodMin"`
 		DeliveryPeriodMax int           `json:"deliveryPeriodMax"`
 		DeliveryDateMin   string        `json:"deliveryDateMin"`
 		DeliveryDateMax   string        `json:"deliveryDateMax"`
 		TariffId          int           `json:"tariffId"`
-		CashOnDelivery    float64       `json:"cashOnDelivery"`
-		PriceByCurrency   float64       `json:"priceByCurrency"`
+		CashOnDelivery    float64       `json:"cashOnDelivery,string"`
+		PriceByCurrency   float64       `json:"priceByCurrency,string"`
 		Currency          string        `json:"currency"`
 		PercentVAT        int           `json:"percentVAT"`
 		Services          []ServiceResp `json:"services"`
