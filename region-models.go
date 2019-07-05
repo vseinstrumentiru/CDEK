@@ -1,7 +1,9 @@
 package cdek
 
+//GetRegionsResp List of Regions response
 type GetRegionsResp []Region
 
+//Region Region response
 type Region struct {
 	RegionUUID     *string `json:"regionUuid"`
 	RegionName     *string `json:"regionName"`

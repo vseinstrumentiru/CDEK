@@ -2,6 +2,7 @@ package cdek
 
 import "encoding/xml"
 
+//RegisterOrderReq Order registration request
 type RegisterOrderReq struct {
 	XMLName     xml.Name     `xml:"DeliveryRequest"`
 	Number      *string      `xml:"Number,attr"`
@@ -14,6 +15,7 @@ type RegisterOrderReq struct {
 	CallCourier *CallCourier `xml:"CallCourier"`
 }
 
+//OrderReq Shipment (order)
 type OrderReq struct {
 	Number                   *string                   `xml:"Number,attr"`
 	SendCityCode             *int                      `xml:"SendCityCode,attr"`
@@ -48,6 +50,7 @@ type OrderReq struct {
 	Schedule                 *Schedule                 `xml:"Schedule,omitempty"`
 }
 
+//Passport Details of the receiver’s passport. Used to print waybills. Only for international orders.
 type Passport struct {
 	Series    *string `xml:"Series,attr"`
 	Number    *string `xml:"Number,attr"`
@@ -56,12 +59,15 @@ type Passport struct {
 	DateBirth *string `xml:"DateBirth,attr"`
 }
 
+//Sender Sender. Must be defined if it is different from the online store client.
+// If the online store is a sender, the Sender tag is not available.
 type Sender struct {
 	Company *string  `xml:"Company,attr"`
 	Name    *string  `xml:"Name,attr"`
 	Address *Address `xml:"Address,omitempty"`
 }
 
+//Address Address of pickup
 type Address struct {
 	Street  *string `xml:"Street,attr"`
 	House   *string `xml:"House,attr"`
@@ -70,6 +76,7 @@ type Address struct {
 	PvzCode *string `xml:"PvzCode,attr,omitempty"`
 }
 
+//Seller Requisites of the real seller
 type Seller struct {
 	Address       *string `xml:"Address,attr,omitempty"`
 	Name          *string `xml:"Name,attr,omitempty"`
@@ -78,6 +85,7 @@ type Seller struct {
 	OwnershipForm *int    `xml:"OwnershipForm,attr,omitempty"`
 }
 
+//OrderPackage Package (all packages are sent with different Package tags)
 type OrderPackage struct {
 	Number  *string             `xml:"Number,attr"`
 	BarCode *string             `xml:"BarCode,attr"`
@@ -88,9 +96,10 @@ type OrderPackage struct {
 	Item    []*OrderPackageItem `xml:"Item"`
 }
 
+//OrderPackageItem Items (goods)
 type OrderPackageItem struct {
 	Amount         *int     `xml:"Amount,attr"`
-	Warekey        *string  `xml:"Warekey,attr"`
+	WareKey        *string  `xml:"WareKey,attr"`
 	Cost           *float64 `xml:"Cost,attr"`
 	Payment        *float64 `xml:"Payment,attr"`
 	PaymentVATRate *string  `xml:"PaymentVATRate,attr,omitempty"`
@@ -102,6 +111,7 @@ type OrderPackageItem struct {
 	Link           *string  `xml:"Link,attr,omitempty"`
 }
 
+//DeliveryRecipientCostAdv Additional charge for delivery (E-shop charges the receiver), depending on the order’s sum
 type DeliveryRecipientCostAdv struct {
 	Threshold *int     `xml:"Threshold,attr"`
 	Sum       *float64 `xml:"Sum,attr"`
@@ -109,15 +119,18 @@ type DeliveryRecipientCostAdv struct {
 	VATSum    *float64 `xml:"VATSum,attr,omitempty"`
 }
 
+//AddService Additional services
 type AddService struct {
 	ServiceCode *int `xml:"ServiceCode,attr"`
 	Count       *int `xml:"Count,attr,omitempty"`
 }
 
+//Schedule Schedule for delivery/pickup
 type Schedule struct {
 	Attempt []*ScheduleAttempt `xml:"Attempt"`
 }
 
+//ScheduleAttempt Time of delivery (one time interval not less than 3 hours is permitted for one day)
 type ScheduleAttempt struct {
 	ID      *string  `xml:"ID,attr"`
 	Date    *string  `xml:"Date,attr"`
@@ -127,10 +140,12 @@ type ScheduleAttempt struct {
 	Address *Address `xml:"Address"`
 }
 
+//CallCourier Call courier
 type CallCourier struct {
 	Call *CourierCallReq `xml:"Call"`
 }
 
+//CourierCallReq Waiting for a courier
 type CourierCallReq struct {
 	Date             *string  `xml:"Date,attr"`
 	TimeBeg          *string  `xml:"TimeBeg,attr"`
@@ -147,6 +162,7 @@ type CourierCallReq struct {
 	SendAddress      *Address `xml:"SendAddress"`
 }
 
+//RegisterOrderResp Order registration response structure
 type RegisterOrderResp struct {
 	ErrorCode       *string                `xml:"ErrorCode,attr,omitempty"`
 	Msg             *string                `xml:"Msg,attr,omitempty"`
@@ -155,12 +171,14 @@ type RegisterOrderResp struct {
 	Call            *CourierCallResp       `xml:"Call,omitempty"`
 }
 
+//DeliveryRequestResp Order registration response
 type DeliveryRequestResp struct {
 	Number    *string `xml:"Number,attr"`
 	ErrorCode *string `xml:"ErrorCode,attr"`
 	Msg       *string `xml:"Msg,attr"`
 }
 
+//OrderResp Order
 type OrderResp struct {
 	DispatchNumber *int    `xml:"DispatchNumber,attr"`
 	Number         *string `xml:"Number,attr"`
@@ -168,6 +186,7 @@ type OrderResp struct {
 	Msg            *string `xml:"Msg,attr"`
 }
 
+//CourierCallResp Call courier
 type CourierCallResp struct {
 	Number    *string `xml:"Number,attr"`
 	ErrorCode *string `xml:"ErrorCode,attr,omitempty"`

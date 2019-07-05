@@ -10,8 +10,8 @@ import (
 
 const pvzListURL = "pvzlist/v1/xml"
 
-func getPvzList(clientConfig ClientConf, filter map[PvzListFilter]string) (*PvzList, error) {
-	serverURL, err := url.Parse(clientConfig.XmlApiUrl)
+func getPvzList(clientConfig ClientConf, filter map[PvzListFilter]string) ([]*Pvz, error) {
+	serverURL, err := url.Parse(clientConfig.CdekAPIURL)
 	if err != nil {
 		return nil, err
 	}
@@ -43,11 +43,11 @@ func getPvzList(clientConfig ClientConf, filter map[PvzListFilter]string) (*PvzL
 		return nil, err
 	}
 
-	var pvzList PvzList
+	var pvzList pvzList
 	err = xml.Unmarshal(body, &pvzList)
 	if err != nil {
 		return nil, err
 	}
 
-	return &pvzList, nil
+	return pvzList.Pvz, nil
 }

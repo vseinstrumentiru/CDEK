@@ -23,7 +23,7 @@ func registerOrder(clientConf ClientConf, req RegisterOrderReq) (*RegisterOrderR
 	data := make(url.Values)
 	data.Add("xml_request", string(reqByte))
 
-	serverURL, err := url.Parse(clientConf.XmlApiUrl)
+	serverURL, err := url.Parse(clientConf.CdekAPIURL)
 	if err != nil {
 		return nil, err
 	}

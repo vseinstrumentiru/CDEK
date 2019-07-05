@@ -3,10 +3,15 @@ package cdek
 const apiVersion = "1.0"
 
 //NewGetCostReq create new instance of GetCostReq
-func NewGetCostReq(senderCityId int, receiverCityId int, tariffId int) *GetCostReq {
+func NewGetCostReq(senderCityID int, receiverCityID int, tariffID int) *GetCostReq {
 	apiVersion := apiVersion
 
-	return &GetCostReq{Version: &apiVersion, SenderCityId: &senderCityId, ReceiverCityId: &receiverCityId, TariffId: &tariffId}
+	return &GetCostReq{
+		Version:        &apiVersion,
+		SenderCityID:   &senderCityID,
+		ReceiverCityID: &receiverCityID,
+		TariffID:       &tariffID,
+	}
 }
 
 func (getCostReq *GetCostReq) setAuth(auth Auth) *GetCostReq {

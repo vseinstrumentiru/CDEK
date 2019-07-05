@@ -22,7 +22,7 @@ func deleteOrder(clientConf ClientConf, req DeleteOrderReq) (*DeleteOrderResp, e
 	data := make(url.Values)
 	data.Add("xml_request", string(reqByte))
 
-	serverURL, err := url.Parse(clientConf.XmlApiUrl)
+	serverURL, err := url.Parse(clientConf.CdekAPIURL)
 	if err != nil {
 		return nil, err
 	}

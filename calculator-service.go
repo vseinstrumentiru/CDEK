@@ -44,7 +44,7 @@ func calculateDelivery(clientConf ClientConf, req GetCostReq) (*GetCostResp, err
 	if getCostResp.Error != nil {
 		var errorMsg string
 		for _, errorResp := range getCostResp.Error {
-			errorMsg += fmt.Sprintf("Error code: %d, error text: %s \n", errorResp.Code, errorResp.Text, )
+			errorMsg += fmt.Sprintf("Error code: %d, error text: %s \n", errorResp.Code, errorResp.Text)
 		}
 
 		return nil, errors.New(errorMsg)

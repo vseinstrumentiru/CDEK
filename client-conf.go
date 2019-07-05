@@ -8,8 +8,8 @@ import (
 
 //ClientConf SDK client configuration
 type ClientConf struct {
-	Auth      Auth
-	XmlApiUrl string
+	Auth       Auth
+	CdekAPIURL string
 }
 
 //Auth account credentials

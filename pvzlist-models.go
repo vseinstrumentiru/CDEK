@@ -1,9 +1,10 @@
 package cdek
 
-type PvzList struct {
+type pvzList struct {
 	Pvz []*Pvz `xml:"Pvz"`
 }
 
+//Pvz List of Pickup Points
 type Pvz struct {
 	Code           *string        `xml:"Code,attr"`
 	PostalCode     *string        `xml:"PostalCode,attr"`
@@ -21,7 +22,7 @@ type Pvz struct {
 	AddressComment *string        `xml:"AddressComment,attr"`
 	Phone          *string        `xml:"Phone,attr"`
 	Email          *string        `xml:"Email,attr"`
-	QqId           *string        `xml:"qqId,attr"`
+	QqID           *string        `xml:"qqId,attr"`
 	Note           *string        `xml:"Note,attr"`
 	CoordX         *float64       `xml:"coordX,attr"`
 	CoordY         *float64       `xml:"coordY,attr"`
@@ -38,15 +39,18 @@ type Pvz struct {
 	WeightLimit    *WeightLimit   `xml:"WeightLimit"`
 }
 
+//OfficeImage All photos of the office (except for a photo showing how to get to it)
 type OfficeImage struct {
 	URL *string `xml:"url,attr"`
 }
 
+//WorkTimeY Opening hours for every day
 type WorkTimeY struct {
 	Day     *int    `xml:"day,attr"`
 	Periods *string `xml:"periods,attr"`
 }
 
+//WeightLimit Weight limits for a pickup point (the tag is used only if limits are set)
 type WeightLimit struct {
 	WeightMin *float64 `xml:"WeightMin,attr"`
 	WeightMax *float64 `xml:"WeightMax,attr"`

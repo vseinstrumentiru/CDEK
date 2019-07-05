@@ -18,7 +18,7 @@ func getStatusReport(clientConf ClientConf, req StatusReportReq) (*StatusReportR
 		return nil, err
 	}
 
-	serverURL, err := url.Parse(clientConf.XmlApiUrl)
+	serverURL, err := url.Parse(clientConf.CdekAPIURL)
 	if err != nil {
 		return nil, err
 	}

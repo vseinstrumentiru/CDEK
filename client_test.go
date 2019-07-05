@@ -11,7 +11,7 @@ func ClientConfForTests() *ClientConf {
 			Account: "z9GRRu7FxmO53CQ9cFfI6qiy32wpfTkd",
 			Secure:  "w24JTCv4MnAcuRTx0oHjHLDtyt3I6IBq",
 		},
-		XmlApiUrl: "https://integration.edu.cdek.ru",
+		CdekAPIURL: "https://integration.edu.cdek.ru",
 	}
 }
 
@@ -91,11 +91,11 @@ func Test_client_GetPvzList(t *testing.T) {
 				t.Errorf("client.GetPvzList() error = %v", "nothing received")
 				return
 			}
-			if len(pvzlist.Pvz) < 1 {
+			if len(pvzlist) < 1 {
 				t.Errorf("client.GetPvzList() error = %v", "received pvz quantity less than 1")
 				return
 			}
-			got := *pvzlist.Pvz[0].CityCode
+			got := *pvzlist[0].CityCode
 			if (err != nil) != tt.wantErr {
 				t.Errorf("client.GetPvzList() error = %v, wantErr %v", err, tt.wantErr)
 				return

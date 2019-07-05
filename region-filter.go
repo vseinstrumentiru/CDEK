@@ -1,21 +1,37 @@
 package cdek
 
+//RegionFilter filter key for "List of Regions" request
 type RegionFilter string
 
 const (
-	RegionFilterRegionCodeExt  RegionFilter = "regionCodeExt"  //Код региона
-	RegionFilterRegionCode     RegionFilter = "regionCode"     //Код региона в ИС СДЭК
-	RegionFilterRegionFiasGUID RegionFilter = "regionFiasGuid" //Код региона из ФИАС
-	RegionFilterCountryCode    RegionFilter = "countryCode"    //Код страны в формате ISO 3166-1 alpha-2
-	RegionFilterCountryCodeExt RegionFilter = "countryCodeExt" //Код ОКСМ
-	RegionFilterPage           RegionFilter = "page"           //Номер страницы выборки результата.По умолчанию 0
-	RegionFilterSize           RegionFilter = "size"           //Ограничение выборки результата.По умолчанию 1000
+	//RegionFilterRegionCodeExt  Region code
+	RegionFilterRegionCodeExt RegionFilter = "regionCodeExt"
+
+	//RegionFilterRegionCode Region code in the CDEK IS
+	RegionFilterRegionCode RegionFilter = "regionCode"
+
+	//RegionFilterRegionFiasGUID Region code according to the Federal Information Address System
+	RegionFilterRegionFiasGUID RegionFilter = "regionFiasGuid"
+
+	//RegionFilterCountryCode Country code in the CDEK IS
+	RegionFilterCountryCode RegionFilter = "countryCode"
+
+	//RegionFilterCountryCodeExt Code according to the Russian Classifier of Countries of the World
+	RegionFilterCountryCodeExt RegionFilter = "countryCodeExt"
+
+	//RegionFilterPage Number of the results page. Default value: 0
+	RegionFilterPage RegionFilter = "page"
+
+	//RegionFilterSize Limitation on the number of results displayed. Default value: 1,000
+	RegionFilterSize RegionFilter = "size"
 )
 
+//RegionFilterBuilder builder for filer for "List of Regions" request
 type RegionFilterBuilder struct {
 	filter map[RegionFilter]string
 }
 
+//AddFilter add filter to set of filters for "List of Regions" request
 func (filterBuilder *RegionFilterBuilder) AddFilter(filter RegionFilter, value string) *RegionFilterBuilder {
 	if filterBuilder.filter == nil {
 		filterBuilder.filter = make(map[RegionFilter]string)
@@ -26,6 +42,7 @@ func (filterBuilder *RegionFilterBuilder) AddFilter(filter RegionFilter, value s
 	return filterBuilder
 }
 
-func (filterBuilder RegionFilterBuilder) Filter() map[RegionFilter]string {
+//Filter compile RegionFilterBuilder for "List of Regions" request
+func (filterBuilder *RegionFilterBuilder) Filter() map[RegionFilter]string {
 	return filterBuilder.filter
 }

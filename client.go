@@ -20,14 +20,14 @@ type Client interface {
 	RegisterOrder(req RegisterOrderReq) (*RegisterOrderResp, error)
 	UpdateOrder(req UpdateOrderReq) (*UpdateOrderResp, error)
 	DeleteOrder(req DeleteOrderReq) (*DeleteOrderResp, error)
-	GetPvzList(filter map[PvzListFilter]string) (*PvzList, error)
+	GetPvzList(filter map[PvzListFilter]string) ([]*Pvz, error)
 	GetRegions(filter map[RegionFilter]string) (*GetRegionsResp, error)
 	GetCities(filter map[CityFilter]string) (*GetCitiesResp, error)
 	CalculateDelivery(getCostReq GetCostReq) (*GetCostResp, error)
 	GetStatusReport(statusReportReq StatusReportReq) (*StatusReportResp, error)
 }
 
-func (cl client) GetPvzList(filter map[PvzListFilter]string) (*PvzList, error) {
+func (cl client) GetPvzList(filter map[PvzListFilter]string) ([]*Pvz, error) {
 	return getPvzList(cl.clientConfig, filter)
 }
 

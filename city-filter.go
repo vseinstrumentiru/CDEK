@@ -1,5 +1,6 @@
 package cdek
 
+//CityFilter filter key for "List of Cities" request
 type CityFilter string
 
 const (
@@ -9,8 +10,8 @@ const (
 	//CityFilterRegionCode Код региона в ИС СДЭК
 	CityFilterRegionCode CityFilter = "regionCode"
 
-	//CityFilterRegionFiasGuid Код региона из ФИАС
-	CityFilterRegionFiasGuid CityFilter = "regionFiasGuid"
+	//CityFilterRegionFiasGUID Код региона из ФИАС
+	CityFilterRegionFiasGUID CityFilter = "regionFiasGuid"
 
 	//CityFilterPage Номер страницы выборки результата.По умолчанию 0
 	CityFilterPage CityFilter = "page"
@@ -28,10 +29,12 @@ const (
 	CityFilterPostcode CityFilter = "postcode"
 )
 
+//CityFilterBuilder builder for filer for "List of Cities" request
 type CityFilterBuilder struct {
 	filter map[CityFilter]string
 }
 
+//AddFilter add filter to set of filters for "List of Cities" request
 func (filterBuilder *CityFilterBuilder) AddFilter(filter CityFilter, value string) *CityFilterBuilder {
 	if filterBuilder.filter == nil {
 		filterBuilder.filter = make(map[CityFilter]string)
@@ -42,6 +45,7 @@ func (filterBuilder *CityFilterBuilder) AddFilter(filter CityFilter, value strin
 	return filterBuilder
 }
 
-func (filterBuilder CityFilterBuilder) Filter() map[CityFilter]string {
+//Filter compile CityFilterBuilder for "List of Cities" request
+func (filterBuilder *CityFilterBuilder) Filter() map[CityFilter]string {
 	return filterBuilder.filter
 }

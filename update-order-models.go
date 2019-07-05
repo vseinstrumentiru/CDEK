@@ -2,6 +2,7 @@ package cdek
 
 import "encoding/xml"
 
+//UpdateOrderReq Order Change request structure
 type UpdateOrderReq struct {
 	XMLName    xml.Name     `xml:"UpdateRequest"`
 	Number     *string      `xml:"Number,attr"`
@@ -12,6 +13,7 @@ type UpdateOrderReq struct {
 	Order      *UpdateOrder `xml:"Order"`
 }
 
+//UpdateOrder Order Change request
 type UpdateOrder struct {
 	Number                   *string                   `xml:"Number,attr"`
 	DispatchNumber           *int                      `xml:"DispatchNumber,attr"`
@@ -28,6 +30,7 @@ type UpdateOrder struct {
 	Package                  *OrderPackage             `xml:"Package"`
 }
 
+//UpdateOrderResp Order Change response
 type UpdateOrderResp struct {
 	XMLName xml.Name     `xml:"Response"`
 	Order   []*OrderResp `xml:"Order"`

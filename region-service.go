@@ -11,7 +11,7 @@ import (
 const regionsURL = "/v1/location/regions/json"
 
 func getRegions(clientConfig ClientConf, filter map[RegionFilter]string) (*GetRegionsResp, error) {
-	serverURL, err := url.Parse(clientConfig.XmlApiUrl)
+	serverURL, err := url.Parse(clientConfig.CdekAPIURL)
 	if err != nil {
 		return nil, err
 	}

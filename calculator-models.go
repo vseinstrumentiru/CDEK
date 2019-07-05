@@ -1,5 +1,6 @@
 package cdek
 
+//Good Location's dimension
 type Good struct {
 	Weight float64 `json:"weight"`
 	Length int     `json:"length"`
@@ -8,30 +9,34 @@ type Good struct {
 	Volume float64 `json:"volume"`
 }
 
+//ServiceReq List of additional service
 type ServiceReq struct {
-	Id    int `json:"id"`
+	ID    int `json:"id"`
 	Param int `json:"param,omitempty"`
 }
 
+//ServiceResp List of transmitted additional services
 type ServiceResp struct {
-	Id    int     `json:"id"`
+	ID    int     `json:"id"`
 	Title string  `json:"title"`
 	Price float64 `json:"price"`
 	Rate  float64 `json:"rate,omitempty"`
 }
 
+//GetCostReq Cost calculation on tariffs with priority request
 type GetCostReq struct {
 	Version        *string       `json:"version"`
 	AuthLogin      *string       `json:"authLogin,omitempty"`
 	Secure         *string       `json:"secure,omitempty"`
 	DateExecute    *string       `json:"dateExecute,omitempty"`
-	SenderCityId   *int          `json:"senderCityId"`
-	ReceiverCityId *int          `json:"receiverCityId"`
-	TariffId       *int          `json:"tariffId"`
+	SenderCityID   *int          `json:"senderCityId"`
+	ReceiverCityID *int          `json:"receiverCityId"`
+	TariffID       *int          `json:"tariffId"`
 	Goods          []*Good       `json:"goods"`
 	Services       []*ServiceReq `json:"services,omitempty"`
 }
 
+//GetCostResp Cost calculation on tariffs with priority response
 type GetCostResp struct {
 	Error  []ErrorResp `json:"error,omitempty"`
 	Result struct {
@@ -40,7 +45,7 @@ type GetCostResp struct {
 		DeliveryPeriodMax int           `json:"deliveryPeriodMax"`
 		DeliveryDateMin   string        `json:"deliveryDateMin"`
 		DeliveryDateMax   string        `json:"deliveryDateMax"`
-		TariffId          int           `json:"tariffId"`
+		TariffID          int           `json:"tariffId"`
 		CashOnDelivery    float64       `json:"cashOnDelivery"`
 		PriceByCurrency   float64       `json:"priceByCurrency"`
 		Currency          string        `json:"currency"`
@@ -49,6 +54,7 @@ type GetCostResp struct {
 	} `json:"result"`
 }
 
+//ErrorResp error response
 type ErrorResp struct {
 	Code int    `json:"code"`
 	Text string `json:"text"`
