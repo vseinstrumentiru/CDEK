@@ -1,4 +1,4 @@
 package cdek
 
 //Version package version
-const Version = "2.0.0"
+const Version = "v2.0.0"
