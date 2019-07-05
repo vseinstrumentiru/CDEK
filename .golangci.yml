@@ -4,9 +4,6 @@ run:
 linters:
   enable-all: true
   disable:
-#    - lll
-#    - gochecknoglobals
-#    - gochecknoinits
     - scopelint
     - dupl
 linters-settings:
