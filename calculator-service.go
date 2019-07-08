@@ -9,16 +9,14 @@ import (
 	"net/http"
 )
 
-const calculatorURL = "http://api.cdek.ru/calculator/calculate_price_by_json.php"
-
-func calculateDelivery(clientConf ClientConf, req GetCostReq) (*GetCostResp, error) {
+func calculateDelivery(clientConf ClientConf, req GetCostReq) (*GetCostRespResult, error) {
 	req.setAuth(clientConf.Auth)
 	reqByte, err := json.Marshal(req)
 	if err != nil {
 		return nil, err
 	}
 
-	resp, err := http.Post(calculatorURL, jsonContentType, bytes.NewReader(reqByte))
+	resp, err := http.Post(clientConf.CalculatorURL, jsonContentType, bytes.NewReader(reqByte))
 	if err != nil {
 		return nil, err
 	}
@@ -50,5 +48,5 @@ func calculateDelivery(clientConf ClientConf, req GetCostReq) (*GetCostResp, err
 		return nil, errors.New(errorMsg)
 	}
 
-	return &getCostResp, nil
+	return &getCostResp.Result, nil
 }

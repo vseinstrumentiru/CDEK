@@ -14,9 +14,7 @@ type StatusReportResp struct {
 
 //StatusReportContentReq Order Status Report request
 type StatusReportContentReq struct {
-	Date                   *string                 `xml:"Date,attr"`
-	Account                *string                 `xml:"Account,attr"`
-	Secure                 *string                 `xml:"Secure,attr"`
+	securableXML
 	ShowHistory            *bool                   `xml:"ShowHistory,attr"`
 	ShowReturnOrder        *bool                   `xml:"ShowReturnOrder,attr"`
 	ShowReturnOrderHistory *bool                   `xml:"ShowReturnOrderHistory,attr"`

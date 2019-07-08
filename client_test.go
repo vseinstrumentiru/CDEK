@@ -2,12 +2,13 @@ package cdek
 
 import (
 	"reflect"
+	"strconv"
 	"testing"
 )
 
 func ClientConfForTests() *ClientConf {
 	return &ClientConf{
-		Auth: Auth{
+		Auth: &Auth{
 			Account: "z9GRRu7FxmO53CQ9cFfI6qiy32wpfTkd",
 			Secure:  "w24JTCv4MnAcuRTx0oHjHLDtyt3I6IBq",
 		},
@@ -30,7 +31,7 @@ func TestNewClient(t *testing.T) {
 				clientConfig: *ClientConfForTests(),
 			},
 			&client{
-				clientConfig: *ClientConfForTests(),
+				clientConf: *ClientConfForTests(),
 			},
 		},
 		{
@@ -39,7 +40,7 @@ func TestNewClient(t *testing.T) {
 				clientConfig: *new(ClientConf),
 			},
 			&client{
-				clientConfig: *new(ClientConf),
+				clientConf: *new(ClientConf),
 			},
 		},
 	}
@@ -59,12 +60,12 @@ func Test_client_GetPvzList(t *testing.T) {
 	type args struct {
 		filter map[PvzListFilter]string
 	}
-	cityCode := "44"
+	cityCode := 44
 	tests := []struct {
 		name    string
 		fields  fields
 		args    args
-		want    string
+		want    int
 		wantErr bool
 	}{
 		{
@@ -74,7 +75,7 @@ func Test_client_GetPvzList(t *testing.T) {
 			},
 			args{
 				map[PvzListFilter]string{
-					PvzListFilterCityID: cityCode,
+					PvzListFilterCityID: strconv.Itoa(cityCode),
 				},
 			},
 			cityCode,
@@ -84,7 +85,7 @@ func Test_client_GetPvzList(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			cl := client{
-				clientConfig: tt.fields.clientConfig,
+				clientConf: tt.fields.clientConfig,
 			}
 			pvzlist, err := cl.GetPvzList(tt.args.filter)
 			if pvzlist == nil {

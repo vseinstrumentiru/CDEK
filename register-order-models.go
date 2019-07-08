@@ -4,11 +4,9 @@ import "encoding/xml"
 
 //RegisterOrderReq Order registration request
 type RegisterOrderReq struct {
+	securableXML
 	XMLName     xml.Name     `xml:"DeliveryRequest"`
 	Number      *string      `xml:"Number,attr"`
-	Date        *string      `xml:"Date,attr"`
-	Account     *string      `xml:"Account,attr"`
-	Secure      *string      `xml:"Secure,attr"`
 	OrderCount  *string      `xml:"OrderCount,attr"`
 	Currency    *string      `xml:"Currency,attr,omitempty"`
 	Order       *OrderReq    `xml:"Order"`

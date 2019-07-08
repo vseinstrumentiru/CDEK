@@ -9,16 +9,6 @@ func NewDeleteOrderReq(number string, orderCount string, order DeleteOrder) *Del
 	}
 }
 
-func (deleteOrderReq *DeleteOrderReq) setAuth(auth Auth) *DeleteOrderReq {
-	deleteOrderReq.Account = &auth.Account
-
-	date, sec := auth.EncodedSecure()
-	deleteOrderReq.Date = &date
-	deleteOrderReq.Secure = &sec
-
-	return deleteOrderReq
-}
-
 //NewDeleteOrder DeleteOrder constructor
 func NewDeleteOrder(number string, dispatchNumber int) *DeleteOrder {
 	return &DeleteOrder{

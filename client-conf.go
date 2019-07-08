@@ -6,10 +6,35 @@ import (
 	"time"
 )
 
+const calculatorURLDefault = "http://api.cdek.ru/calculator/calculate_price_by_json.php"
+
 //ClientConf SDK client configuration
 type ClientConf struct {
-	Auth       Auth
-	CdekAPIURL string
+	Auth          *Auth
+	CdekAPIURL    string
+	CalculatorURL string
+}
+
+//NewClientConf ClientConf constructor with defaults
+func NewClientConf(cdekAPIURL string) *ClientConf {
+	clientConf := ClientConf{
+		CdekAPIURL:    cdekAPIURL,
+		CalculatorURL: calculatorURLDefault,
+	}
+
+	return &clientConf
+}
+
+func (clientConf *ClientConf) SetAuth(auth *Auth) *ClientConf {
+	clientConf.Auth = auth
+
+	return clientConf
+}
+
+func (clientConf *ClientConf) SetCalculatorURL(calculatorURL string) *ClientConf {
+	clientConf.CalculatorURL = calculatorURL
+
+	return clientConf
 }
 
 //Auth account credentials

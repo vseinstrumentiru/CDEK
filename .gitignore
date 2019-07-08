@@ -1,5 +1,10 @@
 vendor
 .idea/
 
-# бинарник
-cdek_sdk
+# binary
+cdek
+
+# go test -coverprofile cover.out
+cover.out
+# go tool cover -html=cover.out -o cover.html
+cover.html

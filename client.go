@@ -5,14 +5,14 @@ const xmlContentType = "application/xml"
 const urlFormEncoded = "application/x-www-form-urlencoded"
 
 //NewClient creates new instance of Client
-func NewClient(clientConfig ClientConf) Client {
+func NewClient(clientConf ClientConf) Client {
 	return &client{
-		clientConfig: clientConfig,
+		clientConf: clientConf,
 	}
 }
 
 type client struct {
-	clientConfig ClientConf
+	clientConf ClientConf
 }
 
 //Client CDEK SDK client with public methods
@@ -23,38 +23,38 @@ type Client interface {
 	GetPvzList(filter map[PvzListFilter]string) ([]*Pvz, error)
 	GetRegions(filter map[RegionFilter]string) (*GetRegionsResp, error)
 	GetCities(filter map[CityFilter]string) (*GetCitiesResp, error)
-	CalculateDelivery(getCostReq GetCostReq) (*GetCostResp, error)
+	CalculateDelivery(getCostReq GetCostReq) (*GetCostRespResult, error)
 	GetStatusReport(statusReportReq StatusReportReq) (*StatusReportResp, error)
 }
 
 func (cl client) GetPvzList(filter map[PvzListFilter]string) ([]*Pvz, error) {
-	return getPvzList(cl.clientConfig, filter)
+	return getPvzList(cl.clientConf, filter)
 }
 
-func (cl client) CalculateDelivery(getCostReq GetCostReq) (*GetCostResp, error) {
-	return calculateDelivery(cl.clientConfig, getCostReq)
+func (cl client) CalculateDelivery(getCostReq GetCostReq) (*GetCostRespResult, error) {
+	return calculateDelivery(cl.clientConf, getCostReq)
 }
 
 func (cl client) GetCities(filter map[CityFilter]string) (*GetCitiesResp, error) {
-	return getCities(cl.clientConfig, filter)
+	return getCities(cl.clientConf, filter)
 }
 
 func (cl client) GetRegions(filter map[RegionFilter]string) (*GetRegionsResp, error) {
-	return getRegions(cl.clientConfig, filter)
+	return getRegions(cl.clientConf, filter)
 }
 
 func (cl client) GetStatusReport(statusReportReq StatusReportReq) (*StatusReportResp, error) {
-	return getStatusReport(cl.clientConfig, statusReportReq)
+	return getStatusReport(cl.clientConf, statusReportReq)
 }
 
 func (cl client) RegisterOrder(req RegisterOrderReq) (*RegisterOrderResp, error) {
-	return registerOrder(cl.clientConfig, req)
+	return registerOrder(cl.clientConf, req)
 }
 
 func (cl client) UpdateOrder(req UpdateOrderReq) (*UpdateOrderResp, error) {
-	return updateOrder(cl.clientConfig, req)
+	return updateOrder(cl.clientConf, req)
 }
 
 func (cl client) DeleteOrder(req DeleteOrderReq) (*DeleteOrderResp, error) {
-	return deleteOrder(cl.clientConfig, req)
+	return deleteOrder(cl.clientConf, req)
 }

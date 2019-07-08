@@ -7,16 +7,6 @@ func NewDeliveryRequest() *RegisterOrderReq {
 	return new(RegisterOrderReq)
 }
 
-func (registerOrderReq *RegisterOrderReq) setAuth(auth Auth) *RegisterOrderReq {
-	registerOrderReq.Account = &auth.Account
-
-	date, sec := auth.EncodedSecure()
-	registerOrderReq.Date = &date
-	registerOrderReq.Secure = &sec
-
-	return registerOrderReq
-}
-
 //SetNumber ID number of the acceptance certificate/waybill,
 // accompanying document attached upon the transfer of the cargo to CDEK, generated in the online store's system.
 // Identifier of the list of cargoes in the IS of the CDEK client. By default, you can use 1.

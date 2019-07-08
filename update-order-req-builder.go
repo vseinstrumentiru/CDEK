@@ -9,16 +9,6 @@ func NewUpdateOrderReq(number string, orderCount string, order UpdateOrder) *Upd
 	}
 }
 
-func (updateOrderReq *UpdateOrderReq) setAuth(auth Auth) *UpdateOrderReq {
-	updateOrderReq.Account = &auth.Account
-
-	date, sec := auth.EncodedSecure()
-	updateOrderReq.Date = &date
-	updateOrderReq.Secure = &sec
-
-	return updateOrderReq
-}
-
 //NewUpdateOrder UpdateOrder builder
 func NewUpdateOrder() *UpdateOrder {
 	return new(UpdateOrder)

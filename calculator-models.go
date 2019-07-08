@@ -25,10 +25,8 @@ type ServiceResp struct {
 
 //GetCostReq Cost calculation on tariffs with priority request
 type GetCostReq struct {
+	securableJSON
 	Version        *string       `json:"version"`
-	AuthLogin      *string       `json:"authLogin,omitempty"`
-	Secure         *string       `json:"secure,omitempty"`
-	DateExecute    *string       `json:"dateExecute,omitempty"`
 	SenderCityID   *int          `json:"senderCityId"`
 	ReceiverCityID *int          `json:"receiverCityId"`
 	TariffID       *int          `json:"tariffId"`
@@ -39,19 +37,22 @@ type GetCostReq struct {
 //GetCostResp Cost calculation on tariffs with priority response
 type GetCostResp struct {
 	Error  []ErrorResp `json:"error,omitempty"`
-	Result struct {
-		Price             float64       `json:"price,string"`
-		DeliveryPeriodMin int           `json:"deliveryPeriodMin"`
-		DeliveryPeriodMax int           `json:"deliveryPeriodMax"`
-		DeliveryDateMin   string        `json:"deliveryDateMin"`
-		DeliveryDateMax   string        `json:"deliveryDateMax"`
-		TariffID          int           `json:"tariffId"`
-		CashOnDelivery    float64       `json:"cashOnDelivery"`
-		PriceByCurrency   float64       `json:"priceByCurrency"`
-		Currency          string        `json:"currency"`
-		PercentVAT        int           `json:"percentVAT"`
-		Services          []ServiceResp `json:"services"`
-	} `json:"result"`
+	Result GetCostRespResult `json:"result"`
+}
+
+//GetCostResp Cost calculation on tariffs with priority result response
+type GetCostRespResult struct {
+	Price             float64       `json:"price,string"`
+	DeliveryPeriodMin int           `json:"deliveryPeriodMin"`
+	DeliveryPeriodMax int           `json:"deliveryPeriodMax"`
+	DeliveryDateMin   string        `json:"deliveryDateMin"`
+	DeliveryDateMax   string        `json:"deliveryDateMax"`
+	TariffID          int           `json:"tariffId"`
+	CashOnDelivery    float64       `json:"cashOnDelivery"`
+	PriceByCurrency   float64       `json:"priceByCurrency"`
+	Currency          string        `json:"currency"`
+	PercentVAT        int           `json:"percentVAT"`
+	Services          []ServiceResp `json:"services"`
 }
 
 //ErrorResp error response

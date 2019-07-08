@@ -14,16 +14,6 @@ func NewGetCostReq(senderCityID int, receiverCityID int, tariffID int) *GetCostR
 	}
 }
 
-func (getCostReq *GetCostReq) setAuth(auth Auth) *GetCostReq {
-	getCostReq.AuthLogin = &auth.Account
-
-	date, sec := auth.EncodedSecure()
-	getCostReq.DateExecute = &date
-	getCostReq.Secure = &sec
-
-	return getCostReq
-}
-
 //AddService add service to request
 func (getCostReq *GetCostReq) AddService(service ServiceReq) *GetCostReq {
 	if getCostReq.Services == nil {
