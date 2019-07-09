@@ -11,7 +11,7 @@ All notable changes to this project will be documented in this file.
 - `Auth` is not necessary for client now
 - Now you can path calculator url to SDK (`ClientConf.CalculatorURL`), default value is present while you use constructor
 
-## [2.0.0] - 2019-07-09
+## [2.0.0] - 2019-07-06
 ### Added
 - Documentation
 
