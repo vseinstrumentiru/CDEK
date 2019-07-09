@@ -28,9 +28,9 @@ type Pvz struct {
 	CoordY         *float64       `xml:"coordY,attr"`
 	Type           *string        `xml:"Type,attr"`
 	OwnerCode      *string        `xml:"ownerCode,attr"`
-	IsDressingRoom *string        `xml:"IsDressingRoom,attr"`
-	HaveCashless   *string        `xml:"HaveCashless,attr"`
-	AllowedCod     *string        `xml:"AllowedCod,attr"`
+	IsDressingRoom *bool          `xml:"IsDressingRoom,attr"`
+	HaveCashless   *bool          `xml:"HaveCashless,attr"`
+	AllowedCod     *bool          `xml:"AllowedCod,attr"`
 	NearestStation *string        `xml:"NearestStation,attr"`
 	MetroStation   *string        `xml:"MetroStation,attr"`
 	Site           *string        `xml:"Site,attr"`

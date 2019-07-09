@@ -11,14 +11,14 @@ import (
 
 const statusReportURL = "/status_report_h.php"
 
-func getStatusReport(clientConf ClientConf, req StatusReportReq) (*StatusReportResp, error) {
-	req.setAuth(clientConf.Auth)
-	reqByte, err := xml.Marshal(req)
+func (cl client) GetStatusReport(statusReportReq StatusReportReq) (*StatusReportResp, error) {
+	statusReportReq.setAuth(cl.clientConf.Auth)
+	reqByte, err := xml.Marshal(statusReportReq)
 	if err != nil {
 		return nil, err
 	}
 
-	serverURL, err := url.Parse(clientConf.CdekAPIURL)
+	serverURL, err := url.Parse(cl.clientConf.CdekAPIURL)
 	if err != nil {
 		return nil, err
 	}
@@ -32,11 +32,8 @@ func getStatusReport(clientConf ClientConf, req StatusReportReq) (*StatusReportR
 	}
 
 	defer func() {
-		err = resp.Body.Close()
+		_ = resp.Body.Close()
 	}()
-	if err != nil {
-		return nil, err
-	}
 
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {

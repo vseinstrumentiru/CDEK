@@ -12,8 +12,8 @@ import (
 
 const registerOrderURL = "new_orders.php"
 
-func registerOrder(clientConf ClientConf, req RegisterOrderReq) (*RegisterOrderResp, error) {
-	req.setAuth(clientConf.Auth)
+func (cl client) RegisterOrder(req RegisterOrderReq) (*RegisterOrderResp, error) {
+	req.setAuth(cl.clientConf.Auth)
 	reqByte, err := xml.Marshal(req)
 
 	if err != nil {
@@ -23,7 +23,7 @@ func registerOrder(clientConf ClientConf, req RegisterOrderReq) (*RegisterOrderR
 	data := make(url.Values)
 	data.Add("xml_request", string(reqByte))
 
-	serverURL, err := url.Parse(clientConf.CdekAPIURL)
+	serverURL, err := url.Parse(cl.clientConf.CdekAPIURL)
 	if err != nil {
 		return nil, err
 	}
@@ -37,11 +37,8 @@ func registerOrder(clientConf ClientConf, req RegisterOrderReq) (*RegisterOrderR
 	}
 
 	defer func() {
-		err = resp.Body.Close()
+		_ = resp.Body.Close()
 	}()
-	if err != nil {
-		return nil, err
-	}
 
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {

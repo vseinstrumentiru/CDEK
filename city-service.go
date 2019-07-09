@@ -11,8 +11,8 @@ import (
 
 const citiesURL = "v1/location/cities/json"
 
-func getCities(clientConfig ClientConf, filter map[CityFilter]string) (*GetCitiesResp, error) {
-	serverURL, err := url.Parse(clientConfig.CdekAPIURL)
+func (cl client) GetCities(filter map[CityFilter]string) (*GetCitiesResp, error) {
+	serverURL, err := url.Parse(cl.clientConf.CdekAPIURL)
 	if err != nil {
 		return nil, err
 	}
@@ -33,11 +33,8 @@ func getCities(clientConfig ClientConf, filter map[CityFilter]string) (*GetCitie
 	}
 
 	defer func() {
-		err = resp.Body.Close()
+		_ = resp.Body.Close()
 	}()
-	if err != nil {
-		return nil, err
-	}
 
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {

@@ -9,7 +9,7 @@ import (
 	"testing"
 )
 
-func getMockServer() *httptest.Server {
+func calculateDeliveryGetMockServer() *httptest.Server {
 	return httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
 		body, _ := ioutil.ReadAll(req.Body)
 		_, _ = req.Body.Read(body)
@@ -69,17 +69,18 @@ func getMockServer() *httptest.Server {
 	}))
 }
 
-func getMockServerWithError() *httptest.Server {
+func calculateDeliveryGetMockServerWithError() *httptest.Server {
 	return httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
-		_, _ = res.Write([]byte{})
+		_, _ = res.Write([]byte("err"))
 	}))
 }
 
-func Test_calculateDelivery(t *testing.T) {
-	testServer := getMockServer()
-	testServerWithError := getMockServerWithError()
-
+func Test_client_CalculateDelivery(t *testing.T) {
+	testServer := calculateDeliveryGetMockServer()
 	defer testServer.Close()
+
+	testServerWithError := calculateDeliveryGetMockServerWithError()
+	defer testServerWithError.Close()
 
 	apiVersion := apiVersion
 	senderCityID := 1
@@ -192,15 +193,16 @@ func Test_calculateDelivery(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got, err := calculateDelivery(tt.args.clientConf, tt.args.req)
+			cl := client{
+				clientConf: tt.args.clientConf,
+			}
+			got, err := cl.CalculateDelivery(tt.args.req)
 			if (err != nil) != tt.wantErr {
-				t.Errorf("calculateDelivery() error = %v, wantErr %v", err, tt.wantErr)
+				t.Errorf("CalculateDelivery() error = %v, wantErr %v", err, tt.wantErr)
 				return
 			}
 			if !reflect.DeepEqual(got, tt.want) {
-				g, _ := json.Marshal(got)
-				w, _ := json.Marshal(tt.want)
-				t.Errorf("calculateDelivery() got \n %v \n want \n %v", string(g), string(w))
+				t.Errorf("CalculateDelivery() got = %v, want %v", got, tt.want)
 			}
 		})
 	}

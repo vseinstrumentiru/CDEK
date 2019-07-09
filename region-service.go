@@ -10,8 +10,8 @@ import (
 
 const regionsURL = "/v1/location/regions/json"
 
-func getRegions(clientConfig ClientConf, filter map[RegionFilter]string) (*GetRegionsResp, error) {
-	serverURL, err := url.Parse(clientConfig.CdekAPIURL)
+func (cl client) GetRegions(filter map[RegionFilter]string) (*GetRegionsResp, error) {
+	serverURL, err := url.Parse(cl.clientConf.CdekAPIURL)
 	if err != nil {
 		return nil, err
 	}
@@ -32,11 +32,8 @@ func getRegions(clientConfig ClientConf, filter map[RegionFilter]string) (*GetRe
 	}
 
 	defer func() {
-		err = resp.Body.Close()
+		_ = resp.Body.Close()
 	}()
-	if err != nil {
-		return nil, err
-	}
 
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {

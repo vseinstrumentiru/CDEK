@@ -9,14 +9,14 @@ import (
 	"net/http"
 )
 
-func calculateDelivery(clientConf ClientConf, req GetCostReq) (*GetCostRespResult, error) {
-	req.setAuth(clientConf.Auth)
+func(cl client) CalculateDelivery(req GetCostReq) (*GetCostRespResult, error) {
+	req.setAuth(cl.clientConf.Auth)
 	reqByte, err := json.Marshal(req)
 	if err != nil {
 		return nil, err
 	}
 
-	resp, err := http.Post(clientConf.CalculatorURL, jsonContentType, bytes.NewReader(reqByte))
+	resp, err := http.Post(cl.clientConf.CalculatorURL, jsonContentType, bytes.NewReader(reqByte))
 	if err != nil {
 		return nil, err
 	}

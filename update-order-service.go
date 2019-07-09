@@ -11,8 +11,8 @@ import (
 
 const updateOrderURL = "update"
 
-func updateOrder(clientConf ClientConf, req UpdateOrderReq) (*UpdateOrderResp, error) {
-	req.setAuth(clientConf.Auth)
+func (cl client) UpdateOrder(req UpdateOrderReq) (*UpdateOrderResp, error) {
+	req.setAuth(cl.clientConf.Auth)
 	reqByte, err := xml.Marshal(req)
 
 	if err != nil {
@@ -22,7 +22,7 @@ func updateOrder(clientConf ClientConf, req UpdateOrderReq) (*UpdateOrderResp, e
 	data := make(url.Values)
 	data.Add("xml_request", string(reqByte))
 
-	serverURL, err := url.Parse(clientConf.CdekAPIURL)
+	serverURL, err := url.Parse(cl.clientConf.CdekAPIURL)
 	if err != nil {
 		return nil, err
 	}
@@ -36,11 +36,8 @@ func updateOrder(clientConf ClientConf, req UpdateOrderReq) (*UpdateOrderResp, e
 	}
 
 	defer func() {
-		err = resp.Body.Close()
+		_ = resp.Body.Close()
 	}()
-	if err != nil {
-		return nil, err
-	}
 
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {

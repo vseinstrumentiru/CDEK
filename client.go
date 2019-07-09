@@ -26,35 +26,3 @@ type Client interface {
 	CalculateDelivery(getCostReq GetCostReq) (*GetCostRespResult, error)
 	GetStatusReport(statusReportReq StatusReportReq) (*StatusReportResp, error)
 }
-
-func (cl client) GetPvzList(filter map[PvzListFilter]string) ([]*Pvz, error) {
-	return getPvzList(cl.clientConf, filter)
-}
-
-func (cl client) CalculateDelivery(getCostReq GetCostReq) (*GetCostRespResult, error) {
-	return calculateDelivery(cl.clientConf, getCostReq)
-}
-
-func (cl client) GetCities(filter map[CityFilter]string) (*GetCitiesResp, error) {
-	return getCities(cl.clientConf, filter)
-}
-
-func (cl client) GetRegions(filter map[RegionFilter]string) (*GetRegionsResp, error) {
-	return getRegions(cl.clientConf, filter)
-}
-
-func (cl client) GetStatusReport(statusReportReq StatusReportReq) (*StatusReportResp, error) {
-	return getStatusReport(cl.clientConf, statusReportReq)
-}
-
-func (cl client) RegisterOrder(req RegisterOrderReq) (*RegisterOrderResp, error) {
-	return registerOrder(cl.clientConf, req)
-}
-
-func (cl client) UpdateOrder(req UpdateOrderReq) (*UpdateOrderResp, error) {
-	return updateOrder(cl.clientConf, req)
-}
-
-func (cl client) DeleteOrder(req DeleteOrderReq) (*DeleteOrderResp, error) {
-	return deleteOrder(cl.clientConf, req)
-}

@@ -45,7 +45,7 @@ func (filterBuilder *CityFilterBuilder) AddFilter(filter CityFilter, value strin
 	return filterBuilder
 }
 
-//Filter compile CityFilterBuilder for "List of Cities" request
+//Filter returns complete CityFilter for "List of Cities" request
 func (filterBuilder *CityFilterBuilder) Filter() map[CityFilter]string {
 	return filterBuilder.filter
 }
