@@ -36,11 +36,11 @@ type GetCostReq struct {
 
 //GetCostResp Cost calculation on tariffs with priority response
 type GetCostResp struct {
-	Error  []ErrorResp `json:"error,omitempty"`
+	Error  []ErrorResp       `json:"error,omitempty"`
 	Result GetCostRespResult `json:"result"`
 }
 
-//GetCostResp Cost calculation on tariffs with priority result response
+//GetCostRespResult Cost calculation on tariffs with priority result response
 type GetCostRespResult struct {
 	Price             float64       `json:"price,string"`
 	DeliveryPeriodMin int           `json:"deliveryPeriodMin"`

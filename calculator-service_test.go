@@ -9,7 +9,7 @@ import (
 	"testing"
 )
 
-func getMockServer(t *testing.T) *httptest.Server {
+func getMockServer() *httptest.Server {
 	return httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
 		body, _ := ioutil.ReadAll(req.Body)
 		_, _ = req.Body.Read(body)
@@ -69,15 +69,15 @@ func getMockServer(t *testing.T) *httptest.Server {
 	}))
 }
 
-func getMockServerWithError(t *testing.T) *httptest.Server {
+func getMockServerWithError() *httptest.Server {
 	return httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
 		_, _ = res.Write([]byte{})
 	}))
 }
 
 func Test_calculateDelivery(t *testing.T) {
-	testServer := getMockServer(t)
-	testServerWithError := getMockServerWithError(t)
+	testServer := getMockServer()
+	testServerWithError := getMockServerWithError()
 
 	defer testServer.Close()
 

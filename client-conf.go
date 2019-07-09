@@ -25,12 +25,14 @@ func NewClientConf(cdekAPIURL string) *ClientConf {
 	return &clientConf
 }
 
+//SetAuth set auth data
 func (clientConf *ClientConf) SetAuth(auth *Auth) *ClientConf {
 	clientConf.Auth = auth
 
 	return clientConf
 }
 
+//SetCalculatorURL url for delivery calculation
 func (clientConf *ClientConf) SetCalculatorURL(calculatorURL string) *ClientConf {
 	clientConf.CalculatorURL = calculatorURL
 

@@ -40,7 +40,8 @@ func TestNewGetCostReq(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := NewGetCostReq(tt.args.senderCityID, tt.args.receiverCityID, tt.args.tariffID); !reflect.DeepEqual(got, tt.want) {
+			got := NewGetCostReq(tt.args.senderCityID, tt.args.receiverCityID, tt.args.tariffID)
+			if !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("NewGetCostReq() = %v, want %v", got, tt.want)
 			}
 		})
