@@ -9,7 +9,7 @@ import (
 	"net/http"
 )
 
-func(cl client) CalculateDelivery(req GetCostReq) (*GetCostRespResult, error) {
+func (cl client) CalculateDelivery(req GetCostReq) (*GetCostRespResult, error) {
 	req.setAuth(cl.clientConf.Auth)
 	reqByte, err := json.Marshal(req)
 	if err != nil {

@@ -9,8 +9,6 @@ import (
 )
 
 func TestAuth_EncodedSecure(t *testing.T) {
-	testAccount := "testAccount"
-	testSecure := "testSecure"
 	now := time.Now().Format("2006-01-02")
 	encoder := md5.New()
 	_, _ = encoder.Write([]byte(now + "&" + testSecure))

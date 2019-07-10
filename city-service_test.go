@@ -10,37 +10,37 @@ import (
 func getCitiesGetMockServer() *httptest.Server {
 	return httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
 		_, _ = res.Write([]byte(`[{
-"cityUuid":"dece8676-077e-4793-9d67-96112fe96b03",
-"cityName":"Москва",
-"cityCode":"61627",
-"region":"Кировская",
-"regionCodeExt":"43",
-"regionCode":"44",
-"subRegion":"Верхошижемский",
-"country":"Russia",
-"countryCode":"RU",
-"latitude":57.9664,
-"longitude":49.1074,
-"kladr":"4300700005400",
-"fiasGuid":"f1c72b9d-a2d7-45b7-b9f5-2222c12d5164",
-"regionFiasGuid":null,"paymentLimit":0
-},{
-"cityUuid":"18bd1ad1-0ed5-4908-9069-db07b805aa53",
-"cityName":"Москва",
-"cityCode":"44",
-"region":"Москва",
-"regionCodeExt":"77",
-"regionCode":"81",
-"subRegion":"Москва",
-"country":"Russia",
-"countryCode":"RU",
-"latitude":55.754,
-"longitude":37.6204,
-"kladr":"7700000000000",
-"fiasGuid":"0c5b2444-70a0-4932-980c-b4dc0d3f02b5",
-"regionFiasGuid":null,
-"paymentLimit":-1
-}]`))
+			"cityUuid":"dece8676-077e-4793-9d67-96112fe96b03",
+			"cityName":"Москва",
+			"cityCode":"61627",
+			"region":"Кировская",
+			"regionCodeExt":"43",
+			"regionCode":"44",
+			"subRegion":"Верхошижемский",
+			"country":"Russia",
+			"countryCode":"RU",
+			"latitude":57.9664,
+			"longitude":49.1074,
+			"kladr":"4300700005400",
+			"fiasGuid":"f1c72b9d-a2d7-45b7-b9f5-2222c12d5164",
+			"regionFiasGuid":null,"paymentLimit":0
+		},{
+			"cityUuid":"18bd1ad1-0ed5-4908-9069-db07b805aa53",
+			"cityName":"Москва",
+			"cityCode":"44",
+			"region":"Москва",
+			"regionCodeExt":"77",
+			"regionCode":"81",
+			"subRegion":"Москва",
+			"country":"Russia",
+			"countryCode":"RU",
+			"latitude":55.754,
+			"longitude":37.6204,
+			"kladr":"7700000000000",
+			"fiasGuid":"0c5b2444-70a0-4932-980c-b4dc0d3f02b5",
+			"regionFiasGuid":null,
+			"paymentLimit":-1
+		}]`))
 	}))
 }
 
@@ -51,7 +51,13 @@ func getCitiesGetMockServerWithError() *httptest.Server {
 }
 func getCitiesGetMockServerWithValidError() *httptest.Server {
 	return httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
-		_, _ = res.Write([]byte(`{"alerts":[{"type":"danger","msg":"API location not available","errorCode":"connector.location.error.send"}]}`))
+		_, _ = res.Write([]byte(`
+			{
+				"alerts":[
+					{"type":"danger","msg":"API location not available","errorCode":"connector.location.error.send"}
+				]
+			}
+		`))
 	}))
 }
 
@@ -90,34 +96,40 @@ func Test_client_GetCities(t *testing.T) {
 				filter: citiesFilterBuilder.Filter(),
 			},
 			want: &GetCitiesResp{
-				buildTestCity("dece8676-077e-4793-9d67-96112fe96b03",
-					"Москва",
-					61627,
-					"Кировская",
-					43,
-					44,
-					"Верхошижемский",
-					"Russia",
-					"RU",
-					57.9664,
-					49.1074,
-					"4300700005400",
-					"f1c72b9d-a2d7-45b7-b9f5-2222c12d5164",
-					0),
-				buildTestCity("18bd1ad1-0ed5-4908-9069-db07b805aa53",
-					"Москва",
-					44,
-					"Москва",
-					77,
-					81,
-					"Москва",
-					"Russia",
-					"RU",
-					55.754,
-					37.6204,
-					"7700000000000",
-					"0c5b2444-70a0-4932-980c-b4dc0d3f02b5",
-					-1),
+				&City{
+					strLink("dece8676-077e-4793-9d67-96112fe96b03"),
+					strLink("Москва"),
+					intLink(61627),
+					strLink("Кировская"),
+					intLink(43),
+					intLink(44),
+					strLink("Верхошижемский"),
+					strLink("Russia"),
+					strLink("RU"),
+					float64Link(57.9664),
+					float64Link(49.1074),
+					strLink("4300700005400"),
+					strLink("f1c72b9d-a2d7-45b7-b9f5-2222c12d5164"),
+					nil,
+					float64Link(0),
+				},
+				&City{
+					strLink("18bd1ad1-0ed5-4908-9069-db07b805aa53"),
+					strLink("Москва"),
+					intLink(44),
+					strLink("Москва"),
+					intLink(77),
+					intLink(81),
+					strLink("Москва"),
+					strLink("Russia"),
+					strLink("RU"),
+					float64Link(55.754),
+					float64Link(37.6204),
+					strLink("7700000000000"),
+					strLink("0c5b2444-70a0-4932-980c-b4dc0d3f02b5"),
+					nil,
+					float64Link(-1),
+				},
 			},
 			wantErr: false,
 		},
@@ -180,39 +192,5 @@ func Test_client_GetCities(t *testing.T) {
 				t.Errorf("GetCities() got = %v, want %v", got, tt.want)
 			}
 		})
-	}
-}
-
-func buildTestCity(CityUUID string,
-	CityName string,
-	CityCode int,
-	Region string,
-	RegionCodeExt int,
-	RegionCode int,
-	SubRegion string,
-	Country string,
-	CountryCode string,
-	Latitude float64,
-	Longitude float64,
-	Kladr string,
-	FiasGUID string,
-	PaymentLimit float64,
-) *City {
-	return &City{
-		&CityUUID,
-		&CityName,
-		&CityCode,
-		&Region,
-		&RegionCodeExt,
-		&RegionCode,
-		&SubRegion,
-		&Country,
-		&CountryCode,
-		&Latitude,
-		&Longitude,
-		&Kladr,
-		&FiasGUID,
-		nil,
-		&PaymentLimit,
 	}
 }

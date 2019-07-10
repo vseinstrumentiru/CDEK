@@ -8,9 +8,10 @@ import (
 	"time"
 )
 
+const testAccount = "testAccount"
+const testSecure = "testSecure"
+
 func Test_securableJSON_setAuth(t *testing.T) {
-	testAccount := "testAccount"
-	testSecure := "testSecure"
 	now := time.Now().Format("2006-01-02")
 	encoder := md5.New()
 	_, _ = encoder.Write([]byte(now + "&" + testSecure))
@@ -40,7 +41,7 @@ func Test_securableJSON_setAuth(t *testing.T) {
 				},
 			},
 			want: &securableJSON{
-				AuthLogin:   &testAccount,
+				AuthLogin:   strLink(testAccount),
 				Secure:      &testSecureEncoded,
 				DateExecute: &now,
 			},
@@ -48,8 +49,8 @@ func Test_securableJSON_setAuth(t *testing.T) {
 		{
 			name:   "empty auth",
 			fields: fields{},
-			args: args{},
-			want: &securableJSON{},
+			args:   args{},
+			want:   &securableJSON{},
 		},
 	}
 	for _, tt := range tests {
@@ -106,8 +107,8 @@ func Test_securableXML_setAuth(t *testing.T) {
 		{
 			name:   "empty auth",
 			fields: fields{},
-			args: args{},
-			want: &securableXML{},
+			args:   args{},
+			want:   &securableXML{},
 		},
 	}
 	for _, tt := range tests {
