@@ -7,7 +7,7 @@ type DeleteOrderReq struct {
 	securableXML
 	XMLName    xml.Name     `xml:"DeleteRequest"`
 	Number     *string      `xml:"Number,attr"`
-	OrderCount *string      `xml:"OrderCount,attr"`
+	OrderCount *int         `xml:"OrderCount,attr"`
 	Order      *DeleteOrder `xml:"Order"`
 }
 
@@ -19,6 +19,6 @@ type DeleteOrder struct {
 
 //DeleteOrderResp response structure of deleting order from CDEK
 type DeleteOrderResp struct {
-	XMLName xml.Name     `xml:"Response"`
+	XMLName xml.Name     `xml:"response"`
 	Order   []*OrderResp `xml:"Order"`
 }

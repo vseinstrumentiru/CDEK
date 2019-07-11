@@ -1,6 +1,11 @@
 package cdek
 
-import "encoding/xml"
+import (
+	"encoding/xml"
+	"errors"
+	"fmt"
+	"strings"
+)
 
 //RegisterOrderReq Order registration request
 type RegisterOrderReq struct {
@@ -162,8 +167,7 @@ type CourierCallReq struct {
 
 //RegisterOrderResp Order registration response structure
 type RegisterOrderResp struct {
-	ErrorCode       *string                `xml:"ErrorCode,attr,omitempty"`
-	Msg             *string                `xml:"Msg,attr,omitempty"`
+	ErrorXML
 	DeliveryRequest []*DeliveryRequestResp `xml:"DeliveryRequest,omitempty"`
 	Order           []*OrderResp           `xml:"Order,omitempty"`
 	Call            *CourierCallResp       `xml:"Call,omitempty"`
@@ -171,22 +175,46 @@ type RegisterOrderResp struct {
 
 //DeliveryRequestResp Order registration response
 type DeliveryRequestResp struct {
-	Number    *string `xml:"Number,attr"`
-	ErrorCode *string `xml:"ErrorCode,attr"`
-	Msg       *string `xml:"Msg,attr"`
+	ErrorXML
+	Number *string `xml:"Number,attr"`
 }
 
 //OrderResp Order
 type OrderResp struct {
+	ErrorXML
 	DispatchNumber *int    `xml:"DispatchNumber,attr"`
 	Number         *string `xml:"Number,attr"`
-	ErrorCode      *string `xml:"ErrorCode,attr,omitempty"`
-	Msg            *string `xml:"Msg,attr"`
 }
 
 //CourierCallResp Call courier
 type CourierCallResp struct {
-	Number    *string `xml:"Number,attr"`
+	ErrorXML
+	Number *string `xml:"Number,attr"`
+}
+
+//ErrorXML error values in responses
+type ErrorXML struct {
 	ErrorCode *string `xml:"ErrorCode,attr,omitempty"`
 	Msg       *string `xml:"Msg,attr"`
+}
+
+//IsErroneous check if struct has error
+func (e *ErrorXML) IsErroneous() bool {
+	return e.ErrorCode != nil
+}
+
+//GenerateError generate error for OrderResp if OrderResp IsErroneous
+func (o *OrderResp) GenerateError() error {
+	errorMsgParts := []string{
+		*o.Msg,
+		fmt.Sprintf("ErrorCode: %s", *o.ErrorCode),
+	}
+	if o.DispatchNumber != nil {
+		errorMsgParts = append(errorMsgParts, fmt.Sprintf("DispatchNumber: %d", *o.DispatchNumber))
+	}
+	if o.Number != nil {
+		errorMsgParts = append(errorMsgParts, fmt.Sprintf("Number: %s", *o.Number))
+	}
+
+	return errors.New(strings.Join(errorMsgParts, "; "))
 }

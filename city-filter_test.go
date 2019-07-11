@@ -20,7 +20,7 @@ func TestCityFilterBuilder_AddFilter(t *testing.T) {
 		want   *CityFilterBuilder
 	}{
 		{
-			name: "add single CityFilterPage filter",
+			name: "add single filter",
 			fields: fields{
 				filter: nil,
 			},
@@ -31,21 +31,6 @@ func TestCityFilterBuilder_AddFilter(t *testing.T) {
 			want: &CityFilterBuilder{
 				filter: map[CityFilter]string{
 					CityFilterPage: "33",
-				},
-			},
-		},
-		{
-			name: "add string filter",
-			fields: fields{
-				filter: nil,
-			},
-			args: args{
-				filter: "page",
-				value:  "22",
-			},
-			want: &CityFilterBuilder{
-				filter: map[CityFilter]string{
-					CityFilterPage: "22",
 				},
 			},
 		},

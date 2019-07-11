@@ -1,7 +1,7 @@
 package cdek
 
 //NewDeleteOrderReq DeleteOrderReq constructor
-func NewDeleteOrderReq(number string, orderCount string, order DeleteOrder) *DeleteOrderReq {
+func NewDeleteOrderReq(number string, orderCount int, order DeleteOrder) *DeleteOrderReq {
 	return &DeleteOrderReq{
 		Number:     &number,
 		OrderCount: &orderCount,

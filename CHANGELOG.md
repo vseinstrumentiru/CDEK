@@ -10,6 +10,8 @@ All notable changes to this project will be documented in this file.
 ### Changed
 - `Auth` is not necessary for client now
 - Now you can path calculator url to SDK (`ClientConf.CalculatorURL`), default value is present while you use constructor
+- `Pvz.IsDressingRoom`, `Pvz.HaveCashless` and `Pvz.AllowedCod` now `*bool` (was `*string`)
+- `DeleteOrderReq.OrderCount` now `*int`, (was `*string`)
 
 ## [2.0.0] - 2019-07-06
 ### Added

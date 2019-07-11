@@ -7,6 +7,8 @@ import (
 	"net/url"
 	"path"
 	"strings"
+
+	"github.com/hashicorp/go-multierror"
 )
 
 const deleteOrderURL = "delete_orders.php"
@@ -50,5 +52,12 @@ func (cl client) DeleteOrder(req DeleteOrderReq) (*DeleteOrderResp, error) {
 		return nil, err
 	}
 
-	return &deleteOrderResp, nil
+	multiError := &multierror.Error{}
+	for _, o := range deleteOrderResp.Order {
+		if o.IsErroneous() {
+			multiError = multierror.Append(o.GenerateError())
+		}
+	}
+
+	return &deleteOrderResp, multiError.ErrorOrNil()
 }
