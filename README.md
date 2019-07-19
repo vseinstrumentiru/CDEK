@@ -29,8 +29,13 @@ Example
 -------------
 You cat get test `clientAccount` and `clientSecurePassword` from [the official CDEK documentation](https://confluence.cdek.ru/pages/viewpage.action?pageId=20264477#DataExchangeProtocol(v1.5)-TestAccount)
 ```
-clientConf := NewClientConf("https://integration.edu.cdek.ru/")
-clientConf.SetAuth(clientAccount, clientSecurePassword)
+import "github.com/vseinstrumentiru/cdek"
+...
 
-client := cdek.NewClient(clientConf)
+client := cdek.NewClient("https://integration.edu.cdek.ru/").
+    SetAuth(clientAccount, clientSecurePassword)
+
+cities, err := client.GetCities(map[cdek.CityFilter]string{
+    cdek.CityFilterPage: "1",
+})
 ```
