@@ -2,6 +2,7 @@
 [![GoDoc reference](https://godoc.org/github.com/vseinstrumentiru/CDEK?status.svg)](https://godoc.org/github.com/vseinstrumentiru/CDEK) 
 [![Go Report Card](https://goreportcard.com/badge/github.com/vseinstrumentiru/CDEK)](https://goreportcard.com/report/github.com/vseinstrumentiru/CDEK)
 [![GitHub release](https://img.shields.io/github/release/vseinstrumentiru/cdek.svg)](https://github.com/vseinstrumentiru/CDEK/releases)
+[![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/2990/badge)](https://bestpractices.coreinfrastructure.org/projects/2990)
 
 The Go language implementation of SDK for [integration with CDEK](https://www.cdek.ru/clients/integrator.html)
 
