@@ -1,6 +1,7 @@
 package cdek
 
 import (
+	"encoding/json"
 	"net/http"
 	"net/http/httptest"
 	"reflect"
@@ -39,17 +40,40 @@ func TestClient_GetStatusReport(t *testing.T) {
 			},
 			args: args{
 				statusReportReq: StatusReport{
-					ShowHistory: boolLink(true),
+					ShowHistory: intLink(1),
 					Order: []*StatusReportOrderReq{
 						{
-							DispatchNumber: intLink(1105256461),
+							Number: strLink("number-soOEl0"),
 						},
 					},
 				},
 			},
-			// TODO: wait for the CDEK technical support answer and finish the test
-			want:    nil,
-			wantErr: true,
+			want: &StatusReportResp{
+				Order: []*StatusReportOrderResp{
+					{
+						ActNumber:      strLink("soOEl"),
+						Number:         strLink("number-soOEl0"),
+						DispatchNumber: intLink(1105068433),
+						Status: &Status{
+							Date:        strLink("2019-07-21T17:34:34+00:00"),
+							Code:        intLink(1),
+							Description: strLink("Создан"),
+							CityCode:    intLink(44),
+							CityName:    strLink("Москва"),
+							State: []*State{
+								{
+									Date:        strLink("2019-07-21T17:34:34+00:00"),
+									Code:        intLink(1),
+									Description: strLink("Создан"),
+									CityCode:    intLink(44),
+									CityName:    strLink("Москва"),
+								},
+							},
+						},
+					},
+				},
+			},
+			wantErr: false,
 		},
 		{
 			name: "handle valid error",
@@ -60,7 +84,7 @@ func TestClient_GetStatusReport(t *testing.T) {
 			},
 			args: args{
 				statusReportReq: StatusReport{
-					ShowHistory: boolLink(true),
+					ShowHistory: intLink(1),
 					ChangePeriod: &ChangePeriod{
 						DateFirst: strLink("14-07-2019"),
 					},
@@ -118,7 +142,9 @@ func TestClient_GetStatusReport(t *testing.T) {
 				return
 			}
 			if !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("Client.GetStatusReport() = %v, want %v", got, tt.want)
+				g, _ := json.Marshal(got)
+				w, _ := json.Marshal(tt.want)
+				t.Errorf("Client.GetStatusReport() = \n %v \n, want \n %v", string(g), string(w))
 			}
 		})
 	}
@@ -126,8 +152,31 @@ func TestClient_GetStatusReport(t *testing.T) {
 
 func getStatusReportMockServer() *httptest.Server {
 	return httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
-		// TODO: wait for the CDEK technical support answer and finish the test
-		_, _ = res.Write([]byte(``))
+		_, _ = res.Write([]byte(`<?xml version="1.0" encoding="UTF-8"?>
+			<StatusReport DateFirst="2000-12-31T17:00:00+00:00" DateLast="2019-07-21T18:05:39+00:00" >
+				<Order
+					ActNumber="soOEl" 
+					Number="number-soOEl0" 
+					DispatchNumber="1105068433"  
+					DeliveryDate="" 
+					RecipientName="" >
+					<Status Date="2019-07-21T17:34:34+00:00" 
+						Code="1" 
+						Description="Создан" 
+						CityCode="44" 
+						CityName="Москва">
+						<State 
+							Date="2019-07-21T17:34:34+00:00" 
+							Code="1" 
+							Description="Создан" 
+							CityCode="44" 
+							CityName="Москва" />
+					</Status>
+					<Reason Code="" Description="" Date=""></Reason>
+					<DelayReason Code="" Description="" Date="" ></DelayReason>
+				</Order>
+			</StatusReport>
+		`))
 	}))
 }
 

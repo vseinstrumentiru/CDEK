@@ -7,7 +7,6 @@ import (
 )
 
 const jsonContentType = "application/json"
-const xmlContentType = "application/xml"
 const urlFormEncoded = "application/x-www-form-urlencoded"
 
 const calculatorURLDefault = "http://api.cdek.ru/calculator/calculate_price_by_json.php"
