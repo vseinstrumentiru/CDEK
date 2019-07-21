@@ -1,12 +1,12 @@
 package cdek
 
 import (
-	"bytes"
 	"encoding/xml"
 	"io/ioutil"
 	"net/http"
 	"net/url"
 	"path"
+	"strings"
 )
 
 const statusReportURL = "/status_report_h.php"
@@ -19,6 +19,9 @@ func (c Client) GetStatusReport(statusReportReq StatusReport) (*StatusReportResp
 		return nil, err
 	}
 
+	data := make(url.Values)
+	data.Add("xml_request", string(reqByte))
+
 	serverURL, err := url.Parse(c.apiURL)
 	if err != nil {
 		return nil, err
@@ -27,7 +30,7 @@ func (c Client) GetStatusReport(statusReportReq StatusReport) (*StatusReportResp
 	serverURL.Path = path.Join(serverURL.Path, statusReportURL)
 	reqURL := serverURL.String()
 
-	resp, err := http.Post(reqURL, xmlContentType, bytes.NewReader(reqByte))
+	resp, err := http.Post(reqURL, urlFormEncoded, strings.NewReader(data.Encode()))
 	if err != nil {
 		return nil, err
 	}

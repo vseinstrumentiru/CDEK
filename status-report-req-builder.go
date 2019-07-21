@@ -8,7 +8,7 @@ func NewStatusReportReq() *StatusReport {
 }
 
 //SetShowHistory The attribute indicating that the order history must be loaded (1 – yes, 0 – no)
-func (req *StatusReport) SetShowHistory(showHistory bool) *StatusReport {
+func (req *StatusReport) SetShowHistory(showHistory int) *StatusReport {
 	req.ShowHistory = &showHistory
 
 	return req

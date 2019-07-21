@@ -28,14 +28,14 @@ func TestNewStatusReportReq(t *testing.T) {
 
 func TestStatusReportReq_SetShowHistory(t *testing.T) {
 	type fields struct {
-		ShowHistory            *bool
+		ShowHistory            *int
 		ShowReturnOrder        *bool
 		ShowReturnOrderHistory *bool
 		ChangePeriod           *ChangePeriod
 		Order                  []*StatusReportOrderReq
 	}
 	type args struct {
-		showHistory bool
+		showHistory int
 	}
 	tests := []struct {
 		name   string
@@ -50,24 +50,24 @@ func TestStatusReportReq_SetShowHistory(t *testing.T) {
 				ShowReturnOrder: boolLink(true),
 			},
 			args: args{
-				showHistory: true,
+				showHistory: 1,
 			},
 			want: &StatusReport{
-				ShowHistory:     boolLink(true),
+				ShowHistory:     intLink(1),
 				ShowReturnOrder: boolLink(true),
 			},
 		},
 		{
 			name: "modify",
 			fields: fields{
-				ShowHistory:     boolLink(true),
+				ShowHistory:     intLink(1),
 				ShowReturnOrder: boolLink(true),
 			},
 			args: args{
-				showHistory: false,
+				showHistory: 1,
 			},
 			want: &StatusReport{
-				ShowHistory:     boolLink(false),
+				ShowHistory:     intLink(1),
 				ShowReturnOrder: boolLink(true),
 			},
 		},
@@ -90,7 +90,7 @@ func TestStatusReportReq_SetShowHistory(t *testing.T) {
 
 func TestStatusReportReq_SetShowReturnOrder(t *testing.T) {
 	type fields struct {
-		ShowHistory            *bool
+		ShowHistory            *int
 		ShowReturnOrder        *bool
 		ShowReturnOrderHistory *bool
 		ChangePeriod           *ChangePeriod
@@ -108,28 +108,28 @@ func TestStatusReportReq_SetShowReturnOrder(t *testing.T) {
 		{
 			name: "set",
 			fields: fields{
-				ShowHistory:     boolLink(true),
+				ShowHistory:     intLink(1),
 				ShowReturnOrder: nil,
 			},
 			args: args{
 				showReturnOrder: true,
 			},
 			want: &StatusReport{
-				ShowHistory:     boolLink(true),
+				ShowHistory:     intLink(1),
 				ShowReturnOrder: boolLink(true),
 			},
 		},
 		{
 			name: "modify",
 			fields: fields{
-				ShowHistory:     boolLink(true),
+				ShowHistory:     intLink(1),
 				ShowReturnOrder: boolLink(true),
 			},
 			args: args{
 				showReturnOrder: false,
 			},
 			want: &StatusReport{
-				ShowHistory:     boolLink(true),
+				ShowHistory:     intLink(1),
 				ShowReturnOrder: boolLink(false),
 			},
 		},
@@ -152,7 +152,7 @@ func TestStatusReportReq_SetShowReturnOrder(t *testing.T) {
 
 func TestStatusReportReq_SetShowReturnOrderHistory(t *testing.T) {
 	type fields struct {
-		ShowHistory            *bool
+		ShowHistory            *int
 		ShowReturnOrder        *bool
 		ShowReturnOrderHistory *bool
 		ChangePeriod           *ChangePeriod
@@ -170,28 +170,28 @@ func TestStatusReportReq_SetShowReturnOrderHistory(t *testing.T) {
 		{
 			name: "set",
 			fields: fields{
-				ShowHistory:            boolLink(true),
+				ShowHistory:            intLink(1),
 				ShowReturnOrderHistory: nil,
 			},
 			args: args{
 				showReturnOrderHistory: true,
 			},
 			want: &StatusReport{
-				ShowHistory:            boolLink(true),
+				ShowHistory:            intLink(1),
 				ShowReturnOrderHistory: boolLink(true),
 			},
 		},
 		{
 			name: "modify",
 			fields: fields{
-				ShowHistory:            boolLink(true),
+				ShowHistory:            intLink(1),
 				ShowReturnOrderHistory: boolLink(true),
 			},
 			args: args{
 				showReturnOrderHistory: false,
 			},
 			want: &StatusReport{
-				ShowHistory:            boolLink(true),
+				ShowHistory:            intLink(1),
 				ShowReturnOrderHistory: boolLink(false),
 			},
 		},
@@ -214,7 +214,7 @@ func TestStatusReportReq_SetShowReturnOrderHistory(t *testing.T) {
 
 func TestStatusReportReq_SetChangePeriod(t *testing.T) {
 	type fields struct {
-		ShowHistory            *bool
+		ShowHistory            *int
 		ShowReturnOrder        *bool
 		ShowReturnOrderHistory *bool
 		ChangePeriod           *ChangePeriod
@@ -232,7 +232,7 @@ func TestStatusReportReq_SetChangePeriod(t *testing.T) {
 		{
 			name: "set",
 			fields: fields{
-				ShowHistory:  boolLink(true),
+				ShowHistory:  intLink(1),
 				ChangePeriod: nil,
 			},
 			args: args{
@@ -242,7 +242,7 @@ func TestStatusReportReq_SetChangePeriod(t *testing.T) {
 				},
 			},
 			want: &StatusReport{
-				ShowHistory: boolLink(true),
+				ShowHistory: intLink(1),
 				ChangePeriod: &ChangePeriod{
 					DateFirst: strLink("2019-07-15"),
 					DateLast:  strLink("2019-07-16"),
@@ -252,7 +252,7 @@ func TestStatusReportReq_SetChangePeriod(t *testing.T) {
 		{
 			name: "modify",
 			fields: fields{
-				ShowHistory: boolLink(true),
+				ShowHistory: intLink(1),
 				ChangePeriod: &ChangePeriod{
 					DateFirst: strLink("2019-07-15"),
 					DateLast:  strLink("2019-07-16"),
@@ -265,7 +265,7 @@ func TestStatusReportReq_SetChangePeriod(t *testing.T) {
 				},
 			},
 			want: &StatusReport{
-				ShowHistory: boolLink(true),
+				ShowHistory: intLink(1),
 				ChangePeriod: &ChangePeriod{
 					DateFirst: strLink("2019-07-16"),
 					DateLast:  strLink("2019-07-17"),
@@ -291,7 +291,7 @@ func TestStatusReportReq_SetChangePeriod(t *testing.T) {
 
 func TestStatusReportReq_AddOrder(t *testing.T) {
 	type fields struct {
-		ShowHistory            *bool
+		ShowHistory            *int
 		ShowReturnOrder        *bool
 		ShowReturnOrderHistory *bool
 		ChangePeriod           *ChangePeriod
@@ -309,7 +309,7 @@ func TestStatusReportReq_AddOrder(t *testing.T) {
 		{
 			name: "add first",
 			fields: fields{
-				ShowHistory: boolLink(true),
+				ShowHistory: intLink(1),
 				Order:       nil,
 			},
 			args: args{
@@ -320,7 +320,7 @@ func TestStatusReportReq_AddOrder(t *testing.T) {
 				},
 			},
 			want: &StatusReport{
-				ShowHistory: boolLink(true),
+				ShowHistory: intLink(1),
 				Order: []*StatusReportOrderReq{
 					{
 						DispatchNumber: intLink(1),
@@ -333,7 +333,7 @@ func TestStatusReportReq_AddOrder(t *testing.T) {
 		{
 			name: "add second",
 			fields: fields{
-				ShowHistory: boolLink(true),
+				ShowHistory: intLink(1),
 				Order: []*StatusReportOrderReq{
 					{
 						DispatchNumber: intLink(1),
@@ -350,7 +350,7 @@ func TestStatusReportReq_AddOrder(t *testing.T) {
 				},
 			},
 			want: &StatusReport{
-				ShowHistory: boolLink(true),
+				ShowHistory: intLink(1),
 				Order: []*StatusReportOrderReq{
 					{
 						DispatchNumber: intLink(1),

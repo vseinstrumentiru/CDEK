@@ -3,7 +3,7 @@ package cdek
 //StatusReport Order Status Report request
 type StatusReport struct {
 	securableXML
-	ShowHistory            *bool                   `xml:"ShowHistory,attr"`
+	ShowHistory            *int                    `xml:"ShowHistory,attr"`
 	ShowReturnOrder        *bool                   `xml:"ShowReturnOrder,attr"`
 	ShowReturnOrderHistory *bool                   `xml:"ShowReturnOrderHistory,attr"`
 	ChangePeriod           *ChangePeriod           `xml:"ChangePeriod"`
@@ -39,26 +39,26 @@ type StatusReportContentForResp struct {
 
 //StatusReportOrderResp Shipment (order)
 type StatusReportOrderResp struct {
-	ActNumber            *string      `xml:"ActNumber,attr"`
-	Number               *string      `xml:"Number,attr"`
-	DispatchNumber       *string      `xml:"DispatchNumber,attr"`
-	DeliveryDate         *string      `xml:"DeliveryDate,attr"`
-	RecipientName        *string      `xml:"RecipientName,attr"`
-	ReturnDispatchNumber *int         `xml:"ReturnDispatchNumber,attr"`
-	Status               *Status      `xml:"Status"`
-	Reason               *Reason      `xml:"Reason"`
-	DelayReason          *DelayReason `xml:"DelayReason"`
-	Package              *Package     `xml:"Package"`
-	Attempt              *Attempt     `xml:"Attempt,omitempty"`
-	Call                 *Call        `xml:"Call"`
+	ActNumber            *string     `xml:"ActNumber,attr"`
+	Number               *string     `xml:"Number,attr"`
+	DispatchNumber       *int        `xml:"DispatchNumber,attr"`
+	DeliveryDate         string      `xml:"DeliveryDate,attr"`
+	RecipientName        string      `xml:"RecipientName,attr"`
+	ReturnDispatchNumber *int        `xml:"ReturnDispatchNumber,attr"`
+	Status               *Status     `xml:"Status"`
+	Reason               Reason      `xml:"Reason"`
+	DelayReason          DelayReason `xml:"DelayReason"`
+	Package              *Package    `xml:"Package"`
+	Attempt              *Attempt    `xml:"Attempt"`
+	Call                 *Call       `xml:"Call"`
 }
 
 //Status Current order status
 type Status struct {
 	Date        *string  `xml:"Date,attr"`
-	Code        *string  `xml:"Code,attr"`
+	Code        *int     `xml:"Code,attr"`
 	Description *string  `xml:"Description,attr"`
-	CityCode    *string  `xml:"CityCode,attr"`
+	CityCode    *int     `xml:"CityCode,attr"`
 	CityName    *string  `xml:"CityName,attr"`
 	State       []*State `xml:"State"`
 }
@@ -66,24 +66,24 @@ type Status struct {
 //State Status change history
 type State struct {
 	Date        *string `xml:"Date,attr"`
-	Code        *string `xml:"Code,attr"`
+	Code        *int    `xml:"Code,attr"`
 	Description *string `xml:"Description,attr"`
-	CityCode    *string `xml:"CityCode,attr,omitempty"`
+	CityCode    *int    `xml:"CityCode,attr,omitempty"`
 	CityName    *string `xml:"CityName,attr,omitempty"`
 }
 
 //Reason Current additional status
 type Reason struct {
-	Date        *string `xml:"Date,attr"`
-	Code        *string `xml:"Code,attr"`
-	Description *string `xml:"Description,attr"`
+	Date        string `xml:"Date,attr"`
+	Code        int    `xml:"Code,attr"`
+	Description string `xml:"Description,attr"`
 }
 
 //DelayReason Current delay reason
 type DelayReason struct {
-	Date        *string `xml:"Date,attr"`
-	Code        *string `xml:"Code,attr"`
-	Description *string `xml:"Description,attr"`
+	Date        string  `xml:"Date,attr"`
+	Code        int     `xml:"Code,attr"`
+	Description string  `xml:"Description,attr"`
 	State       []State `xml:"State"`
 }
 
@@ -97,8 +97,8 @@ type Package struct {
 //Item Items
 type Item struct {
 	WareKey     *string `xml:"WareKey,attr"`
-	Amount      *string `xml:"Amount,attr"`
-	DelivAmount *string `xml:"DelivAmount,attr"`
+	Amount      *int    `xml:"Amount,attr"`
+	DelivAmount *int    `xml:"DelivAmount,attr"`
 }
 
 //Attempt Delivery time taken from the delivery schedule
@@ -134,7 +134,7 @@ type CallFail struct {
 //CallFailItem Failed call
 type CallFailItem struct {
 	Date              *string `xml:"Date,attr"`
-	ReasonCode        *string `xml:"ReasonCode,attr"`
+	ReasonCode        *int    `xml:"ReasonCode,attr"`
 	ReasonDescription *string `xml:"ReasonDescription,attr"`
 }
 
