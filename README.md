@@ -1,5 +1,7 @@
 # GO SDK for CDEK API
 [![GoDoc reference](https://godoc.org/github.com/vseinstrumentiru/CDEK?status.svg)](https://godoc.org/github.com/vseinstrumentiru/CDEK) 
+[![Build Status](https://travis-ci.com/vseinstrumentiru/CDEK.svg?branch=master)](https://travis-ci.com/vseinstrumentiru/CDEK)
+[![Coverage Status](https://coveralls.io/repos/github/vseinstrumentiru/CDEK/badge.svg?branch=travis)](https://coveralls.io/github/vseinstrumentiru/CDEK?branch=travis)
 [![Go Report Card](https://goreportcard.com/badge/github.com/vseinstrumentiru/CDEK)](https://goreportcard.com/report/github.com/vseinstrumentiru/CDEK)
 [![GitHub release](https://img.shields.io/github/release/vseinstrumentiru/cdek.svg)](https://github.com/vseinstrumentiru/CDEK/releases)
 [![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/2990/badge)](https://bestpractices.coreinfrastructure.org/projects/2990)
