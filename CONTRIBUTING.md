@@ -9,3 +9,5 @@ We generally follow the standard [github pull request](https://help.github.com/a
 All changes must be code reviewed.
 Expect reviewers to request that you avoid [common go style
 mistakes](https://github.com/golang/go/wiki/CodeReviewComments) in your pull requests.
+
+New code must be covered with tests. Modified code should be checked by existing tests.
