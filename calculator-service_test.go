@@ -3,6 +3,7 @@ package cdek
 import (
 	"encoding/json"
 	"io/ioutil"
+	"math"
 	"net/http"
 	"net/http/httptest"
 	"reflect"
@@ -82,11 +83,6 @@ func TestClient_CalculateDelivery(t *testing.T) {
 	testServerWithError := calculateDeliveryGetMockServerWithError()
 	defer testServerWithError.Close()
 
-	apiVersion := apiVersion
-	senderCityID := 1
-	receiverCityID := 2
-	tariffID := 3
-
 	type args struct {
 		client Client
 		req    GetCostReq
@@ -109,10 +105,10 @@ func TestClient_CalculateDelivery(t *testing.T) {
 					calculatorURL: testServer.URL,
 				},
 				req: GetCostReq{
-					Version:        &apiVersion,
-					SenderCityID:   &senderCityID,
-					ReceiverCityID: &receiverCityID,
-					TariffID:       &tariffID,
+					Version:        strLink(apiVersion),
+					SenderCityID:   intLink(1),
+					ReceiverCityID: intLink(2),
+					TariffID:       intLink(3),
 					Goods: []*Good{
 						{
 							Weight: 1.1,
@@ -145,10 +141,10 @@ func TestClient_CalculateDelivery(t *testing.T) {
 					calculatorURL: testServer.URL,
 				},
 				req: GetCostReq{
-					Version:        &apiVersion,
-					SenderCityID:   &senderCityID,
-					ReceiverCityID: &receiverCityID,
-					TariffID:       &tariffID,
+					Version:        strLink(apiVersion),
+					SenderCityID:   intLink(1),
+					ReceiverCityID: intLink(2),
+					TariffID:       intLink(3),
 					Goods:          nil,
 					Services:       nil,
 				},
@@ -168,11 +164,38 @@ func TestClient_CalculateDelivery(t *testing.T) {
 					calculatorURL: testServerWithError.URL,
 				},
 				req: GetCostReq{
-					Version:        &apiVersion,
-					SenderCityID:   &senderCityID,
-					ReceiverCityID: &receiverCityID,
-					TariffID:       &tariffID,
+					Version:        strLink(apiVersion),
+					SenderCityID:   intLink(1),
+					ReceiverCityID: intLink(2),
+					TariffID:       intLink(3),
 					Goods:          nil,
+					Services:       nil,
+				},
+			},
+			nil,
+			true,
+		},
+		{
+			"marshal error",
+			args{
+				client: Client{
+					auth: &auth{
+						account: "123",
+						secure:  "123",
+					},
+					apiURL:        "",
+					calculatorURL: testServerWithError.URL,
+				},
+				req: GetCostReq{
+					Version:        strLink(apiVersion),
+					SenderCityID:   nil,
+					ReceiverCityID: intLink(2),
+					TariffID:       intLink(3),
+					Goods:          []*Good{
+						{
+							Weight: math.Inf(1),
+						},
+					},
 					Services:       nil,
 				},
 			},
