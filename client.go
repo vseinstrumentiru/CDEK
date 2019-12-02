@@ -6,10 +6,12 @@ import (
 	"time"
 )
 
-const jsonContentType = "application/json"
-const urlFormEncoded = "application/x-www-form-urlencoded"
+const (
+	jsonContentType = "application/json"
+	urlFormEncoded  = "application/x-www-form-urlencoded"
 
-const calculatorURLDefault = "http://api.cdek.ru/calculator/calculate_price_by_json.php"
+	calculatorURLDefault = "http://api.cdek.ru/calculator/calculate_price_by_json.php"
+)
 
 //Client SDK Client configuration
 type Client struct {

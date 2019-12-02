@@ -11,7 +11,9 @@ import (
 	"github.com/hashicorp/go-multierror"
 )
 
-const deleteOrderURL = "delete_orders.php"
+const (
+	deleteOrderURL = "delete_orders.php"
+)
 
 //DeleteOrder The method is designed to cancel/delete an order at the client's initiative.
 func (c Client) DeleteOrder(req DeleteOrderReq) (*DeleteOrderResp, error) {

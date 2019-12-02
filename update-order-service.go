@@ -11,7 +11,9 @@ import (
 	"github.com/hashicorp/go-multierror"
 )
 
-const updateOrderURL = "update"
+const (
+	updateOrderURL = "update"
+)
 
 //UpdateOrder This method is used to change a created order.
 func (c Client) UpdateOrder(req UpdateOrderReq) (*UpdateOrderResp, error) {

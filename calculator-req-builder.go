@@ -1,6 +1,8 @@
 package cdek
 
-const apiVersion = "1.0"
+const (
+	apiVersion = "1.0"
+)
 
 //NewGetCostReq create new instance of GetCostReq
 func NewGetCostReq(senderCityID int, receiverCityID int, tariffID int) *GetCostReq {

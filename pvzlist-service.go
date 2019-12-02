@@ -8,7 +8,9 @@ import (
 	"path"
 )
 
-const pvzListURL = "pvzlist/v1/xml"
+const (
+	pvzListURL = "pvzlist/v1/xml"
+)
 
 //GetPvzList The method is used to load the list of active pickup points, from which the client can pick up its order.
 func (c Client) GetPvzList(filter map[PvzListFilter]string) ([]*Pvz, error) {

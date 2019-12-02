@@ -10,7 +10,9 @@ import (
 	"github.com/hashicorp/go-multierror"
 )
 
-const regionsURL = "/v1/location/regions/json"
+const (
+	regionsURL = "/v1/location/regions/json"
+)
 
 //GetRegions This method is used to load detailed information on regions.
 func (c Client) GetRegions(filter map[RegionFilter]string) (*GetRegionsResp, error) {

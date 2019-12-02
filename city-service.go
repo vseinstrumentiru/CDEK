@@ -10,7 +10,9 @@ import (
 	"github.com/hashicorp/go-multierror"
 )
 
-const citiesURL = "v1/location/cities/json"
+const (
+	citiesURL = "v1/location/cities/json"
+)
 
 //GetCities This method is used to load detailed information on cities.
 func (c Client) GetCities(filter map[CityFilter]string) (*GetCitiesResp, error) {

@@ -9,7 +9,9 @@ import (
 	"strings"
 )
 
-const statusReportURL = "/status_report_h.php"
+const (
+	statusReportURL = "/status_report_h.php"
+)
 
 //GetStatusReport This method is used to generate an order status report, including order change history.
 func (c Client) GetStatusReport(statusReportReq StatusReport) (*StatusReportResp, error) {

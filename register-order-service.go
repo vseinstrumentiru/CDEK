@@ -11,7 +11,9 @@ import (
 	"github.com/hashicorp/go-multierror"
 )
 
-const registerOrderURL = "new_orders.php"
+const (
+	registerOrderURL = "new_orders.php"
+)
 
 //RegisterOrder This method is used to register orders to be delivered to clients.
 func (c Client) RegisterOrder(req RegisterOrderReq) (*RegisterOrderResp, error) {
