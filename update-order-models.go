@@ -19,6 +19,7 @@ type UpdateOrder struct {
 	DeliveryRecipientVATRate *string                   `xml:"DeliveryRecipientVATRate,attr"`
 	DeliveryRecipientVATSum  *float64                  `xml:"DeliveryRecipientVATSum,attr"`
 	RecipientName            *string                   `xml:"RecipientName,attr"`
+	RecipientEmail           *string                   `xml:"RecipientEmail,attr"`
 	Phone                    *string                   `xml:"Phone,attr"`
 	RecipientINN             *string                   `xml:"RecipientINN,attr"`
 	DateInvoice              *string                   `xml:"DateInvoice,attr"`

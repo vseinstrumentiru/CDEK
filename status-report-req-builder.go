@@ -60,16 +60,19 @@ func (changePeriod *ChangePeriod) SetDateLast(date time.Time) *ChangePeriod {
 	return changePeriod
 }
 
-//NewStatusReportOrderReq StatusReportOrderReq builder
-// dispatchNumber: CDEK shipment number (assigned when orders are imported). Order identifier in the CDEK IS.
-// number: Client's shipment number. Order identifier in the IS of the CDEK Client.
-// date: Date of an acceptance certificate, based on which the order has been transferred.
-func NewStatusReportOrderReq(dispatchNumber int, number string, date time.Time) *StatusReportOrderReq {
+//NewStatusReportByCDEKNumberReq StatusReportOrderReq builder by CDEK order number
+func NewStatusReportByCDEKIdentifierReq(dispatchNumber int) *StatusReportOrderReq {
+	return &StatusReportOrderReq{
+		DispatchNumber: &dispatchNumber,
+	}
+}
+
+//NewStatusReportByClientNumberReq StatusReportOrderReq builder by client order number
+func NewStatusReportByClientIdentifierReq(number string, date time.Time) *StatusReportOrderReq {
 	dateFormatted := date.Format("2006-01-02")
 
 	return &StatusReportOrderReq{
-		DispatchNumber: &dispatchNumber,
-		Number:         &number,
-		Date:           &dateFormatted,
+		Number: &number,
+		Date:   &dateFormatted,
 	}
 }
