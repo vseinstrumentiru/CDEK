@@ -503,6 +503,82 @@ func TestUpdateOrder_SetRecipientName(t *testing.T) {
 	}
 }
 
+func TestUpdateOrder_SetRecipientEmail(t *testing.T) {
+	type fields struct {
+		Number                   *string
+		DispatchNumber           *int
+		DeliveryRecipientCost    *float64
+		DeliveryRecipientVATRate *string
+		DeliveryRecipientVATSum  *float64
+		RecipientName            *string
+		RecipientEmail           *string
+		Phone                    *string
+		RecipientINN             *string
+		DateInvoice              *string
+		Passport                 *Passport
+		Address                  *Address
+		DeliveryRecipientCostAdv *DeliveryRecipientCostAdv
+		Package                  *OrderPackage
+	}
+	type args struct {
+		recipientEmail string
+	}
+	tests := []struct {
+		name   string
+		fields fields
+		args   args
+		want   *UpdateOrder
+	}{
+		{
+			name: "set",
+			fields: fields{
+				RecipientEmail: nil,
+			},
+			args: args{
+				recipientEmail: "test@email.com",
+			},
+			want: &UpdateOrder{
+				RecipientEmail: strLink("test@email.com"),
+			},
+		},
+		{
+			name: "modify",
+			fields: fields{
+				RecipientEmail: strLink("test@email.com"),
+			},
+			args: args{
+				recipientEmail: "test_mod@email.com",
+			},
+			want: &UpdateOrder{
+				RecipientEmail: strLink("test_mod@email.com"),
+			},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			updateOrder := &UpdateOrder{
+				Number:                   tt.fields.Number,
+				DispatchNumber:           tt.fields.DispatchNumber,
+				DeliveryRecipientCost:    tt.fields.DeliveryRecipientCost,
+				DeliveryRecipientVATRate: tt.fields.DeliveryRecipientVATRate,
+				DeliveryRecipientVATSum:  tt.fields.DeliveryRecipientVATSum,
+				RecipientName:            tt.fields.RecipientName,
+				RecipientEmail:           tt.fields.RecipientEmail,
+				Phone:                    tt.fields.Phone,
+				RecipientINN:             tt.fields.RecipientINN,
+				DateInvoice:              tt.fields.DateInvoice,
+				Passport:                 tt.fields.Passport,
+				Address:                  tt.fields.Address,
+				DeliveryRecipientCostAdv: tt.fields.DeliveryRecipientCostAdv,
+				Package:                  tt.fields.Package,
+			}
+			if got := updateOrder.SetRecipientEmail(tt.args.recipientEmail); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("UpdateOrder.SetRecipientEmail() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
 func TestUpdateOrder_SetPhone(t *testing.T) {
 	type fields struct {
 		Number                   *string
