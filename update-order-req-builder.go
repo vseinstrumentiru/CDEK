@@ -57,6 +57,13 @@ func (updateOrder *UpdateOrder) SetRecipientName(recipientName string) *UpdateOr
 	return updateOrder
 }
 
+//SetRecipientEmail Receiver's email for sending order status notifications and contacting in case of failed calls
+func (updateOrder *UpdateOrder) SetRecipientEmail(recipientEmail string) *UpdateOrder {
+	updateOrder.RecipientEmail = &recipientEmail
+
+	return updateOrder
+}
+
 //SetPhone Receiver's phone
 func (updateOrder *UpdateOrder) SetPhone(phone string) *UpdateOrder {
 	updateOrder.Phone = &phone
