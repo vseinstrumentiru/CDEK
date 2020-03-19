@@ -469,11 +469,9 @@ func TestChangePeriod_SetDateLast(t *testing.T) {
 	}
 }
 
-func TestNewStatusReportOrderReq(t *testing.T) {
+func TestNewStatusReportByCDEKIdentifierReq(t *testing.T) {
 	type args struct {
 		dispatchNumber int
-		number         string
-		date           time.Time
 	}
 	tests := []struct {
 		name string
@@ -484,21 +482,47 @@ func TestNewStatusReportOrderReq(t *testing.T) {
 			name: "constructor",
 			args: args{
 				dispatchNumber: 1,
-				number:         "test_number",
-				date:           time.Date(2019, 7, 15, 0, 0, 0, 0, time.UTC),
 			},
 			want: &StatusReportOrderReq{
 				DispatchNumber: intLink(1),
-				Number:         strLink("test_number"),
-				Date:           strLink("2019-07-15"),
 			},
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got := NewStatusReportOrderReq(tt.args.dispatchNumber, tt.args.number, tt.args.date)
-			if !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("NewStatusReportOrderReq() = %v, want %v", got, tt.want)
+			if got := NewStatusReportByCDEKIdentifierReq(tt.args.dispatchNumber); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("NewStatusReportByCDEKIdentifierReq() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func TestNewStatusReportByClientIdentifierReq(t *testing.T) {
+	type args struct {
+		number string
+		date   time.Time
+	}
+	tests := []struct {
+		name string
+		args args
+		want *StatusReportOrderReq
+	}{
+		{
+			name: "constructor",
+			args: args{
+				number: "test_number",
+				date:   time.Date(2019, 7, 15, 0, 0, 0, 0, time.UTC),
+			},
+			want: &StatusReportOrderReq{
+				Number: strLink("test_number"),
+				Date:   strLink("2019-07-15"),
+			},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := NewStatusReportByClientIdentifierReq(tt.args.number, tt.args.date); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("NewStatusReportByClientIdentifierReq() = %v, want %v", got, tt.want)
 			}
 		})
 	}
