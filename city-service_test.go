@@ -99,7 +99,7 @@ func TestClient_GetCities(t *testing.T) {
 				&City{
 					strLink("dece8676-077e-4793-9d67-96112fe96b03"),
 					strLink("Москва"),
-					intLink(61627),
+					strLink("61627"),
 					strLink("Кировская"),
 					intLink(43),
 					intLink(44),
@@ -116,7 +116,7 @@ func TestClient_GetCities(t *testing.T) {
 				&City{
 					strLink("18bd1ad1-0ed5-4908-9069-db07b805aa53"),
 					strLink("Москва"),
-					intLink(44),
+					strLink("44"),
 					strLink("Москва"),
 					intLink(77),
 					intLink(81),

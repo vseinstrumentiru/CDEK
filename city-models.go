@@ -7,7 +7,7 @@ type GetCitiesResp []*City
 type City struct {
 	CityUUID       *string  `json:"cityUuid"`
 	CityName       *string  `json:"cityName"`
-	CityCode       *int     `json:"cityCode,string"`
+	CityCode       *string     `json:"cityCode"`
 	Region         *string  `json:"region"`
 	RegionCodeExt  *int     `json:"regionCodeExt,string"`
 	RegionCode     *int     `json:"regionCode,string"`
