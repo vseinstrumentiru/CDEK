@@ -10,7 +10,7 @@ import (
 )
 
 //CalculateDelivery Cost calculation on tariffs with priority.
-func (c Client) CalculateDelivery(req GetCostReq) (*GetCostRespResult, error) {
+func (c clientImpl) CalculateDelivery(req GetCostReq) (*GetCostRespResult, error) {
 	req.setAuth(c.auth)
 	reqByte, err := json.Marshal(req)
 	if err != nil {

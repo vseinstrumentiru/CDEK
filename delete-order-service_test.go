@@ -66,7 +66,7 @@ func TestClient_DeleteOrder(t *testing.T) {
 	defer mockServerWithError.Close()
 
 	type fields struct {
-		client Client
+		client clientImpl
 	}
 	type args struct {
 		req DeleteOrderReq
@@ -81,7 +81,7 @@ func TestClient_DeleteOrder(t *testing.T) {
 		{
 			name: "delete",
 			fields: fields{
-				client: Client{
+				client: clientImpl{
 					apiURL: mockServer.URL,
 				},
 			},
@@ -112,7 +112,7 @@ func TestClient_DeleteOrder(t *testing.T) {
 		{
 			name: "order not found",
 			fields: fields{
-				client: Client{
+				client: clientImpl{
 					apiURL: mockServer.URL,
 				},
 			},
@@ -131,7 +131,7 @@ func TestClient_DeleteOrder(t *testing.T) {
 		{
 			name: "wrong quantity error",
 			fields: fields{
-				client: Client{
+				client: clientImpl{
 					apiURL: mockServer.URL,
 				},
 			},
@@ -150,7 +150,7 @@ func TestClient_DeleteOrder(t *testing.T) {
 		{
 			name: "server error",
 			fields: fields{
-				client: Client{
+				client: clientImpl{
 					apiURL: mockServerWithError.URL,
 				},
 			},
@@ -163,7 +163,7 @@ func TestClient_DeleteOrder(t *testing.T) {
 		{
 			name: "wrong url",
 			fields: fields{
-				client: Client{
+				client: clientImpl{
 					apiURL: "wrong://url",
 				},
 			},
@@ -176,7 +176,7 @@ func TestClient_DeleteOrder(t *testing.T) {
 		{
 			name: "wrong parse url",
 			fields: fields{
-				client: Client{
+				client: clientImpl{
 					apiURL: " wrong://url ",
 				},
 			},

@@ -15,7 +15,7 @@ const (
 )
 
 //GetRegions This method is used to load detailed information on regions.
-func (c Client) GetRegions(filter map[RegionFilter]string) (*GetRegionsResp, error) {
+func (c clientImpl) GetRegions(filter map[RegionFilter]string) (*GetRegionsResp, error) {
 	serverURL, err := url.Parse(c.apiURL)
 	if err != nil {
 		return nil, err

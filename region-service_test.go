@@ -18,7 +18,7 @@ func TestClient_GetRegions(t *testing.T) {
 	defer mockServerWithError.Close()
 
 	type fields struct {
-		client Client
+		client clientImpl
 	}
 	type args struct {
 		filter map[RegionFilter]string
@@ -33,7 +33,7 @@ func TestClient_GetRegions(t *testing.T) {
 		{
 			name: "handle response",
 			fields: fields{
-				client: Client{
+				client: clientImpl{
 					apiURL: mockServer.URL,
 				},
 			},
@@ -60,7 +60,7 @@ func TestClient_GetRegions(t *testing.T) {
 		{
 			name: "handle valid error",
 			fields: fields{
-				client: Client{
+				client: clientImpl{
 					apiURL: mockServerWithValidError.URL,
 				},
 			},
@@ -75,7 +75,7 @@ func TestClient_GetRegions(t *testing.T) {
 		{
 			name: "uncompilable url",
 			fields: fields{
-				client: Client{
+				client: clientImpl{
 					apiURL: " wrong://url ",
 				},
 			},
@@ -85,7 +85,7 @@ func TestClient_GetRegions(t *testing.T) {
 		{
 			name: "wrong url",
 			fields: fields{
-				client: Client{
+				client: clientImpl{
 					apiURL: "wrong://url",
 				},
 			},
@@ -95,7 +95,7 @@ func TestClient_GetRegions(t *testing.T) {
 		{
 			name: "server error",
 			fields: fields{
-				client: Client{
+				client: clientImpl{
 					apiURL: mockServerWithError.URL,
 				},
 			},
@@ -108,11 +108,11 @@ func TestClient_GetRegions(t *testing.T) {
 			cl := tt.fields.client
 			got, err := cl.GetRegions(tt.args.filter)
 			if (err != nil) != tt.wantErr {
-				t.Errorf("Client.GetRegions() error = %v, wantErr %v", err, tt.wantErr)
+				t.Errorf("clientImpl.GetRegions() error = %v, wantErr %v", err, tt.wantErr)
 				return
 			}
 			if !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("Client.GetRegions() = %v, want %v", got, tt.want)
+				t.Errorf("clientImpl.GetRegions() = %v, want %v", got, tt.want)
 			}
 		})
 	}

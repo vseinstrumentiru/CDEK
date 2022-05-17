@@ -15,14 +15,14 @@ func TestNewClient(t *testing.T) {
 	tests := []struct {
 		name string
 		args args
-		want *Client
+		want *clientImpl
 	}{
 		{
-			"Client created",
+			"clientImpl created",
 			args{
 				apiURL: "apiURL",
 			},
-			&Client{
+			&clientImpl{
 				apiURL:        "apiURL",
 				calculatorURL: calculatorURLDefault,
 			},
@@ -94,7 +94,7 @@ func TestClient_SetAuth(t *testing.T) {
 		name   string
 		fields fields
 		args   args
-		want   *Client
+		want   *clientImpl
 	}{
 		{
 			name: "auth set",
@@ -105,7 +105,7 @@ func TestClient_SetAuth(t *testing.T) {
 				account: "testAccount",
 				secure:  "testSecure",
 			},
-			want: &Client{
+			want: &clientImpl{
 				auth: &auth{
 					account: "testAccount",
 					secure:  "testSecure",
@@ -115,7 +115,7 @@ func TestClient_SetAuth(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			clientConf := &Client{
+			clientConf := &clientImpl{
 				auth:          tt.fields.Auth,
 				apiURL:        tt.fields.CdekAPIURL,
 				calculatorURL: tt.fields.CalculatorURL,
@@ -140,7 +140,7 @@ func TestClient_SetCalculatorURL(t *testing.T) {
 		name   string
 		fields fields
 		args   args
-		want   *Client
+		want   *clientImpl
 	}{
 		{
 			name: "set url",
@@ -150,7 +150,7 @@ func TestClient_SetCalculatorURL(t *testing.T) {
 			args: args{
 				calculatorURL: "testCalcUrl",
 			},
-			want: &Client{
+			want: &clientImpl{
 				calculatorURL: "testCalcUrl",
 			},
 		},
@@ -162,14 +162,14 @@ func TestClient_SetCalculatorURL(t *testing.T) {
 			args: args{
 				calculatorURL: "testCalcUrl_rewritten",
 			},
-			want: &Client{
+			want: &clientImpl{
 				calculatorURL: "testCalcUrl_rewritten",
 			},
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			clientConf := &Client{
+			clientConf := &clientImpl{
 				auth:          tt.fields.Auth,
 				apiURL:        tt.fields.CdekAPIURL,
 				calculatorURL: tt.fields.CalculatorURL,

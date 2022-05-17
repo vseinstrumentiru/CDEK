@@ -60,7 +60,7 @@ func TestClient_GetPvzList(t *testing.T) {
 	defer mockServerWithError.Close()
 
 	type fields struct {
-		client Client
+		client clientImpl
 	}
 	type args struct {
 		filter map[PvzListFilter]string
@@ -75,7 +75,7 @@ func TestClient_GetPvzList(t *testing.T) {
 		{
 			"server ok",
 			fields{
-				Client{
+				clientImpl{
 					apiURL: mockServer.URL,
 				},
 			},
@@ -161,7 +161,7 @@ func TestClient_GetPvzList(t *testing.T) {
 		{
 			"server error",
 			fields{
-				Client{
+				clientImpl{
 					apiURL: mockServerWithError.URL,
 				},
 			},
@@ -172,7 +172,7 @@ func TestClient_GetPvzList(t *testing.T) {
 		{
 			"wrong url parse error",
 			fields{
-				Client{
+				clientImpl{
 					apiURL: " wrong://url ",
 				},
 			},
@@ -183,7 +183,7 @@ func TestClient_GetPvzList(t *testing.T) {
 		{
 			"wrong url",
 			fields{
-				Client{
+				clientImpl{
 					apiURL: "wrong://url",
 				},
 			},
@@ -197,13 +197,13 @@ func TestClient_GetPvzList(t *testing.T) {
 			cl := tt.fields.client
 			got, err := cl.GetPvzList(tt.args.filter)
 			if (err != nil) != tt.wantErr {
-				t.Errorf("Client.GetPvzList() error = %v, wantErr %v", err, tt.wantErr)
+				t.Errorf("clientImpl.GetPvzList() error = %v, wantErr %v", err, tt.wantErr)
 				return
 			}
 			g, _ := json.Marshal(got)
 			w, _ := json.Marshal(tt.want)
 			if !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("Client.GetPvzList() = \n %v \n, want \n %v", string(g), string(w))
+				t.Errorf("clientImpl.GetPvzList() = \n %v \n, want \n %v", string(g), string(w))
 			}
 		})
 	}

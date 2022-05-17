@@ -14,7 +14,7 @@ func NewUpdateOrder() *UpdateOrder {
 	return new(UpdateOrder)
 }
 
-//SetNumber Client shipment number (unique for orders of a particular Client). Order identifier in the Client's IS.
+//SetNumber clientImpl shipment number (unique for orders of a particular clientImpl). Order identifier in the clientImpl's IS.
 func (updateOrder *UpdateOrder) SetNumber(number string) *UpdateOrder {
 	updateOrder.Number = &number
 

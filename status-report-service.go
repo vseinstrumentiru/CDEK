@@ -14,7 +14,7 @@ const (
 )
 
 //GetStatusReport This method is used to generate an order status report, including order change history.
-func (c Client) GetStatusReport(statusReportReq StatusReport) (*StatusReportResp, error) {
+func (c clientImpl) GetStatusReport(statusReportReq StatusReport) (*StatusReportResp, error) {
 	statusReportReq.setAuth(c.auth)
 	reqByte, err := xml.Marshal(statusReportReq)
 	if err != nil {

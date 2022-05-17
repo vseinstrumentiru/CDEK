@@ -7,7 +7,7 @@ import (
 //NewDeliveryRequest Order registration request builder
 // number: ID number of the acceptance certificate/waybill,
 // accompanying document attached upon the transfer of the cargo to CDEK, generated in the online store's system.
-// Identifier of the list of cargoes in the IS of the CDEK Client. By default, you can use 1.
+// Identifier of the list of cargoes in the IS of the CDEK clientImpl. By default, you can use 1.
 // orderCount: The total number of orders in a document, default value: 1.
 // order: Shipment (order)
 func NewDeliveryRequest(number string, orderCount int, order *OrderReq) *RegisterOrderReq {
@@ -33,7 +33,7 @@ func (registerOrderReq *RegisterOrderReq) SetCallCourier(callCourier CallCourier
 }
 
 //NewOrderReq Shipment (order) builder
-// number: Client shipment number (unique for orders of a particular Client). Order identifier in the Client's IS
+// number: clientImpl shipment number (unique for orders of a particular clientImpl). Order identifier in the clientImpl's IS
 // recipientName: Receiver (full name). At least 3 characters.
 // phone: Receiver's phone
 // tariffTypeCode: Code of tariff type
@@ -138,7 +138,7 @@ func (orderReq *OrderReq) SetPassport(passport Passport) *OrderReq {
 	return orderReq
 }
 
-//SetSender Sender. Must be defined if it is different from the online store Client.
+//SetSender Sender. Must be defined if it is different from the online store clientImpl.
 // If the online store is a sender, the Sender tag is not available.
 func (orderReq *OrderReq) SetSender(sender Sender) *OrderReq {
 	orderReq.Sender = &sender
@@ -185,7 +185,7 @@ func (orderReq *OrderReq) SetRecipientCurrency(recipientCurrency string) *OrderR
 }
 
 //SetItemsCurrency Code of declared value currency (all items in the order).
-// Currency of settlements with the CDEK Client under contract.
+// Currency of settlements with the CDEK clientImpl under contract.
 func (orderReq *OrderReq) SetItemsCurrency(itemsCurrency string) *OrderReq {
 	orderReq.ItemsCurrency = &itemsCurrency
 
@@ -395,11 +395,11 @@ func (seller *Seller) SetOwnershipForm(ownershipForm int) *Seller {
 
 //NewOrderPackage OrderPackage builder
 // number: Package number (ordinal package number or order number can be used), unique for this order.
-// Order identifier in the Client's IS.
+// Order identifier in the clientImpl's IS.
 // barCode: Package barcode, package identifier (if any);
 // otherwise, transmit a value of the package number: Packege.Number).
 // The parameter is used to handle the cargo at CDEK warehouses), unique for this order.
-// Package identifier in the Client's IS.
+// Package identifier in the clientImpl's IS.
 // weight: Total weight (in grams)
 func NewOrderPackage(number string, barCode string, weight int) *OrderPackage {
 	return &OrderPackage{

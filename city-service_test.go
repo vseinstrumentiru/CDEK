@@ -78,7 +78,7 @@ func TestClient_GetCities(t *testing.T) {
 	filterCausesServerError.AddFilter(CityFilterPage, "2000")
 
 	type args struct {
-		client Client
+		client clientImpl
 		filter map[CityFilter]string
 	}
 	tests := []struct {
@@ -90,7 +90,7 @@ func TestClient_GetCities(t *testing.T) {
 		{
 			name: "got cities",
 			args: args{
-				client: Client{
+				client: clientImpl{
 					apiURL: testServer.URL,
 				},
 				filter: citiesFilterBuilder.Filter(),
@@ -136,7 +136,7 @@ func TestClient_GetCities(t *testing.T) {
 		{
 			name: "server error",
 			args: args{
-				client: Client{
+				client: clientImpl{
 					apiURL: testServerWithError.URL,
 				},
 				filter: nil,
@@ -147,7 +147,7 @@ func TestClient_GetCities(t *testing.T) {
 		{
 			name: "uncompilable url",
 			args: args{
-				client: Client{
+				client: clientImpl{
 					apiURL: " wrong://url ",
 				},
 				filter: nil,
@@ -158,7 +158,7 @@ func TestClient_GetCities(t *testing.T) {
 		{
 			name: "wrong url",
 			args: args{
-				client: Client{
+				client: clientImpl{
 					apiURL: "wrong://url",
 				},
 				filter: nil,
@@ -169,7 +169,7 @@ func TestClient_GetCities(t *testing.T) {
 		{
 			name: "valid error on service",
 			args: args{
-				client: Client{
+				client: clientImpl{
 					apiURL: testServerWithValidError.URL,
 				},
 				filter: filterCausesServerError.Filter(),

@@ -14,7 +14,7 @@ func NewDeleteOrder() *DeleteOrder {
 	return new(DeleteOrder)
 }
 
-//SetNumber Client's shipment number. Order identifier in the IS of the CDEK client.
+//SetNumber clientImpl's shipment number. Order identifier in the IS of the CDEK client.
 func (o *DeleteOrder) SetNumber(number string) *DeleteOrder {
 	o.Number = &number
 

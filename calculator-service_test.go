@@ -84,7 +84,7 @@ func TestClient_CalculateDelivery(t *testing.T) {
 	defer testServerWithError.Close()
 
 	type args struct {
-		client Client
+		client clientImpl
 		req    GetCostReq
 	}
 	tests := []struct {
@@ -96,7 +96,7 @@ func TestClient_CalculateDelivery(t *testing.T) {
 		{
 			"success deliveries calculated",
 			args{
-				client: Client{
+				client: clientImpl{
 					auth: &auth{
 						account: "123",
 						secure:  "123",
@@ -132,7 +132,7 @@ func TestClient_CalculateDelivery(t *testing.T) {
 		{
 			"wrong goods",
 			args{
-				client: Client{
+				client: clientImpl{
 					auth: &auth{
 						account: "123",
 						secure:  "123",
@@ -155,7 +155,7 @@ func TestClient_CalculateDelivery(t *testing.T) {
 		{
 			"server error",
 			args{
-				client: Client{
+				client: clientImpl{
 					auth: &auth{
 						account: "123",
 						secure:  "123",
@@ -178,7 +178,7 @@ func TestClient_CalculateDelivery(t *testing.T) {
 		{
 			"marshal error",
 			args{
-				client: Client{
+				client: clientImpl{
 					auth: &auth{
 						account: "123",
 						secure:  "123",
@@ -191,12 +191,12 @@ func TestClient_CalculateDelivery(t *testing.T) {
 					SenderCityID:   nil,
 					ReceiverCityID: intLink(2),
 					TariffID:       intLink(3),
-					Goods:          []*Good{
+					Goods: []*Good{
 						{
 							Weight: math.Inf(1),
 						},
 					},
-					Services:       nil,
+					Services: nil,
 				},
 			},
 			nil,
@@ -205,7 +205,7 @@ func TestClient_CalculateDelivery(t *testing.T) {
 		{
 			"wrong url",
 			args{
-				client: Client{
+				client: clientImpl{
 					calculatorURL: "wrong url",
 				},
 				req: GetCostReq{},

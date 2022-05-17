@@ -13,15 +13,15 @@ const (
 	calculatorURLDefault = "http://api.cdek.ru/calculator/calculate_price_by_json.php"
 )
 
-//ServiceAccessСonfigurator allows to configure client for the service
-type ServiceAccessСonfigurator interface {
-	SetAuth(account, secure string) ServiceProvider
-	SetCalculatorURL(calculatorURL string) ServiceProvider
+//ClientСonfigurator allows to configure client for the service
+type ClientСonfigurator interface {
+	SetAuth(account, secure string) Client
+	SetCalculatorURL(calculatorURL string) Client
 }
 
-//ServiceProvider provides CDEK API functionality
-type ServiceProvider interface {
-	ServiceAccessСonfigurator
+//Client provides CDEK API functionality
+type Client interface {
+	ClientСonfigurator
 
 	CalculateDelivery(req GetCostReq) (*GetCostRespResult, error)
 	GetCities(filter map[CityFilter]string) (*GetCitiesResp, error)
@@ -33,23 +33,23 @@ type ServiceProvider interface {
 	GetStatusReport(statusReportReq StatusReport) (*StatusReportResp, error)
 }
 
-//Client SDK Client configuration
-type Client struct {
+//clientImpl SDK clientImpl configuration
+type clientImpl struct {
 	auth          *auth
 	apiURL        string
 	calculatorURL string
 }
 
-//NewClient Client constructor with defaults
-func NewClient(apiURL string) ServiceProvider {
-	return &Client{
+//NewClient clientImpl constructor with defaults
+func NewClient(apiURL string) Client {
+	return &clientImpl{
 		apiURL:        apiURL,
 		calculatorURL: calculatorURLDefault,
 	}
 }
 
 //SetAuth set auth data
-func (c *Client) SetAuth(account, secure string) ServiceProvider {
+func (c *clientImpl) SetAuth(account, secure string) Client {
 	c.auth = &auth{
 		account: account,
 		secure:  secure,
@@ -59,7 +59,7 @@ func (c *Client) SetAuth(account, secure string) ServiceProvider {
 }
 
 //SetCalculatorURL url for delivery calculation
-func (c *Client) SetCalculatorURL(calculatorURL string) ServiceProvider {
+func (c *clientImpl) SetCalculatorURL(calculatorURL string) Client {
 	c.calculatorURL = calculatorURL
 
 	return c

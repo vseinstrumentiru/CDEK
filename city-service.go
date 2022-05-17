@@ -15,7 +15,7 @@ const (
 )
 
 //GetCities This method is used to load detailed information on cities.
-func (c Client) GetCities(filter map[CityFilter]string) (*GetCitiesResp, error) {
+func (c clientImpl) GetCities(filter map[CityFilter]string) (*GetCitiesResp, error) {
 	serverURL, err := url.Parse(c.apiURL)
 	if err != nil {
 		return nil, err

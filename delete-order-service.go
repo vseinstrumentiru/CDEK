@@ -16,7 +16,7 @@ const (
 )
 
 //DeleteOrder The method is designed to cancel/delete an order at the client's initiative.
-func (c Client) DeleteOrder(req DeleteOrderReq) (*DeleteOrderResp, error) {
+func (c clientImpl) DeleteOrder(req DeleteOrderReq) (*DeleteOrderResp, error) {
 	req.setAuth(c.auth)
 	reqByte, err := xml.Marshal(req)
 

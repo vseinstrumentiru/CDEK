@@ -18,7 +18,7 @@ func TestClient_UpdateOrder(t *testing.T) {
 	defer mockServerWithError.Close()
 
 	type fields struct {
-		client Client
+		client clientImpl
 	}
 	type args struct {
 		req UpdateOrderReq
@@ -47,7 +47,7 @@ func TestClient_UpdateOrder(t *testing.T) {
 		{
 			name: "creation",
 			fields: fields{
-				client: Client{
+				client: clientImpl{
 					apiURL: mockServer.URL,
 				},
 			},
@@ -72,7 +72,7 @@ func TestClient_UpdateOrder(t *testing.T) {
 		{
 			name: "handle valid error",
 			fields: fields{
-				client: Client{
+				client: clientImpl{
 					apiURL: mockServerWithValidError.URL,
 				},
 			},
@@ -85,7 +85,7 @@ func TestClient_UpdateOrder(t *testing.T) {
 		{
 			name: "uncompilable url",
 			fields: fields{
-				client: Client{
+				client: clientImpl{
 					apiURL: " wrong://url ",
 				},
 			},
@@ -95,7 +95,7 @@ func TestClient_UpdateOrder(t *testing.T) {
 		{
 			name: "wrong url",
 			fields: fields{
-				client: Client{
+				client: clientImpl{
 					apiURL: "wrong://url",
 				},
 			},
@@ -105,7 +105,7 @@ func TestClient_UpdateOrder(t *testing.T) {
 		{
 			name: "server error",
 			fields: fields{
-				client: Client{
+				client: clientImpl{
 					apiURL: mockServerWithError.URL,
 				},
 			},
@@ -118,11 +118,11 @@ func TestClient_UpdateOrder(t *testing.T) {
 			cl := tt.fields.client
 			got, err := cl.UpdateOrder(tt.args.req)
 			if (err != nil) != tt.wantErr {
-				t.Errorf("Client.UpdateOrder() error = %v, wantErr %v", err, tt.wantErr)
+				t.Errorf("clientImpl.UpdateOrder() error = %v, wantErr %v", err, tt.wantErr)
 				return
 			}
 			if !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("Client.UpdateOrder() = %v, want %v", got, tt.want)
+				t.Errorf("clientImpl.UpdateOrder() = %v, want %v", got, tt.want)
 			}
 		})
 	}

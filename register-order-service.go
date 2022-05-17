@@ -16,7 +16,7 @@ const (
 )
 
 //RegisterOrder This method is used to register orders to be delivered to clients.
-func (c Client) RegisterOrder(req RegisterOrderReq) (*RegisterOrderResp, error) {
+func (c clientImpl) RegisterOrder(req RegisterOrderReq) (*RegisterOrderResp, error) {
 	req.setAuth(c.auth)
 	reqByte, err := xml.Marshal(req)
 

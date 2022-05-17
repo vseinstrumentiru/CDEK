@@ -62,7 +62,7 @@ type Passport struct {
 	DateBirth *string `xml:"DateBirth,attr"`
 }
 
-//Sender Sender. Must be defined if it is different from the online store Client.
+//Sender Sender. Must be defined if it is different from the online store clientImpl.
 // If the online store is a sender, the Sender tag is not available.
 type Sender struct {
 	Company *string   `xml:"Company,attr"`
