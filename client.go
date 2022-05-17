@@ -4,6 +4,7 @@ import (
 	"context"
 	"crypto/md5"
 	"encoding/hex"
+	"net/http"
 	"time"
 )
 
@@ -39,6 +40,7 @@ type clientImpl struct {
 	auth          *auth
 	apiURL        string
 	calculatorURL string
+	httpClient    *http.Client
 }
 
 //NewClient clientImpl constructor with defaults
