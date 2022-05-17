@@ -4,7 +4,7 @@ import "encoding/xml"
 
 //UpdateOrderReq Order Change request structure
 type UpdateOrderReq struct {
-	securableXML
+	credentialsXML
 	XMLName    xml.Name     `xml:"UpdateRequest"`
 	Number     *string      `xml:"Number,attr"`
 	OrderCount *int         `xml:"OrderCount,attr"`

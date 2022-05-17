@@ -1,6 +1,7 @@
 package cdek
 
 import (
+	"context"
 	"net/http"
 	"net/http/httptest"
 	"reflect"
@@ -178,10 +179,11 @@ func TestClient_GetCities(t *testing.T) {
 			wantErr: true,
 		},
 	}
+	ctx := context.TODO()
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			cl := tt.args.client
-			got, err := cl.GetCities(tt.args.filter)
+			got, err := cl.GetCities(ctx, tt.args.filter)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("GetCities() error = %v, wantErr %v", err, tt.wantErr)
 				return
@@ -197,7 +199,8 @@ func ExampleClient_GetCities() {
 	client := NewClient("https://integration.edu.cdek.ru/")
 	client.SetAuth("z9GRRu7FxmO53CQ9cFfI6qiy32wpfTkd", "w24JTCv4MnAcuRTx0oHjHLDtyt3I6IBq")
 
-	result, err := client.GetCities(map[CityFilter]string{
+	ctx := context.TODO()
+	result, err := client.GetCities(ctx, map[CityFilter]string{
 		CityFilterPage: "3",
 	})
 

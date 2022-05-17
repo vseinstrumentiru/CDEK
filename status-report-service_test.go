@@ -1,6 +1,7 @@
 package cdek
 
 import (
+	"context"
 	"encoding/json"
 	"net/http"
 	"net/http/httptest"
@@ -133,10 +134,11 @@ func TestClient_GetStatusReport(t *testing.T) {
 			wantErr: true,
 		},
 	}
+	ctx := context.TODO()
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			cl := tt.fields.client
-			got, err := cl.GetStatusReport(tt.args.statusReportReq)
+			got, err := cl.GetStatusReport(ctx, tt.args.statusReportReq)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("clientImpl.GetStatusReport() error = %v, wantErr %v", err, tt.wantErr)
 				return

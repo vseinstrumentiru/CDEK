@@ -1,6 +1,7 @@
 package cdek
 
 import (
+	"context"
 	"net/http"
 	"net/http/httptest"
 	"reflect"
@@ -103,10 +104,11 @@ func TestClient_GetRegions(t *testing.T) {
 			wantErr: true,
 		},
 	}
+	ctx := context.TODO()
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			cl := tt.fields.client
-			got, err := cl.GetRegions(tt.args.filter)
+			got, err := cl.GetRegions(ctx, tt.args.filter)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("clientImpl.GetRegions() error = %v, wantErr %v", err, tt.wantErr)
 				return
@@ -158,7 +160,8 @@ func ExampleClient_GetRegions() {
 	client := NewClient("https://integration.edu.cdek.ru/")
 	client.SetAuth("z9GRRu7FxmO53CQ9cFfI6qiy32wpfTkd", "w24JTCv4MnAcuRTx0oHjHLDtyt3I6IBq")
 
-	result, err := client.GetRegions(map[RegionFilter]string{
+	ctx := context.TODO()
+	result, err := client.GetRegions(ctx, map[RegionFilter]string{
 		RegionFilterPage: "3",
 	})
 

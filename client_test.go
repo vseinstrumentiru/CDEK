@@ -120,8 +120,9 @@ func TestClient_SetAuth(t *testing.T) {
 				apiURL:        tt.fields.CdekAPIURL,
 				calculatorURL: tt.fields.CalculatorURL,
 			}
-			if got := clientConf.SetAuth(tt.args.account, tt.args.secure); !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("SetAuth() = %v, want %v", got, tt.want)
+			clientConf.SetAuth(tt.args.account, tt.args.secure)
+			if !reflect.DeepEqual(clientConf, tt.want) {
+				t.Errorf("SetAuth() = %v, want %v", clientConf, tt.want)
 			}
 		})
 	}
@@ -174,8 +175,9 @@ func TestClient_SetCalculatorURL(t *testing.T) {
 				apiURL:        tt.fields.CdekAPIURL,
 				calculatorURL: tt.fields.CalculatorURL,
 			}
-			if got := clientConf.SetCalculatorURL(tt.args.calculatorURL); !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("SetCalculatorURL() = %v, want %v", got, tt.want)
+			clientConf.SetCalculatorURL(tt.args.calculatorURL)
+			if !reflect.DeepEqual(clientConf, tt.want) {
+				t.Errorf("SetCalculatorURL() = %v, want %v", clientConf, tt.want)
 			}
 		})
 	}

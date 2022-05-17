@@ -1,6 +1,7 @@
 package cdek
 
 import (
+	"context"
 	"encoding/json"
 	"io/ioutil"
 	"net/http"
@@ -15,7 +16,7 @@ const (
 )
 
 //GetRegions This method is used to load detailed information on regions.
-func (c clientImpl) GetRegions(filter map[RegionFilter]string) (*GetRegionsResp, error) {
+func (c clientImpl) GetRegions(ctx context.Context, filter map[RegionFilter]string) (*GetRegionsResp, error) {
 	serverURL, err := url.Parse(c.apiURL)
 	if err != nil {
 		return nil, err

@@ -4,7 +4,7 @@ import "encoding/xml"
 
 //DeleteOrderReq request structure for deleting order from CDEK
 type DeleteOrderReq struct {
-	securableXML
+	credentialsXML
 	XMLName    xml.Name     `xml:"DeleteRequest"`
 	Number     *string      `xml:"Number,attr"`
 	OrderCount *int         `xml:"OrderCount,attr"`

@@ -26,7 +26,7 @@ func Test_securableJSON_setAuth(t *testing.T) {
 		name   string
 		fields fields
 		args   args
-		want   *securableJSON
+		want   *credentialsJSON
 	}{
 		{
 			name:   "secure fields pass correct",
@@ -37,7 +37,7 @@ func Test_securableJSON_setAuth(t *testing.T) {
 					secure:  "testSecure",
 				},
 			},
-			want: &securableJSON{
+			want: &credentialsJSON{
 				AuthLogin:   strLink("testAccount"),
 				Secure:      &testSecureEncoded,
 				DateExecute: &now,
@@ -47,12 +47,12 @@ func Test_securableJSON_setAuth(t *testing.T) {
 			name:   "empty auth",
 			fields: fields{},
 			args:   args{},
-			want:   &securableJSON{},
+			want:   &credentialsJSON{},
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			s := &securableJSON{
+			s := &credentialsJSON{
 				AuthLogin:   tt.fields.AuthLogin,
 				Secure:      tt.fields.Secure,
 				DateExecute: tt.fields.DateExecute,
@@ -84,7 +84,7 @@ func Test_securableXML_setAuth(t *testing.T) {
 		name   string
 		fields fields
 		args   args
-		want   *securableXML
+		want   *credentialsXML
 	}{
 		{
 			name:   "secure fields pass correct",
@@ -95,7 +95,7 @@ func Test_securableXML_setAuth(t *testing.T) {
 					secure:  testSecure,
 				},
 			},
-			want: &securableXML{
+			want: &credentialsXML{
 				Account: &testAccount,
 				Date:    &now,
 				Secure:  &testSecureEncoded,
@@ -105,12 +105,12 @@ func Test_securableXML_setAuth(t *testing.T) {
 			name:   "empty auth",
 			fields: fields{},
 			args:   args{},
-			want:   &securableXML{},
+			want:   &credentialsXML{},
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			s := &securableXML{
+			s := &credentialsXML{
 				Account: tt.fields.Account,
 				Date:    tt.fields.Date,
 				Secure:  tt.fields.Secure,

@@ -1,19 +1,19 @@
 package cdek
 
-type securableXML struct {
+type credentialsXML struct {
 	Account *string `xml:"Account,attr"`
 	Date    *string `xml:"Date,attr"`
 	Secure  *string `xml:"Secure,attr"`
 }
 
-type securableJSON struct {
+type credentialsJSON struct {
 	AuthLogin   *string `json:"authLogin,omitempty"`
 	Secure      *string `json:"secure,omitempty"`
 	DateExecute *string `json:"dateExecute,omitempty"`
 }
 
 //TODO: there are some methods that MUST HAVE auth, need to handle this case
-func (s *securableXML) setAuth(auth *auth) *securableXML {
+func (s *credentialsXML) setAuth(auth *auth) *credentialsXML {
 	if auth == nil {
 		return s
 	}
@@ -27,7 +27,7 @@ func (s *securableXML) setAuth(auth *auth) *securableXML {
 	return s
 }
 
-func (s *securableJSON) setAuth(auth *auth) *securableJSON {
+func (s *credentialsJSON) setAuth(auth *auth) *credentialsJSON {
 	if auth == nil {
 		return s
 	}

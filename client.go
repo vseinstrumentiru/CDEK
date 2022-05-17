@@ -1,6 +1,7 @@
 package cdek
 
 import (
+	"context"
 	"crypto/md5"
 	"encoding/hex"
 	"time"
@@ -15,22 +16,22 @@ const (
 
 //ClientСonfigurator allows to configure client for the service
 type ClientСonfigurator interface {
-	SetAuth(account, secure string) Client
-	SetCalculatorURL(calculatorURL string) Client
+	SetAuth(account, secure string)
+	SetCalculatorURL(calculatorURL string)
 }
 
 //Client provides CDEK API functionality
 type Client interface {
 	ClientСonfigurator
 
-	CalculateDelivery(req GetCostReq) (*GetCostRespResult, error)
-	GetCities(filter map[CityFilter]string) (*GetCitiesResp, error)
-	GetPvzList(filter map[PvzListFilter]string) ([]*Pvz, error)
-	GetRegions(filter map[RegionFilter]string) (*GetRegionsResp, error)
-	RegisterOrder(req RegisterOrderReq) (*RegisterOrderResp, error)
-	UpdateOrder(req UpdateOrderReq) (*UpdateOrderResp, error)
-	DeleteOrder(req DeleteOrderReq) (*DeleteOrderResp, error)
-	GetStatusReport(statusReportReq StatusReport) (*StatusReportResp, error)
+	CalculateDelivery(ctx context.Context, req GetCostReq) (*GetCostRespResult, error)
+	GetCities(ctx context.Context, filter map[CityFilter]string) (*GetCitiesResp, error)
+	GetPvzList(ctx context.Context, filter map[PvzListFilter]string) ([]*Pvz, error)
+	GetRegions(ctx context.Context, filter map[RegionFilter]string) (*GetRegionsResp, error)
+	RegisterOrder(ctx context.Context, req RegisterOrderReq) (*RegisterOrderResp, error)
+	UpdateOrder(ctx context.Context, req UpdateOrderReq) (*UpdateOrderResp, error)
+	DeleteOrder(ctx context.Context, req DeleteOrderReq) (*DeleteOrderResp, error)
+	GetStatusReport(ctx context.Context, statusReportReq StatusReport) (*StatusReportResp, error)
 }
 
 //clientImpl SDK clientImpl configuration
@@ -49,20 +50,16 @@ func NewClient(apiURL string) Client {
 }
 
 //SetAuth set auth data
-func (c *clientImpl) SetAuth(account, secure string) Client {
+func (c *clientImpl) SetAuth(account, secure string) {
 	c.auth = &auth{
 		account: account,
 		secure:  secure,
 	}
-
-	return c
 }
 
 //SetCalculatorURL url for delivery calculation
-func (c *clientImpl) SetCalculatorURL(calculatorURL string) Client {
+func (c *clientImpl) SetCalculatorURL(calculatorURL string) {
 	c.calculatorURL = calculatorURL
-
-	return c
 }
 
 type auth struct {

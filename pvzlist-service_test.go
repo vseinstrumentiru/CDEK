@@ -1,6 +1,7 @@
 package cdek
 
 import (
+	"context"
 	"encoding/json"
 	"net/http"
 	"net/http/httptest"
@@ -192,10 +193,11 @@ func TestClient_GetPvzList(t *testing.T) {
 			true,
 		},
 	}
+	ctx := context.TODO()
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			cl := tt.fields.client
-			got, err := cl.GetPvzList(tt.args.filter)
+			got, err := cl.GetPvzList(ctx, tt.args.filter)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("clientImpl.GetPvzList() error = %v, wantErr %v", err, tt.wantErr)
 				return
@@ -213,7 +215,8 @@ func ExampleClient_GetPvzList() {
 	client := NewClient("https://integration.edu.cdek.ru/")
 	client.SetAuth("z9GRRu7FxmO53CQ9cFfI6qiy32wpfTkd", "w24JTCv4MnAcuRTx0oHjHLDtyt3I6IBq")
 
-	result, err := client.GetPvzList(map[PvzListFilter]string{
+	ctx := context.TODO()
+	result, err := client.GetPvzList(ctx, map[PvzListFilter]string{
 		PvzListFilterCityID: "44",
 	})
 

@@ -1,6 +1,7 @@
 package cdek
 
 import (
+	"context"
 	"encoding/xml"
 	"io/ioutil"
 	"net/http"
@@ -13,7 +14,7 @@ const (
 )
 
 //GetPvzList The method is used to load the list of active pickup points, from which the client can pick up its order.
-func (c clientImpl) GetPvzList(filter map[PvzListFilter]string) ([]*Pvz, error) {
+func (c clientImpl) GetPvzList(ctx context.Context, filter map[PvzListFilter]string) ([]*Pvz, error) {
 	serverURL, err := url.Parse(c.apiURL)
 	if err != nil {
 		return nil, err

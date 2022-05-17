@@ -1,6 +1,7 @@
 package cdek
 
 import (
+	"context"
 	"encoding/xml"
 	"io/ioutil"
 	"net/http"
@@ -16,7 +17,7 @@ const (
 )
 
 //UpdateOrder This method is used to change a created order.
-func (c clientImpl) UpdateOrder(req UpdateOrderReq) (*UpdateOrderResp, error) {
+func (c clientImpl) UpdateOrder(ctx context.Context, req UpdateOrderReq) (*UpdateOrderResp, error) {
 	req.setAuth(c.auth)
 	reqByte, err := xml.Marshal(req)
 

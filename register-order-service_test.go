@@ -1,6 +1,7 @@
 package cdek
 
 import (
+	"context"
 	"net/http"
 	"net/http/httptest"
 	"reflect"
@@ -148,10 +149,11 @@ func TestClient_RegisterOrder(t *testing.T) {
 			wantErr: true,
 		},
 	}
+	ctx := context.TODO()
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			cl := tt.fields.client
-			got, err := cl.RegisterOrder(tt.args.req)
+			got, err := cl.RegisterOrder(ctx, tt.args.req)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("clientImpl.RegisterOrder() error = %v, wantErr %v", err, tt.wantErr)
 				return
@@ -248,7 +250,8 @@ func ExampleClient_RegisterOrder() {
 			),
 		)
 
-	result, err := client.RegisterOrder(*NewDeliveryRequest("soOEl", 1, exampleOrder))
+	ctx := context.TODO()
+	result, err := client.RegisterOrder(ctx, *NewDeliveryRequest("soOEl", 1, exampleOrder))
 
 	_, _ = result, err
 }

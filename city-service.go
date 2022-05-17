@@ -1,6 +1,7 @@
 package cdek
 
 import (
+	"context"
 	"encoding/json"
 	"io/ioutil"
 	"net/http"
@@ -15,7 +16,7 @@ const (
 )
 
 //GetCities This method is used to load detailed information on cities.
-func (c clientImpl) GetCities(filter map[CityFilter]string) (*GetCitiesResp, error) {
+func (c clientImpl) GetCities(ctx context.Context, filter map[CityFilter]string) (*GetCitiesResp, error) {
 	serverURL, err := url.Parse(c.apiURL)
 	if err != nil {
 		return nil, err

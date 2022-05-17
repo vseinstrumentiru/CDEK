@@ -9,7 +9,7 @@ import (
 
 //RegisterOrderReq Order registration request
 type RegisterOrderReq struct {
-	securableXML
+	credentialsXML
 	XMLName     xml.Name     `xml:"DeliveryRequest"`
 	Number      *string      `xml:"Number,attr"`
 	OrderCount  *int         `xml:"OrderCount,attr"`
