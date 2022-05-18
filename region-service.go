@@ -1,13 +1,10 @@
 package cdek
 
 import (
-	"encoding/json"
-	"io/ioutil"
+	"context"
 	"net/http"
 	"net/url"
 	"path"
-
-	"github.com/hashicorp/go-multierror"
 )
 
 const (
@@ -15,7 +12,7 @@ const (
 )
 
 //GetRegions This method is used to load detailed information on regions.
-func (c Client) GetRegions(filter map[RegionFilter]string) (*GetRegionsResp, error) {
+func (c Client) GetRegions(ctx context.Context, filter map[RegionFilter]string) (*GetRegionsResp, error) {
 	serverURL, err := url.Parse(c.apiURL)
 	if err != nil {
 		return nil, err
@@ -29,35 +26,10 @@ func (c Client) GetRegions(filter map[RegionFilter]string) (*GetRegionsResp, err
 	}
 	serverURL.RawQuery = queryString.Encode()
 
-	reqURL := serverURL.String()
-
-	resp, err := http.Get(reqURL)
+	req, err := http.NewRequestWithContext(ctx, http.MethodGet, serverURL.String(), nil)
 	if err != nil {
 		return nil, err
 	}
 
-	defer func() {
-		_ = resp.Body.Close()
-	}()
-
-	body, _ := ioutil.ReadAll(resp.Body)
-
-	var regions GetRegionsResp
-	err = json.Unmarshal(body, &regions)
-	if err != nil {
-		var alertResponse AlertResponse
-		err = json.Unmarshal(body, &alertResponse)
-		if err != nil {
-			return nil, err
-		}
-
-		multiError := &multierror.Error{}
-		for _, alert := range alertResponse.Alerts {
-			multiError = multierror.Append(alert)
-		}
-
-		return nil, multiError.ErrorOrNil()
-	}
-
-	return &regions, nil
+	return jsonReq[GetRegionsResp](req)
 }

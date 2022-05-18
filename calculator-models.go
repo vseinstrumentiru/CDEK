@@ -25,7 +25,7 @@ type ServiceResp struct {
 
 //GetCostReq Cost calculation on tariffs with priority request
 type GetCostReq struct {
-	securableJSON
+	securable
 	Version        *string       `json:"version"`
 	SenderCityID   *int          `json:"senderCityId"`
 	ReceiverCityID *int          `json:"receiverCityId"`

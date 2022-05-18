@@ -1,6 +1,7 @@
 package cdek
 
 import (
+	"context"
 	"encoding/json"
 	"encoding/xml"
 	"net/http"
@@ -187,10 +188,11 @@ func TestClient_DeleteOrder(t *testing.T) {
 			wantErr: true,
 		},
 	}
+	ctx := context.TODO()
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			cl := tt.fields.client
-			got, err := cl.DeleteOrder(tt.args.req)
+			got, err := cl.DeleteOrder(ctx, tt.args.req)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("DeleteOrder() error = %v, wantErr %v", err, tt.wantErr)
 				return
@@ -208,7 +210,8 @@ func ExampleClient_DeleteOrder() {
 	client := NewClient("https://integration.edu.cdek.ru/")
 	client.SetAuth("z9GRRu7FxmO53CQ9cFfI6qiy32wpfTkd", "w24JTCv4MnAcuRTx0oHjHLDtyt3I6IBq")
 
-	result, err := client.DeleteOrder(*NewDeleteOrderReq(
+	ctx := context.TODO()
+	result, err := client.DeleteOrder(ctx, *NewDeleteOrderReq(
 		"number-soOEl0",
 		1,
 		*NewDeleteOrder().SetNumber("number-soOEl0"),

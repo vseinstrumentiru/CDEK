@@ -2,7 +2,7 @@ package cdek
 
 //StatusReport Order Status Report request
 type StatusReport struct {
-	securableXML
+	securable
 	ShowHistory            *int                    `xml:"ShowHistory,attr"`
 	ShowReturnOrder        *bool                   `xml:"ShowReturnOrder,attr"`
 	ShowReturnOrderHistory *bool                   `xml:"ShowReturnOrderHistory,attr"`
