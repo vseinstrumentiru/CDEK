@@ -26,7 +26,7 @@ type ServiceProvider interface {
 
 	CalculateDelivery(ctx context.Context, req GetCostReq) (*GetCostRespResult, error)
 	GetCities(ctx context.Context, filter map[CityFilter]string) (*GetCitiesResp, error)
-	GetPvzList(filter map[PvzListFilter]string) ([]*Pvz, error)
+	GetPvzList(ctx context.Context, filter map[PvzListFilter]string) ([]*Pvz, error)
 	GetRegions(filter map[RegionFilter]string) (*GetRegionsResp, error)
 	RegisterOrder(req RegisterOrderReq) (*RegisterOrderResp, error)
 	UpdateOrder(req UpdateOrderReq) (*UpdateOrderResp, error)
