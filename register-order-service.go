@@ -1,8 +1,8 @@
 package cdek
 
 import (
+	"context"
 	"encoding/xml"
-	"io/ioutil"
 	"net/http"
 	"net/url"
 	"path"
@@ -16,7 +16,7 @@ const (
 )
 
 //RegisterOrder This method is used to register orders to be delivered to clients.
-func (c Client) RegisterOrder(req RegisterOrderReq) (*RegisterOrderResp, error) {
+func (c Client) RegisterOrder(ctx context.Context, req RegisterOrderReq) (*RegisterOrderResp, error) {
 	req.setAuth(c.auth)
 	reqByte, err := xml.Marshal(req)
 
@@ -33,39 +33,28 @@ func (c Client) RegisterOrder(req RegisterOrderReq) (*RegisterOrderResp, error) 
 	}
 
 	serverURL.Path = path.Join(serverURL.Path, registerOrderURL)
-	reqURL := serverURL.String()
 
-	resp, err := http.Post(reqURL, urlFormEncoded, strings.NewReader(data.Encode()))
+	r, err := http.NewRequestWithContext(ctx, http.MethodPost, serverURL.String(), strings.NewReader(data.Encode()))
+	if err != nil {
+		return nil, err
+	}
+	r.Header.Add("Content-Type", urlFormEncoded)
+
+	resp, err := xmlReq[RegisterOrderResp](r)
 	if err != nil {
 		return nil, err
 	}
 
-	defer func() {
-		_ = resp.Body.Close()
-	}()
-
-	body, _ := ioutil.ReadAll(resp.Body)
-
-	var registerOrderResp RegisterOrderResp
-	err = xml.Unmarshal(body, &registerOrderResp)
-	if err != nil {
-		return nil, err
-	}
-
-	multiError := &multierror.Error{}
-	for _, o := range registerOrderResp.Order {
+	var errs error
+	for _, o := range resp.Order {
 		if o.IsErroneous() {
-			multiError = multierror.Append(o.GetError())
+			errs = multierror.Append(errs, o.GetError())
 		}
-	}
-	for _, c := range registerOrderResp.Call {
-		if c.IsErroneous() {
-			multiError = multierror.Append(c.Error)
-		}
-	}
-	if multiError.Len() > 0 {
-		return nil, multiError.ErrorOrNil()
 	}
 
-	return &registerOrderResp, nil
+	if errs != nil {
+		return nil, errs
+	}
+
+	return resp, nil
 }
