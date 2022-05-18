@@ -1,6 +1,7 @@
 package cdek
 
 import (
+	"context"
 	"crypto/md5"
 	"encoding/hex"
 	"time"
@@ -23,7 +24,7 @@ type ServiceAccessСonfigurator interface {
 type ServiceProvider interface {
 	ServiceAccessСonfigurator
 
-	CalculateDelivery(req GetCostReq) (*GetCostRespResult, error)
+	CalculateDelivery(ctx context.Context, req GetCostReq) (*GetCostRespResult, error)
 	GetCities(filter map[CityFilter]string) (*GetCitiesResp, error)
 	GetPvzList(filter map[PvzListFilter]string) ([]*Pvz, error)
 	GetRegions(filter map[RegionFilter]string) (*GetRegionsResp, error)

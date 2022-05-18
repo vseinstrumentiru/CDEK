@@ -2,46 +2,44 @@ package cdek
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
-	"errors"
 	"fmt"
-	"io/ioutil"
+	"github.com/hashicorp/go-multierror"
 	"net/http"
 )
 
 //CalculateDelivery Cost calculation on tariffs with priority.
-func (c Client) CalculateDelivery(req GetCostReq) (*GetCostRespResult, error) {
+func (c Client) CalculateDelivery(ctx context.Context, req GetCostReq) (*GetCostRespResult, error) {
 	req.setAuth(c.auth)
-	reqByte, err := json.Marshal(req)
+
+	payload, err := json.Marshal(&req)
 	if err != nil {
 		return nil, err
 	}
 
-	resp, err := http.Post(c.calculatorURL, jsonContentType, bytes.NewReader(reqByte))
+	r, err := http.NewRequestWithContext(ctx, http.MethodPost, c.calculatorURL, bytes.NewReader(payload))
+	if err != nil {
+		return nil, err
+	}
+	r.Header.Add("Content-Type", jsonContentType)
+
+	resp, err := jsonReq[getCostResp](r)
 	if err != nil {
 		return nil, err
 	}
 
-	defer func() {
-		_ = resp.Body.Close()
-	}()
-
-	body, _ := ioutil.ReadAll(resp.Body)
-
-	var getCostResp getCostResp
-	err = json.Unmarshal(body, &getCostResp)
-	if err != nil {
-		return nil, err
-	}
-
-	if getCostResp.ErrorResp != nil {
-		var errorMsg string
-		for _, err := range getCostResp.ErrorResp {
-			errorMsg += fmt.Sprintf("Error code: %s, error text: %s \n", *err.ErrorCode, *err.Msg)
+	if resp.ErrorResp != nil {
+		var errs error
+		for _, err := range resp.ErrorResp {
+			errs = multierror.Append(
+				errs,
+				fmt.Errorf("error code: %s, error text: %s", *err.ErrorCode, *err.Msg),
+			)
 		}
 
-		return nil, errors.New(errorMsg)
+		return nil, errs
 	}
 
-	return &getCostResp.Result, nil
+	return &resp.Result, nil
 }

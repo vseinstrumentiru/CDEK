@@ -1,6 +1,7 @@
 package cdek
 
 import (
+	"context"
 	"encoding/json"
 	"io/ioutil"
 	"math"
@@ -214,10 +215,11 @@ func TestClient_CalculateDelivery(t *testing.T) {
 			true,
 		},
 	}
+	ctx := context.TODO()
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			cl := tt.args.client
-			got, err := cl.CalculateDelivery(tt.args.req)
+			got, err := cl.CalculateDelivery(ctx, tt.args.req)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("CalculateDelivery() error = %v, wantErr %v", err, tt.wantErr)
 				return
@@ -233,7 +235,8 @@ func ExampleClient_CalculateDelivery() {
 	client := NewClient("https://integration.edu.cdek.ru/")
 	client.SetAuth("z9GRRu7FxmO53CQ9cFfI6qiy32wpfTkd", "w24JTCv4MnAcuRTx0oHjHLDtyt3I6IBq")
 
-	result, err := client.CalculateDelivery(*NewGetCostReq(61208, 2108, 10))
+	ctx := context.TODO()
+	result, err := client.CalculateDelivery(ctx, *NewGetCostReq(61208, 2108, 10))
 
 	_, _ = result, err
 }
