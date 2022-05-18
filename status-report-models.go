@@ -117,7 +117,7 @@ type Call struct {
 
 //CallGood History of successful calls
 type CallGood struct {
-	Good []*CallGoodItem `xml:"Good"`
+	Good []*CallGoodItem `xml:"CalculateDeliveryGood"`
 }
 
 //CallGoodItem Successful call

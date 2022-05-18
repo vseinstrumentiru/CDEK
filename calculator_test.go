@@ -15,11 +15,11 @@ func calculateDeliveryGetMockServer() *httptest.Server {
 	return httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
 		body, _ := ioutil.ReadAll(req.Body)
 		_, _ = req.Body.Read(body)
-		var getCostReq GetCostReq
+		var getCostReq CalculateDeliveryRequest
 		_ = json.Unmarshal(body, &getCostReq)
 
 		var errorsResp []Error
-		if *getCostReq.Version != apiVersion {
+		if getCostReq.Version != ApiVersionV1 {
 			errorsResp = append(errorsResp, Error{
 				ErrorCode: strLink("1"),
 				Msg:       strLink("Указанная вами версия API не поддерживается"),
@@ -31,13 +31,13 @@ func calculateDeliveryGetMockServer() *httptest.Server {
 				Msg:       strLink("Ошибка авторизации"),
 			})
 		}
-		if *getCostReq.SenderCityID == 0 {
+		if getCostReq.SenderCityID == 0 {
 			errorsResp = append(errorsResp, Error{
 				ErrorCode: strLink("7"),
 				Msg:       strLink("Не задан город-отправитель"),
 			})
 		}
-		if *getCostReq.ReceiverCityID == 0 {
+		if getCostReq.ReceiverCityID == 0 {
 			errorsResp = append(errorsResp, Error{
 				ErrorCode: strLink("8"),
 				Msg:       strLink("Не задан город-получатель"),
@@ -50,16 +50,16 @@ func calculateDeliveryGetMockServer() *httptest.Server {
 			})
 		}
 
-		if *getCostReq.TariffID == 0 {
+		if getCostReq.TariffID == 0 {
 			errorsResp = append(errorsResp, Error{
 				ErrorCode: strLink("6"),
 				Msg:       strLink("Не задан тариф или список тарифов"),
 			})
 		}
 
-		result, _ := json.Marshal(&getCostResp{
+		result, _ := json.Marshal(&CalculateDeliveryResponse{
 			ErrorResp: errorsResp,
-			Result: GetCostRespResult{
+			Result: CalculateDeliveryResult{
 				Price:             100,
 				DeliveryPeriodMin: 1,
 				DeliveryPeriodMax: 2,
@@ -86,12 +86,12 @@ func TestClient_CalculateDelivery(t *testing.T) {
 
 	type args struct {
 		client clientImpl
-		req    GetCostReq
+		req    CalculateDeliveryRequest
 	}
 	tests := []struct {
 		name    string
 		args    args
-		want    *GetCostRespResult
+		want    *CalculateDeliveryResult
 		wantErr bool
 	}{
 		{
@@ -105,12 +105,12 @@ func TestClient_CalculateDelivery(t *testing.T) {
 					apiURL:        "",
 					calculatorURL: testServer.URL,
 				},
-				req: GetCostReq{
-					Version:        strLink(apiVersion),
-					SenderCityID:   intLink(1),
-					ReceiverCityID: intLink(2),
-					TariffID:       intLink(3),
-					Goods: []*Good{
+				req: CalculateDeliveryRequest{
+					Version:        ApiVersionV1,
+					SenderCityID:   1,
+					ReceiverCityID: 2,
+					TariffID:       3,
+					Goods: []*CalculateDeliveryGood{
 						{
 							Weight: 1.1,
 							Length: 2,
@@ -122,7 +122,7 @@ func TestClient_CalculateDelivery(t *testing.T) {
 					Services: nil,
 				},
 			},
-			&GetCostRespResult{
+			&CalculateDeliveryResult{
 				Price:             100,
 				DeliveryPeriodMin: 1,
 				DeliveryPeriodMax: 2,
@@ -141,11 +141,11 @@ func TestClient_CalculateDelivery(t *testing.T) {
 					apiURL:        "",
 					calculatorURL: testServer.URL,
 				},
-				req: GetCostReq{
-					Version:        strLink(apiVersion),
-					SenderCityID:   intLink(1),
-					ReceiverCityID: intLink(2),
-					TariffID:       intLink(3),
+				req: CalculateDeliveryRequest{
+					Version:        ApiVersionV1,
+					SenderCityID:   1,
+					ReceiverCityID: 2,
+					TariffID:       3,
 					Goods:          nil,
 					Services:       nil,
 				},
@@ -164,11 +164,11 @@ func TestClient_CalculateDelivery(t *testing.T) {
 					apiURL:        "",
 					calculatorURL: testServerWithError.URL,
 				},
-				req: GetCostReq{
-					Version:        strLink(apiVersion),
-					SenderCityID:   intLink(1),
-					ReceiverCityID: intLink(2),
-					TariffID:       intLink(3),
+				req: CalculateDeliveryRequest{
+					Version:        ApiVersionV1,
+					SenderCityID:   1,
+					ReceiverCityID: 2,
+					TariffID:       3,
 					Goods:          nil,
 					Services:       nil,
 				},
@@ -187,12 +187,12 @@ func TestClient_CalculateDelivery(t *testing.T) {
 					apiURL:        "",
 					calculatorURL: testServerWithError.URL,
 				},
-				req: GetCostReq{
-					Version:        strLink(apiVersion),
-					SenderCityID:   nil,
-					ReceiverCityID: intLink(2),
-					TariffID:       intLink(3),
-					Goods: []*Good{
+				req: CalculateDeliveryRequest{
+					Version:        ApiVersionV1,
+					SenderCityID:   -1,
+					ReceiverCityID: 2,
+					TariffID:       3,
+					Goods: []*CalculateDeliveryGood{
 						{
 							Weight: math.Inf(1),
 						},
@@ -209,7 +209,7 @@ func TestClient_CalculateDelivery(t *testing.T) {
 				client: clientImpl{
 					calculatorURL: "wrong url",
 				},
-				req: GetCostReq{},
+				req: CalculateDeliveryRequest{},
 			},
 			nil,
 			true,
@@ -219,7 +219,7 @@ func TestClient_CalculateDelivery(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			cl := tt.args.client
-			got, err := cl.CalculateDelivery(ctx, tt.args.req)
+			got, err := cl.CalculateDelivery(ctx, &tt.args.req)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("CalculateDelivery() error = %v, wantErr %v", err, tt.wantErr)
 				return
@@ -236,7 +236,15 @@ func ExampleClient_CalculateDelivery() {
 	client.SetAuth("z9GRRu7FxmO53CQ9cFfI6qiy32wpfTkd", "w24JTCv4MnAcuRTx0oHjHLDtyt3I6IBq")
 
 	ctx := context.TODO()
-	result, err := client.CalculateDelivery(ctx, *NewGetCostReq(61208, 2108, 10))
+	req := &CalculateDeliveryRequest{
+		Version:        ApiVersionV1,
+		SenderCityID:   61208,
+		ReceiverCityID: 2108,
+		TariffID:       10,
+		Goods:          nil,
+		Services:       nil,
+	}
+	result, err := client.CalculateDelivery(ctx, req)
 
 	_, _ = result, err
 }

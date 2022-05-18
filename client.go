@@ -9,6 +9,8 @@ import (
 )
 
 const (
+	ApiVersionV1 = "1.0"
+
 	jsonContentType = "application/json"
 	urlFormEncoded  = "application/x-www-form-urlencoded"
 
@@ -25,7 +27,7 @@ type ClientСonfigurator interface {
 type Client interface {
 	ClientСonfigurator
 
-	CalculateDelivery(ctx context.Context, req GetCostReq) (*GetCostRespResult, error)
+	CalculateDelivery(ctx context.Context, req *CalculateDeliveryRequest) (*CalculateDeliveryResult, error)
 	GetCities(ctx context.Context, filter map[CityFilter]string) (*GetCitiesResp, error)
 	GetPvzList(ctx context.Context, filter map[PvzListFilter]string) ([]*Pvz, error)
 	GetRegions(ctx context.Context, filter map[RegionFilter]string) (*GetRegionsResp, error)
