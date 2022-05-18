@@ -1,8 +1,8 @@
 package cdek
 
 import (
+	"context"
 	"encoding/xml"
-	"io/ioutil"
 	"net/http"
 	"net/url"
 	"path"
@@ -14,7 +14,7 @@ const (
 )
 
 //GetStatusReport This method is used to generate an order status report, including order change history.
-func (c Client) GetStatusReport(statusReportReq StatusReport) (*StatusReportResp, error) {
+func (c Client) GetStatusReport(ctx context.Context, statusReportReq StatusReport) (*StatusReportResp, error) {
 	statusReportReq.setAuth(c.auth)
 	reqByte, err := xml.Marshal(statusReportReq)
 	if err != nil {
@@ -30,27 +30,21 @@ func (c Client) GetStatusReport(statusReportReq StatusReport) (*StatusReportResp
 	}
 
 	serverURL.Path = path.Join(serverURL.Path, statusReportURL)
-	reqURL := serverURL.String()
 
-	resp, err := http.Post(reqURL, urlFormEncoded, strings.NewReader(data.Encode()))
+	r, err := http.NewRequestWithContext(ctx, http.MethodPost, serverURL.String(), strings.NewReader(data.Encode()))
+	if err != nil {
+		return nil, err
+	}
+	r.Header.Add("Content-Type", urlFormEncoded)
+
+	resp, err := xmlReq[StatusReportResp](r)
 	if err != nil {
 		return nil, err
 	}
 
-	defer func() {
-		_ = resp.Body.Close()
-	}()
-
-	body, _ := ioutil.ReadAll(resp.Body)
-
-	var statusReportResp StatusReportResp
-	err = xml.Unmarshal(body, &statusReportResp)
-	if err != nil {
-		return nil, err
-	}
-	if statusReportResp.IsErroneous() {
-		return nil, statusReportResp.Error
+	if resp.IsErroneous() {
+		return nil, resp.Error
 	}
 
-	return &statusReportResp, nil
+	return resp, nil
 }
