@@ -1,8 +1,8 @@
 package cdek
 
 import (
+	"context"
 	"encoding/xml"
-	"io/ioutil"
 	"net/http"
 	"net/url"
 	"path"
@@ -16,7 +16,7 @@ const (
 )
 
 //UpdateOrder This method is used to change a created order.
-func (c Client) UpdateOrder(req UpdateOrderReq) (*UpdateOrderResp, error) {
+func (c Client) UpdateOrder(ctx context.Context, req UpdateOrderReq) (*UpdateOrderResp, error) {
 	req.setAuth(c.auth)
 	reqByte, err := xml.Marshal(req)
 
@@ -33,34 +33,28 @@ func (c Client) UpdateOrder(req UpdateOrderReq) (*UpdateOrderResp, error) {
 	}
 
 	serverURL.Path = path.Join(serverURL.Path, updateOrderURL)
-	reqURL := serverURL.String()
 
-	resp, err := http.Post(reqURL, urlFormEncoded, strings.NewReader(data.Encode()))
+	r, err := http.NewRequestWithContext(ctx, http.MethodPost, serverURL.String(), strings.NewReader(data.Encode()))
+	if err != nil {
+		return nil, err
+	}
+	r.Header.Add("Content-Type", urlFormEncoded)
+
+	resp, err := xmlReq[UpdateOrderResp](r)
 	if err != nil {
 		return nil, err
 	}
 
-	defer func() {
-		_ = resp.Body.Close()
-	}()
-
-	body, _ := ioutil.ReadAll(resp.Body)
-
-	var updateOrderResp UpdateOrderResp
-	err = xml.Unmarshal(body, &updateOrderResp)
-	if err != nil {
-		return nil, err
-	}
-
-	multiError := &multierror.Error{}
-	for _, o := range updateOrderResp.Order {
+	var errs error
+	for _, o := range resp.Order {
 		if o.IsErroneous() {
-			multiError = multierror.Append(o.GetError())
+			errs = multierror.Append(errs, o.GetError())
 		}
 	}
-	if multiError.Len() > 0 {
-		return nil, multiError.ErrorOrNil()
+
+	if errs != nil {
+		return nil, errs
 	}
 
-	return &updateOrderResp, nil
+	return resp, nil
 }
