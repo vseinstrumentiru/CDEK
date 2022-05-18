@@ -30,7 +30,7 @@ type ServiceProvider interface {
 	GetRegions(filter map[RegionFilter]string) (*GetRegionsResp, error)
 	RegisterOrder(req RegisterOrderReq) (*RegisterOrderResp, error)
 	UpdateOrder(req UpdateOrderReq) (*UpdateOrderResp, error)
-	DeleteOrder(req DeleteOrderReq) (*DeleteOrderResp, error)
+	DeleteOrder(ctx context.Context, req DeleteOrderReq) (*DeleteOrderResp, error)
 	GetStatusReport(statusReportReq StatusReport) (*StatusReportResp, error)
 }
 
