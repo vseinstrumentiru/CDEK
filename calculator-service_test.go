@@ -24,7 +24,7 @@ func calculateDeliveryGetMockServer() *httptest.Server {
 				Msg:       strLink("Указанная вами версия API не поддерживается"),
 			})
 		}
-		if *getCostReq.Secure == "" || *getCostReq.AuthLogin == "" || *getCostReq.DateExecute == "" {
+		if *getCostReq.Secure == "" || *getCostReq.Account == "" || *getCostReq.Date == "" {
 			errorsResp = append(errorsResp, Error{
 				ErrorCode: strLink("2"),
 				Msg:       strLink("Ошибка авторизации"),
@@ -191,12 +191,12 @@ func TestClient_CalculateDelivery(t *testing.T) {
 					SenderCityID:   nil,
 					ReceiverCityID: intLink(2),
 					TariffID:       intLink(3),
-					Goods:          []*Good{
+					Goods: []*Good{
 						{
 							Weight: math.Inf(1),
 						},
 					},
-					Services:       nil,
+					Services: nil,
 				},
 			},
 			nil,
