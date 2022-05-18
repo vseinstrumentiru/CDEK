@@ -2,11 +2,10 @@ package cdek
 
 import (
 	"context"
-	"encoding/json"
 	"encoding/xml"
+	"github.com/stretchr/testify/require"
 	"net/http"
 	"net/http/httptest"
-	"reflect"
 	"testing"
 )
 
@@ -14,10 +13,10 @@ func deleteOrderGetMockServer() *httptest.Server {
 	return httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
 		_ = req.ParseForm()
 		xmlRequest := req.FormValue("xml_request")
-		var deleteOrderReq DeleteOrderReq
+		var deleteOrderReq DeleteOrderRequest
 		_ = xml.Unmarshal([]byte(xmlRequest), &deleteOrderReq)
 
-		if *deleteOrderReq.OrderCount > 1 {
+		if deleteOrderReq.OrderCount > 1 {
 			_, _ = res.Write([]byte(`
 				<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 				<response>
@@ -29,7 +28,7 @@ func deleteOrderGetMockServer() *httptest.Server {
 			return
 		}
 
-		if *deleteOrderReq.Number != "number-soOEl0" {
+		if deleteOrderReq.Number != "number-soOEl0" {
 			_, _ = res.Write([]byte(`
 				<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 				<response>
@@ -70,13 +69,13 @@ func TestClient_DeleteOrder(t *testing.T) {
 		client clientImpl
 	}
 	type args struct {
-		req DeleteOrderReq
+		req DeleteOrderRequest
 	}
 	tests := []struct {
 		name    string
 		fields  fields
 		args    args
-		want    *DeleteOrderResp
+		want    *DeleteOrderResponse
 		wantErr bool
 	}{
 		{
@@ -87,15 +86,15 @@ func TestClient_DeleteOrder(t *testing.T) {
 				},
 			},
 			args: args{
-				req: DeleteOrderReq{
-					Number:     strLink("number-soOEl0"),
-					OrderCount: intLink(1),
-					Order: &DeleteOrder{
-						Number: strLink("number-soOEl0"),
+				req: DeleteOrderRequest{
+					Number:     "number-soOEl0",
+					OrderCount: 1,
+					Order: DeleteOrder{
+						Number: "number-soOEl0",
 					},
 				},
 			},
-			want: &DeleteOrderResp{
+			want: &DeleteOrderResponse{
 				Order: []*OrderResp{
 					{
 						DispatchNumber: intLink(1105048590),
@@ -118,11 +117,11 @@ func TestClient_DeleteOrder(t *testing.T) {
 				},
 			},
 			args: args{
-				req: DeleteOrderReq{
-					Number:     strLink("test"),
-					OrderCount: intLink(1),
-					Order: &DeleteOrder{
-						Number: strLink("test_order_number"),
+				req: DeleteOrderRequest{
+					Number:     "test",
+					OrderCount: 1,
+					Order: DeleteOrder{
+						Number: "test_order_number",
 					},
 				},
 			},
@@ -137,11 +136,11 @@ func TestClient_DeleteOrder(t *testing.T) {
 				},
 			},
 			args: args{
-				req: DeleteOrderReq{
-					Number:     strLink("test"),
-					OrderCount: intLink(2),
-					Order: &DeleteOrder{
-						Number: strLink("test_order_number"),
+				req: DeleteOrderRequest{
+					Number:     "test",
+					OrderCount: 2,
+					Order: DeleteOrder{
+						Number: "test_order_number",
 					},
 				},
 			},
@@ -156,7 +155,7 @@ func TestClient_DeleteOrder(t *testing.T) {
 				},
 			},
 			args: args{
-				req: DeleteOrderReq{},
+				req: DeleteOrderRequest{},
 			},
 			want:    nil,
 			wantErr: true,
@@ -169,7 +168,7 @@ func TestClient_DeleteOrder(t *testing.T) {
 				},
 			},
 			args: args{
-				req: DeleteOrderReq{},
+				req: DeleteOrderRequest{},
 			},
 			want:    nil,
 			wantErr: true,
@@ -182,7 +181,7 @@ func TestClient_DeleteOrder(t *testing.T) {
 				},
 			},
 			args: args{
-				req: DeleteOrderReq{},
+				req: DeleteOrderRequest{},
 			},
 			want:    nil,
 			wantErr: true,
@@ -193,14 +192,11 @@ func TestClient_DeleteOrder(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			cl := tt.fields.client
 			got, err := cl.DeleteOrder(ctx, tt.args.req)
-			if (err != nil) != tt.wantErr {
-				t.Errorf("DeleteOrder() error = %v, wantErr %v", err, tt.wantErr)
-				return
-			}
-			if !reflect.DeepEqual(got, tt.want) {
-				g, _ := json.Marshal(got)
-				w, _ := json.Marshal(tt.want)
-				t.Errorf("DeleteOrder() got = %v, want %v", string(g), string(w))
+			if tt.wantErr {
+				require.Error(t, err)
+			} else {
+				require.NoError(t, err)
+				require.Equal(t, tt.want, got)
 			}
 		})
 	}
@@ -211,11 +207,14 @@ func ExampleClient_DeleteOrder() {
 	client.SetAuth("z9GRRu7FxmO53CQ9cFfI6qiy32wpfTkd", "w24JTCv4MnAcuRTx0oHjHLDtyt3I6IBq")
 
 	ctx := context.TODO()
-	result, err := client.DeleteOrder(ctx, *NewDeleteOrderReq(
-		"number-soOEl0",
-		1,
-		*NewDeleteOrder().SetNumber("number-soOEl0"),
-	))
+	result, err := client.DeleteOrder(ctx, DeleteOrderRequest{
+		Number:     "number-soOEl0",
+		OrderCount: 1,
+		Order: DeleteOrder{
+			Number:         "number-soOEl0",
+			DispatchNumber: 1,
+		},
+	})
 
 	_, _ = result, err
 }

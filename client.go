@@ -33,7 +33,7 @@ type Client interface {
 	GetRegions(ctx context.Context, filter map[RegionFilter]string) (*GetRegionsResp, error)
 	RegisterOrder(ctx context.Context, req RegisterOrderReq) (*RegisterOrderResp, error)
 	UpdateOrder(ctx context.Context, req UpdateOrderReq) (*UpdateOrderResp, error)
-	DeleteOrder(ctx context.Context, req DeleteOrderReq) (*DeleteOrderResp, error)
+	DeleteOrder(ctx context.Context, req DeleteOrderRequest) (*DeleteOrderResponse, error)
 	GetStatusReport(ctx context.Context, statusReportReq StatusReport) (*StatusReportResp, error)
 }
 
