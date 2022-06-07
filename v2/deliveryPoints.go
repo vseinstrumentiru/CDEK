@@ -59,11 +59,46 @@ type DeliveryPoint struct {
 	} `json:"work_time_exceptions,omitempty"`
 }
 
-func (c *clientImpl) DeliveryPoints(ctx context.Context) (*DeliveryPointsResponse, error) {
+type DeliveryPointsRequest struct {
+	// PostalCode Почтовый индекс города, для которого необходим список офисов
+	PostalCode int `url:"postal_code,omitempty"`
+	// CityCode Код населенного пункта СДЭК (метод "Список населенных пунктов")
+	CityCode int `url:"city_code,omitempty"`
+	// Type Тип офиса, может принимать значения: «PVZ» - склады, «POSTAMAT» - постаматы, «ALL» - все.
+	Type string `url:"type,omitempty"`
+	// CountryCode Код страны в формате ISO_3166-1_alpha-2 (см. “Общероссийский классификатор стран мира”)
+	CountryCode int `url:"country_code"`
+	// RegionCode Код региона по базе СДЭК
+	RegionCode int `url:"region_code"`
+	// HaveCashless Наличие терминала оплаты
+	HaveCashless bool `url:"have_cashless"`
+	// HaveCash Есть прием наличных
+	HaveCash bool `url:"have_cash"`
+	// AllowedCod Разрешен наложенный платеж
+	AllowedCod bool `url:"allowed_cod,omitempty"`
+	// IsDressingRoom Наличие примерочной
+	IsDressingRoom bool `url:"is_dressing_room,omitempty"`
+	// WeightMax Максимальный вес в кг, который может принять офис (значения больше 0 - передаются офисы, которые принимают этот вес; 0 - офисы с нулевым весом не передаются; значение не указано - все офисы)
+	WeightMax bool `url:"weight_max,omitempty"`
+	// WeightMin Минимальный вес в кг, который принимает офис (при переданном значении будут выводиться офисы с минимальным весом до указанного значения)
+	WeightMin bool `url:"weight_min,omitempty"`
+	// Lang Локализация офиса. По умолчанию "rus"
+	Lang string `url:"lang,omitempty"`
+	// TakeOnly Является ли офис только пунктом выдачи
+	TakeOnly bool `url:"take_only,omitempty"`
+	// IsHandout Является пунктом выдачи, может принимать значения
+	IsHandout bool `url:"is_handout,omitempty"`
+	// IsReception Есть ли в офисе приём заказов
+	IsReception bool `url:"is_reception,omitempty"`
+	// FiasGuid Код города ФИАС	UUID
+	FiasGuid string `url:"fias_guid,omitempty"`
+}
+
+func (c *clientImpl) DeliveryPoints(ctx context.Context, input *DeliveryPointsRequest) (*DeliveryPointsResponse, error) {
 	req, err := http.NewRequestWithContext(
 		ctx,
 		http.MethodGet,
-		c.buildUri("/v2/deliverypoints"),
+		c.buildUri("/v2/deliverypoints", input),
 		nil,
 	)
 	if err != nil {

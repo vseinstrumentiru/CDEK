@@ -52,9 +52,13 @@ func (c *clientImpl) getAccessToken(ctx context.Context) (string, error) {
 }
 
 func (c *clientImpl) Auth(ctx context.Context) (*AuthResponse, error) {
+	if len(c.opts.Credentials.ClientID) == 0 || len(c.opts.Credentials.ClientSecret) == 0 {
+		return nil, fmt.Errorf("empty credentials")
+	}
+
 	req, err := http.NewRequestWithContext(
 		ctx, http.MethodPost,
-		c.buildUri("/v2/oauth/token"),
+		c.buildUri("/v2/oauth/token", nil),
 		strings.NewReader(c.opts.Credentials.UrlValues().Encode()),
 	)
 	if err != nil {

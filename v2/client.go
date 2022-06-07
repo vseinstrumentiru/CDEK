@@ -3,12 +3,15 @@ package v2
 import (
 	"context"
 	"fmt"
+	"github.com/google/go-querystring/query"
 	"strings"
 )
 
 type Client interface {
 	Auth(ctx context.Context) (*AuthResponse, error)
-	DeliveryPoints(ctx context.Context) (*DeliveryPointsResponse, error)
+	DeliveryPoints(ctx context.Context, input *DeliveryPointsRequest) (*DeliveryPointsResponse, error)
+	Regions(ctx context.Context, input *RegionsRequest) (*RegionsResponse, error)
+	Cities(ctx context.Context, input *CitiesRequest) (*CitiesResponse, error)
 }
 
 type Options struct {
@@ -26,10 +29,12 @@ type clientImpl struct {
 	expireIn    int
 }
 
-func (c *clientImpl) buildUri(p string) string {
+func (c *clientImpl) buildUri(p string, values interface{}) string {
+	v, _ := query.Values(values)
 	return fmt.Sprintf(
-		"%s/%s",
+		"%s/%s?%s",
 		strings.TrimRight(c.opts.Endpoint, "/"),
 		strings.TrimLeft(p, "/"),
+		v.Encode(),
 	)
 }
