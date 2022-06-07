@@ -3,6 +3,7 @@ package v2
 import (
 	"context"
 	"fmt"
+	"github.com/pkg/errors"
 	"net/http"
 )
 
@@ -27,20 +28,23 @@ type CitiesRequest struct {
 	Lang string `url:"lang,omitempty"`
 }
 
-type CitiesResponse []Region
+type CitiesResponse []*City
 
 type City struct {
-	Code        string  `json:"code"`
-	CountryCode string  `json:"country_code"`
-	FiasGuid    string  `json:"fias_guid"`
-	Country     string  `json:"country"`
-	Region      string  `json:"region"`
-	RegionCode  string  `json:"region_code"`
-	SubRegion   string  `json:"sub_region"`
-	City        string  `json:"city"`
-	Longitude   float64 `json:"longitude"`
-	Latitude    float64 `json:"latitude"`
-	TimeZone    string  `json:"time_zone"`
+	Code         int      `json:"code"`
+	City         string   `json:"city"`
+	CountryCode  string   `json:"country_code"`
+	Country      string   `json:"country"`
+	Region       string   `json:"region,omitempty"`
+	RegionCode   int      `json:"region_code"`
+	SubRegion    string   `json:"sub_region,omitempty"`
+	PostalCodes  []string `json:"postal_codes,omitempty"`
+	Longitude    float64  `json:"longitude"`
+	Latitude     float64  `json:"latitude"`
+	TimeZone     string   `json:"time_zone"`
+	KladrCode    string   `json:"kladr_code,omitempty"`
+	PaymentLimit float64  `json:"payment_limit,omitempty"`
+	FiasGuid     string   `json:"fias_guid,omitempty"`
 }
 
 func (c *clientImpl) Cities(ctx context.Context, input *CitiesRequest) (*CitiesResponse, error) {
@@ -51,12 +55,12 @@ func (c *clientImpl) Cities(ctx context.Context, input *CitiesRequest) (*CitiesR
 		nil,
 	)
 	if err != nil {
-		return nil, err
+		return nil, errors.Wrap(err, "http.NewRequestWithContext")
 	}
 
 	accessToken, err := c.getAccessToken(ctx)
 	if err != nil {
-		return nil, err
+		return nil, errors.Wrap(err, "getAccessToken")
 	}
 
 	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", accessToken))

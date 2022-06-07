@@ -12,6 +12,7 @@ type Client interface {
 	DeliveryPoints(ctx context.Context, input *DeliveryPointsRequest) (*DeliveryPointsResponse, error)
 	Regions(ctx context.Context, input *RegionsRequest) (*RegionsResponse, error)
 	Cities(ctx context.Context, input *CitiesRequest) (*CitiesResponse, error)
+	CalculatorTrafiffList(ctx context.Context, input *CalculatorTrafiffListRequest) (*CalculatorTrafiffListResponse, error)
 }
 
 type Options struct {

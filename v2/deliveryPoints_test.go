@@ -2,7 +2,6 @@ package v2
 
 import (
 	"context"
-	"fmt"
 	"github.com/stretchr/testify/require"
 	"testing"
 	"time"
@@ -24,5 +23,4 @@ func TestClientImpl_DeliveryPoints(t *testing.T) {
 	})
 	require.NoError(t, err)
 	require.NotNil(t, resp)
-	fmt.Printf("%+v", resp)
 }
