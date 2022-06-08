@@ -13,6 +13,7 @@ type Client interface {
 	Regions(ctx context.Context, input *RegionsRequest) (*RegionsResponse, error)
 	Cities(ctx context.Context, input *CitiesRequest) (*CitiesResponse, error)
 	CalculatorTrafiffList(ctx context.Context, input *CalculatorTrafiffListRequest) (*CalculatorTrafiffListResponse, error)
+	OrderRegister(ctx context.Context, input *OrderRegisterRequest) (*OrderRegisterResponse, error)
 }
 
 type Options struct {
@@ -32,10 +33,10 @@ type clientImpl struct {
 
 func (c *clientImpl) buildUri(p string, values interface{}) string {
 	v, _ := query.Values(values)
-	return fmt.Sprintf(
+	return strings.TrimRight(fmt.Sprintf(
 		"%s/%s?%s",
 		strings.TrimRight(c.opts.Endpoint, "/"),
 		strings.TrimLeft(p, "/"),
 		v.Encode(),
-	)
+	), "?")
 }

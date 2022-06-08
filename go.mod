@@ -3,6 +3,7 @@ module github.com/vseinstrumentiru/cdek
 go 1.18
 
 require (
+	github.com/ernesto-jimenez/httplogger v0.0.0-20220128121225-117514c3f345
 	github.com/google/go-querystring v1.1.0
 	github.com/hashicorp/go-multierror v1.0.0
 	github.com/joho/godotenv v1.4.0

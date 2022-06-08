@@ -15,7 +15,7 @@ type Package struct {
 	Height int `json:"height,omitempty"`
 }
 
-type Location struct {
+type CalculatorLocation struct {
 	// Code Код населенного пункта СДЭК (метод "Список населенных пунктов")
 	Code string `json:"code,omitempty"`
 	// PostalCode Почтовый индекс города, для которого необходим список офисов
@@ -36,9 +36,9 @@ type CalculatorTrafiffListRequest struct {
 	// Lang Локализация офиса. По умолчанию "rus"
 	Lang string `url:"lang,omitempty"`
 	// FromLocation Адрес отправления
-	FromLocation Location `json:"from_location,omitempty"`
+	FromLocation CalculatorLocation `json:"from_location,omitempty"`
 	// ToLocation Адрес получения
-	ToLocation Location `json:"to_location"`
+	ToLocation CalculatorLocation `json:"to_location"`
 	// Packages Список информации по местам (упаковкам)
 	Packages []Package `json:"packages"`
 }
