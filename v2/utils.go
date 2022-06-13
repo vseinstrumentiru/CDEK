@@ -16,6 +16,13 @@ var client = http.Client{
 	Transport: httplogger.NewLoggedTransport(http.DefaultTransport, newLogger()),
 }
 
+type RespErrors struct {
+	Errors []struct {
+		Code    string `json:"code"`
+		Message string `json:"message"`
+	} `json:"errors,omitempty"`
+}
+
 func jsonReq[T any](req *http.Request) (*T, error) {
 	response, err := client.Do(req)
 	if err != nil {
@@ -29,8 +36,12 @@ func jsonReq[T any](req *http.Request) (*T, error) {
 		return nil, errors.Wrap(err, "ioutil.ReadAll")
 	}
 
-	fmt.Printf("%s\n", payload)
+	var respErr RespErrors
+	if err := json.Unmarshal(payload, &respErr); err == nil && len(respErr.Errors) > 0 {
+		return nil, fmt.Errorf("%v", respErr)
+	}
 
+	fmt.Printf("@@@ %s", payload)
 	if err := json.Unmarshal(payload, &s); err != nil {
 		return nil, fmt.Errorf("%s", payload)
 	}

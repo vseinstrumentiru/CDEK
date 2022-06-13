@@ -17,7 +17,7 @@ type Package struct {
 
 type CalculatorLocation struct {
 	// Code Код населенного пункта СДЭК (метод "Список населенных пунктов")
-	Code string `json:"code,omitempty"`
+	Code int `json:"code,omitempty"`
 	// PostalCode Почтовый индекс города, для которого необходим список офисов
 	PostalCode int `json:"postal_code,omitempty"`
 	// City Название города
@@ -32,7 +32,7 @@ type CalculatorTrafiffListRequest struct {
 	// Type Тип заказа: 1 - "интернет-магазин", 2 - "доставка". По умолчанию - 1
 	Type string `json:"type,omitempty"`
 	// Валюта, в которой необходимо произвести расчет. По умолчанию - валюта договора
-	Currency string `json:"currency,omitempty"`
+	Currency int `json:"currency,omitempty"`
 	// Lang Локализация офиса. По умолчанию "rus"
 	Lang string `url:"lang,omitempty"`
 	// FromLocation Адрес отправления
@@ -69,6 +69,7 @@ func (c *clientImpl) CalculatorTrafiffList(ctx context.Context, input *Calculato
 		c.buildUri("/v2/calculator/tarifflist", nil),
 		bytes.NewReader(payload),
 	)
+	req.Header.Add("Content-Type", "application/json")
 	if err != nil {
 		return nil, err
 	}

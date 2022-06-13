@@ -5,6 +5,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"github.com/hashicorp/go-multierror"
 	"net/http"
 )
 
@@ -237,7 +238,7 @@ type OrderRegisterRequests struct {
 	// DateTime Дата и время установки текущего состояния запроса (формат yyyy-MM-dd'T'HH:mm:ssZ)
 	DateTime string `json:"date_time"`
 	// Errors Ошибки, возникшие в ходе выполнения запроса
-	Errors   []OrderRegisterError `json:"errors,omitempty"`
+	Errors []OrderRegisterError `json:"errors,omitempty"`
 	// Warnings Предупреждения, возникшие в ходе выполнения запроса
 	Warnings []OrderRegisterError `json:"warnings,omitempty"`
 	// RelatedEntities Связанные сущности (если в запросе был передан корректный print)
@@ -280,6 +281,7 @@ func (c *clientImpl) OrderRegister(ctx context.Context, input *OrderRegisterRequ
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Add("Content-Type", "application/json")
 
 	accessToken, err := c.getAccessToken(ctx)
 	if err != nil {
@@ -288,5 +290,21 @@ func (c *clientImpl) OrderRegister(ctx context.Context, input *OrderRegisterRequ
 
 	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", accessToken))
 
-	return jsonReq[OrderRegisterResponse](req)
+	resp, err := jsonReq[OrderRegisterResponse](req)
+	if err != nil {
+		return nil, err
+	}
+
+	var result error
+	for _, item := range resp.Requests {
+		if item.State == "INVALID" {
+			result = multierror.Append(result, fmt.Errorf("%+v", item))
+		}
+	}
+
+	if result != nil {
+		return nil, result
+	}
+
+	return resp, nil
 }

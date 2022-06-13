@@ -9,7 +9,7 @@ import (
 
 func TestClientImpl_DeliveryPoints(t *testing.T) {
 	ctx := context.Background()
-	timedCtx, cancel := context.WithTimeout(ctx, 3*time.Second)
+	timedCtx, cancel := context.WithTimeout(ctx, 5*time.Second)
 	defer cancel()
 
 	c := createTestClient()
@@ -19,7 +19,7 @@ func TestClientImpl_DeliveryPoints(t *testing.T) {
 	require.NotNil(t, resp)
 
 	resp, err = c.DeliveryPoints(timedCtx, &DeliveryPointsRequest{
-		PostalCode: 610048,
+		CountryCode: "ru",
 	})
 	require.NoError(t, err)
 	require.NotNil(t, resp)

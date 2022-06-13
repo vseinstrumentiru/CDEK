@@ -67,13 +67,13 @@ type DeliveryPointsRequest struct {
 	// Type Тип офиса, может принимать значения: «PVZ» - склады, «POSTAMAT» - постаматы, «ALL» - все.
 	Type string `url:"type,omitempty"`
 	// CountryCode Код страны в формате ISO_3166-1_alpha-2 (см. “Общероссийский классификатор стран мира”)
-	CountryCode int `url:"country_code"`
+	CountryCode string `url:"country_code,omitempty"`
 	// RegionCode Код региона по базе СДЭК
-	RegionCode int `url:"region_code"`
+	RegionCode int `url:"region_code,omitempty"`
 	// HaveCashless Наличие терминала оплаты
-	HaveCashless bool `url:"have_cashless"`
+	HaveCashless bool `url:"have_cashless,omitempty"`
 	// HaveCash Есть прием наличных
-	HaveCash bool `url:"have_cash"`
+	HaveCash bool `url:"have_cash,omitempty"`
 	// AllowedCod Разрешен наложенный платеж
 	AllowedCod bool `url:"allowed_cod,omitempty"`
 	// IsDressingRoom Наличие примерочной
