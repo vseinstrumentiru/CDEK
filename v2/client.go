@@ -14,6 +14,7 @@ type Client interface {
 	Cities(ctx context.Context, input *CitiesRequest) (*CitiesResponse, error)
 	CalculatorTrafiffList(ctx context.Context, input *CalculatorTrafiffListRequest) (*CalculatorTrafiffListResponse, error)
 	OrderRegister(ctx context.Context, input *OrderRegisterRequest) (*OrderRegisterResponse, error)
+	OrderStatus(ctx context.Context, uuid string) (*OrderStatusResponse, error)
 }
 
 type Options struct {

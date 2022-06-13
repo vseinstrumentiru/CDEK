@@ -241,8 +241,6 @@ type OrderRegisterRequests struct {
 	Errors []OrderRegisterError `json:"errors,omitempty"`
 	// Warnings Предупреждения, возникшие в ходе выполнения запроса
 	Warnings []OrderRegisterError `json:"warnings,omitempty"`
-	// RelatedEntities Связанные сущности (если в запросе был передан корректный print)
-	RelatedEntities OrderRegisterRelatedEntities `json:"related_entities,omitempty"`
 }
 
 type OrderRegisterRelatedEntities struct {
@@ -264,6 +262,8 @@ type OrderRegisterResponse struct {
 	Entity OrderRegisterEntity `json:"entity,omitempty"`
 	// Requests Информация о запросе над заказом
 	Requests []OrderRegisterRequests `json:"requests"`
+	// RelatedEntities Связанные сущности (если в запросе был передан корректный print)
+	RelatedEntities OrderRegisterRelatedEntities `json:"related_entities,omitempty"`
 }
 
 func (c *clientImpl) OrderRegister(ctx context.Context, input *OrderRegisterRequest) (*OrderRegisterResponse, error) {
