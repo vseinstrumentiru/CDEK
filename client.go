@@ -24,11 +24,6 @@ type ServiceAccessСonfigurator interface {
 type ServiceProvider interface {
 	ServiceAccessСonfigurator
 
-	CalculateDelivery(ctx context.Context, req GetCostReq) (*GetCostRespResult, error)
-	GetCities(ctx context.Context, filter map[CityFilter]string) (*GetCitiesResp, error)
-	GetPvzList(ctx context.Context, filter map[PvzListFilter]string) ([]*Pvz, error)
-	GetRegions(ctx context.Context, filter map[RegionFilter]string) (*GetRegionsResp, error)
-	RegisterOrder(ctx context.Context, req RegisterOrderReq) (*RegisterOrderResp, error)
 	UpdateOrder(ctx context.Context, req UpdateOrderReq) (*UpdateOrderResp, error)
 	DeleteOrder(ctx context.Context, req DeleteOrderReq) (*DeleteOrderResp, error)
 	GetStatusReport(ctx context.Context, statusReportReq StatusReport) (*StatusReportResp, error)
