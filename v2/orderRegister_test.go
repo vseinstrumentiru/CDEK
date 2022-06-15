@@ -2,7 +2,7 @@ package v2
 
 import (
 	"context"
-	"fmt"
+	"github.com/google/uuid"
 	"github.com/stretchr/testify/require"
 	"testing"
 	"time"
@@ -21,7 +21,7 @@ func TestClientImpl_OrderRegisterStatus(t *testing.T) {
 
 	resp, err = c.OrderRegister(timedCtx, &OrderRegisterRequest{
 		Type:         0,
-		Number:       "123",
+		Number:       uuid.NewString(),
 		Comment:      "test",
 		TariffCode:   62,
 		FromLocation: OrderLocation{Code: 44, Address: "qwe"},
@@ -54,9 +54,6 @@ func TestClientImpl_OrderRegisterStatus(t *testing.T) {
 	require.NoError(t, err)
 	require.NotNil(t, resp)
 	require.Greater(t, len(resp.Requests), 0)
-
-	// @todo ticket SD-735298
-	fmt.Printf("\n\n!!!@@@ %+v\n\n", resp)
 
 	statusResp, err := c.OrderStatus(ctx, resp.Entity.Uuid)
 	require.NoError(t, err)

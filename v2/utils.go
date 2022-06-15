@@ -1,6 +1,7 @@
 package v2
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"github.com/ernesto-jimenez/httplogger"
@@ -38,12 +39,11 @@ func jsonReq[T any](req *http.Request) (*T, error) {
 
 	var respErr RespErrors
 	if err := json.Unmarshal(payload, &respErr); err == nil && len(respErr.Errors) > 0 {
-		return nil, fmt.Errorf("%v", respErr)
+		return nil, fmt.Errorf("json error: %v", respErr)
 	}
 
-	fmt.Printf("@@@ %s", payload)
 	if err := json.Unmarshal(payload, &s); err != nil {
-		return nil, fmt.Errorf("%s", payload)
+		return nil, fmt.Errorf("json error: %s", payload)
 	}
 
 	return &s, nil
@@ -60,12 +60,25 @@ func newLogger() *httpLogger {
 }
 
 func (l *httpLogger) LogRequest(req *http.Request) {
-	l.log.Printf(
-		"Request %s %s (%+v)",
-		req.Method,
-		req.URL.String(),
-		req.Header,
-	)
+	if req.Body != nil {
+		body, _ := ioutil.ReadAll(req.Body)
+		req.Body = ioutil.NopCloser(bytes.NewReader(body))
+
+		l.log.Printf(
+			"Request %s %s (%+v) %s",
+			req.Method,
+			req.URL.String(),
+			req.Header,
+			body,
+		)
+	} else {
+		l.log.Printf(
+			"Request %s %s (%+v)",
+			req.Method,
+			req.URL.String(),
+			req.Header,
+		)
+	}
 }
 
 func (l *httpLogger) LogResponse(req *http.Request, res *http.Response, err error, duration time.Duration) {

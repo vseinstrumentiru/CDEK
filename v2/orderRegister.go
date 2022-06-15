@@ -152,29 +152,29 @@ type OrderPackageItem struct {
 	// 1) Код товара в формате GS1. Пример: 010468008549838921AAA0005255832GS91EE06GS92VTwGVc7wKCc2tqRncUZ1RU5LeUKSXjWbfNQOpQjKK+A
 	// 2) Последовательность допустимых символов общей длиной в 29 символов. Пример: 00000046198488X?io+qCABm8wAYa
 	// 3) Меховые изделия. Имеют собственный формат. Пример: RU-430302-AAA7582720
-	Marking string `json:"marking,omitempty"`
+	//Marking string `json:"marking,omitempty"`
 	// Payment Оплата за товар при получении (за единицу товара в валюте страны получателя, значение >=0) — наложенный платеж, в случае предоплаты значение = 0
 	Payment OrderPayment `json:"payment"`
 	// Cost Объявленная стоимость товара (за единицу товара в валюте взаиморасчетов, значение >=0). С данного значения рассчитывается страховка
 	Cost float64 `json:"cost"`
 	// Amount Количество единиц товара (в штуках). Количество одного товара в заказе может быть от 1 до 999
 	Amount int `json:"amount"`
-	// NameI18N Наименование на иностранном языке. Только для международных заказов
-	NameI18N string `json:"name_i18n,omitempty"`
-	// Brand Бренд на иностранном языке. Только для международных заказов
-	Brand string `json:"brand,omitempty"`
-	// CountryCode Бренд на иностранном языке. Только для международных заказов
-	CountryCode string `json:"country_code,omitempty"`
+	//// NameI18N Наименование на иностранном языке. Только для международных заказов
+	//NameI18N string `json:"name_i18n,omitempty"`
+	//// Brand Бренд на иностранном языке. Только для международных заказов
+	//Brand string `json:"brand,omitempty"`
+	//// CountryCode Бренд на иностранном языке. Только для международных заказов
+	//CountryCode string `json:"country_code,omitempty"`
 	// Weight Вес (за единицу товара, в граммах)
 	Weight int `json:"weight"`
-	// WeightGross Вес брутто. Только для международных заказов
-	WeightGross int `json:"weight_gross,omitempty"`
-	// Material Код материала (подробнее см. приложение 4). Только для международных заказов
-	Material string `json:"material,omitempty"`
-	// WifiGsm Содержит wifi/gsm. Только для международных заказов
-	WifiGsm bool `json:"wifi_gsm,omitempty"`
-	// Url Ссылка на сайт интернет-магазина с описанием товара. Только для международных заказов
-	Url string `json:"url,omitempty"`
+	//// WeightGross Вес брутто. Только для международных заказов
+	//WeightGross int `json:"weight_gross,omitempty"`
+	//// Material Код материала (подробнее см. приложение 4). Только для международных заказов
+	//Material string `json:"material,omitempty"`
+	//// WifiGsm Содержит wifi/gsm. Только для международных заказов
+	//WifiGsm bool `json:"wifi_gsm,omitempty"`
+	//// Url Ссылка на сайт интернет-магазина с описанием товара. Только для международных заказов
+	//Url string `json:"url,omitempty"`
 }
 
 type OrderPackage struct {

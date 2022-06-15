@@ -30,8 +30,8 @@ type OrderStatusEntity struct {
 	// 6 - дверь-постамат
 	// 7 - склад-постамат
 	DeliveryMode string `json:"delivery_mode"`
-	// TariffCode Код тарифа
-	TariffCode int `json:"tariff_code"`
+	//// TariffCode Код тарифа
+	//TariffCode int `json:"tariff_code"`
 	// Comment Комментарий к заказу
 	Comment string `json:"comment,omitempty"`
 	// DeveloperKey Ключ разработчика
@@ -107,7 +107,7 @@ type OrderStatusEntity struct {
 	// Services Дополнительные услуги
 	Services []OrderService `json:"services,omitempty"`
 	// Packages Список информации по местам (упаковкам)
-	Packages OrderPackage `json:"packages"`
+	Packages []OrderPackage `json:"packages"`
 	// DeliveryProblem Проблемы доставки, с которыми столкнулся курьер при доставке заказа "до двери"
 	DeliveryProblem []struct {
 		// Code Код проблемы (подробнее см. приложение 4) https://api-docs.cdek.ru/29923975.html
@@ -207,7 +207,7 @@ type OrderStatusResponse struct {
 		Errors []OrderRegisterError `json:"errors,omitempty"`
 		// Warnings Предупреждения, возникшие в ходе выполнения запроса
 		Warnings []OrderRegisterError `json:"warnings,omitempty"`
-	} `json:"requests"`
+	} `json:"requests,omitempty"`
 	// RelatedEntities Связанные сущности (если в запросе был передан корректный print)
 	RelatedEntities []struct {
 		// Type Тип связанной сущности. Может принимать значения: waybill - квитанция к заказу, barcode - ШК места к заказу
