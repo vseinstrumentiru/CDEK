@@ -17,8 +17,8 @@ func TestClientImpl_CalculatorTrafiffList(t *testing.T) {
 	resp, err := c.CalculatorTrafiffList(timedCtx, &CalculatorTrafiffListRequest{
 		Lang:         "rus",
 		Currency:     1,
-		FromLocation: CalculatorLocation{Code: 44},
-		ToLocation:   CalculatorLocation{Code: 287},
+		FromLocation: Location{Code: 44},
+		ToLocation:   Location{Code: 287},
 		Packages: []Package{
 			{Weight: 1},
 		},

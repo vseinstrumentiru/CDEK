@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/ernesto-jimenez/httplogger"
+	"github.com/hashicorp/go-multierror"
 	"github.com/pkg/errors"
 	"io/ioutil"
 	"log"
@@ -12,6 +13,17 @@ import (
 	"os"
 	"time"
 )
+
+func validateResponse(requests []ResponseRequests) error {
+	var result error
+	for _, item := range requests {
+		if item.State == "INVALID" {
+			result = multierror.Append(result, fmt.Errorf("%+v", item))
+		}
+	}
+
+	return result
+}
 
 var client = http.Client{
 	Transport: httplogger.NewLoggedTransport(http.DefaultTransport, newLogger()),
@@ -65,18 +77,16 @@ func (l *httpLogger) LogRequest(req *http.Request) {
 		req.Body = ioutil.NopCloser(bytes.NewReader(body))
 
 		l.log.Printf(
-			"Request %s %s (%+v) %s",
+			"Request %s %s %s",
 			req.Method,
 			req.URL.String(),
-			req.Header,
 			body,
 		)
 	} else {
 		l.log.Printf(
-			"Request %s %s (%+v)",
+			"Request %s %s",
 			req.Method,
 			req.URL.String(),
-			req.Header,
 		)
 	}
 }

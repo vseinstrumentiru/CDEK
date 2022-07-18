@@ -13,8 +13,10 @@ type Client interface {
 	Regions(ctx context.Context, input *RegionsRequest) (*RegionsResponse, error)
 	Cities(ctx context.Context, input *CitiesRequest) (*CitiesResponse, error)
 	CalculatorTrafiffList(ctx context.Context, input *CalculatorTrafiffListRequest) (*CalculatorTrafiffListResponse, error)
-	OrderRegister(ctx context.Context, input *OrderRegisterRequest) (*OrderRegisterResponse, error)
-	OrderStatus(ctx context.Context, uuid string) (*OrderStatusResponse, error)
+	OrderRegister(ctx context.Context, input *OrderRegisterRequest) (*Response, error)
+	OrderDelete(ctx context.Context, uuid string) (*Response, error)
+	OrderUpdate(ctx context.Context, input *OrderUpdateRequest) (*OrderUpdateResponse, error)
+	OrderStatus(ctx context.Context, uuid string) (*Response, error)
 }
 
 type Options struct {

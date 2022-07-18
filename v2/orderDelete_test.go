@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func TestClientImpl_OrderRegisterStatus(t *testing.T) {
+func TestClientImpl_OrderDelete(t *testing.T) {
 	ctx := context.Background()
 	timedCtx, cancel := context.WithTimeout(ctx, 3*time.Second)
 	defer cancel()
@@ -19,9 +19,10 @@ func TestClientImpl_OrderRegisterStatus(t *testing.T) {
 	require.Error(t, err)
 	require.Nil(t, resp)
 
+	uid := uuid.NewString()
 	resp, err = c.OrderRegister(timedCtx, &OrderRegisterRequest{
 		Type:         0,
-		Number:       uuid.NewString(),
+		Number:       uid,
 		Comment:      "test",
 		TariffCode:   62,
 		FromLocation: Location{Code: 44, Address: "qwe"},
@@ -55,7 +56,7 @@ func TestClientImpl_OrderRegisterStatus(t *testing.T) {
 	require.NotNil(t, resp)
 	require.Greater(t, len(resp.Requests), 0)
 
-	statusResp, err := c.OrderStatus(ctx, resp.Entity.Uuid)
+	statusResp, err := c.OrderDelete(ctx, resp.Entity.Uuid)
 	require.NoError(t, err)
-	require.Equal(t, statusResp.Entity.Comment, "test")
+	require.Equal(t, statusResp.Entity.Uuid, resp.Entity.Uuid)
 }

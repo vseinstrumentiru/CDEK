@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func TestClientImpl_OrderRegisterStatus(t *testing.T) {
+func TestClientImpl_OrderUpdate(t *testing.T) {
 	ctx := context.Background()
 	timedCtx, cancel := context.WithTimeout(ctx, 3*time.Second)
 	defer cancel()
@@ -19,7 +19,7 @@ func TestClientImpl_OrderRegisterStatus(t *testing.T) {
 	require.Error(t, err)
 	require.Nil(t, resp)
 
-	resp, err = c.OrderRegister(timedCtx, &OrderRegisterRequest{
+	registerReq := &OrderRegisterRequest{
 		Type:         0,
 		Number:       uuid.NewString(),
 		Comment:      "test",
@@ -50,12 +50,23 @@ func TestClientImpl_OrderRegisterStatus(t *testing.T) {
 				},
 			},
 		},
-	})
+	}
+	resp, err = c.OrderRegister(timedCtx, registerReq)
 	require.NoError(t, err)
 	require.NotNil(t, resp)
 	require.Greater(t, len(resp.Requests), 0)
 
-	statusResp, err := c.OrderStatus(ctx, resp.Entity.Uuid)
+	updateResp, err := c.OrderUpdate(ctx, &OrderUpdateRequest{
+		UUID:       resp.Entity.Uuid,
+		Comment:    "updated",
+		ToLocation: registerReq.ToLocation,
+		Recipient:  registerReq.Recipient,
+		TariffCode: registerReq.TariffCode,
+		Packages:   registerReq.Packages,
+	})
 	require.NoError(t, err)
-	require.Equal(t, statusResp.Entity.Comment, "test")
+
+	statusResp, err := c.OrderStatus(ctx, updateResp.Entity.Uuid)
+	require.NoError(t, err)
+	require.Equal(t, statusResp.Entity.Comment, "updated")
 }

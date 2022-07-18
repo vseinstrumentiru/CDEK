@@ -8,24 +8,6 @@ import (
 	"net/http"
 )
 
-type Package struct {
-	Weight int `json:"weight"`
-	Length int `json:"length,omitempty"`
-	Width  int `json:"width,omitempty"`
-	Height int `json:"height,omitempty"`
-}
-
-type CalculatorLocation struct {
-	// Code Код населенного пункта СДЭК (метод "Список населенных пунктов")
-	Code int `json:"code,omitempty"`
-	// PostalCode Почтовый индекс города, для которого необходим список офисов
-	PostalCode int `json:"postal_code,omitempty"`
-	// City Название города
-	City string `json:"city,omitempty"`
-	// Address Название города
-	Address string `json:"address,omitempty"`
-}
-
 type CalculatorTrafiffListRequest struct {
 	// Date Дата и время планируемой передачи заказа. По умолчанию - текущая
 	Date string `json:"date,omitempty"`
@@ -36,9 +18,9 @@ type CalculatorTrafiffListRequest struct {
 	// Lang Локализация офиса. По умолчанию "rus"
 	Lang string `url:"lang,omitempty"`
 	// FromLocation Адрес отправления
-	FromLocation CalculatorLocation `json:"from_location,omitempty"`
+	FromLocation Location `json:"from_location,omitempty"`
 	// ToLocation Адрес получения
-	ToLocation CalculatorLocation `json:"to_location"`
+	ToLocation Location `json:"to_location"`
 	// Packages Список информации по местам (упаковкам)
 	Packages []Package `json:"packages"`
 }
