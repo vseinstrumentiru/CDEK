@@ -24,8 +24,8 @@ func createTestClient() Client {
 	return NewClient(&Options{
 		Endpoint: EndpointTest,
 		Credentials: &Credentials{
-			ClientID:     os.Getenv("CDEK_CLIENT_ID"),
-			ClientSecret: os.Getenv("CDEK_SECRET_ID"),
+			ClientID:     clientId,
+			ClientSecret: clientSecretId,
 		},
 	})
 }
