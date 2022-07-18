@@ -1,4 +1,4 @@
-# GO SDK for CDEK API v2
+# GO SDK for CDEK API
 [![GoDoc reference](https://godoc.org/github.com/vseinstrumentiru/CDEK?status.svg)](https://godoc.org/github.com/vseinstrumentiru/CDEK) 
 [![Build Status](https://travis-ci.com/vseinstrumentiru/CDEK.svg?branch=master)](https://travis-ci.com/vseinstrumentiru/CDEK)
 [![Coverage Status](https://coveralls.io/repos/github/vseinstrumentiru/CDEK/badge.svg?branch=travis)](https://coveralls.io/github/vseinstrumentiru/CDEK?branch=travis)
